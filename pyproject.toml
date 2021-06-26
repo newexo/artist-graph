@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "art_graph"
+version = "0.0.1"
+description = "Tools for creating and analyzing art graphs"
+authors = ["Reuben Brasher <rkbrasher@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+packages = [{include = "art_graph"}]
+include = ["README.md", "art_graph/tests/test_data/*"]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+poetry = "^1.8"
+pytest = "^8.2"
+black = "^24.4"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
