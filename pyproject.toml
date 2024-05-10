@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "art_graph"
-version = "0.0.1"
+version = "0.0.2"
 description = "Tools for creating and analyzing art graphs"
 authors = ["Reuben Brasher <rkbrasher@gmail.com>"]
 license = "MIT"
@@ -13,6 +13,13 @@ python = "^3.10"
 poetry = "^1.8"
 pytest = "^8.2"
 black = "^24.4"
+numpy = "^1.26.4"
+pandas = "^2.2.2"
+networkx = "^3.3"
+cinemagoer = "^2023.5.1"
+requests = "^2.31.0"
+gensim = "^4.3.2"
+tqdm = "^4.66.4"
 
 [build-system]
 requires = ["poetry-core"]
