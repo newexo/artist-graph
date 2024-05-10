@@ -2,6 +2,7 @@ import pickle
 import numpy as np
 import json
 import networkx as nx
+from dataclasses import dataclass
 
 from .. import directories
 from ..cinegraph.node_types import PersonNode, WorkNode
@@ -64,6 +65,27 @@ class MockImdbObject(dict):
         m["cast"] = list(actors[:4])
 
 
+@dataclass
+class MockNode:
+    id: str
+
+    def getID(self):
+        return self.id
+
+
+@dataclass
+class MockPerson(MockNode):
+    filmography: dict
+
+    def __getitem__(self, key):
+        if key == "filmography":
+            return self.filmography
+
+    @staticmethod
+    def mock_filmography(d):
+        return {key: [MockNode(id) for id in ids] for key, ids in d.items()}
+
+
 class MockIMBD:
     def __init__(self, g):
         self.g = g
@@ -82,44 +104,39 @@ class MockIMBD:
 
 
 # Kevin Bacon
-def get_bacon(ia=None):
-    return ia.get_person("0000102", info=("main", "filmography", "biography"))
+def get_bacon():
+    with open(directories.test_data("bacon_filmography.json")) as f:
+        filmography = json.load(f)
+        return MockPerson("0000102", MockPerson.mock_filmography(filmography))
 
 
 # Natalie Portman
-def get_natalie(ia=None):
-    return ia.get_person("0000204", info=("main", "filmography", "biography"))
+def get_natalie():
+    with open(directories.test_data("natalie_filmography.json")) as f:
+        filmography = json.load(f)
+        return MockPerson("0000204", MockPerson.mock_filmography(filmography))
 
 
 # Sarah Michelle Gellar
-def get_sarah(ia=None):
-    return ia.get_person("0001264", info=("main", "filmography", "biography"))
-
-
-# The Air I Breath
-def get_air(ia=None):
-    return ia.get_movie("0485851")
-
-
-# A Powerful Noise Live
-def get_noise(ia=None):
-    return ia.get_movie("1392211")
+def get_sarah():
+    with open(directories.test_data("sarah_filmography.json")) as f:
+        filmography = json.load(f)
+    return MockPerson("0001264", MockPerson.mock_filmography(filmography))
 
 
 def get_small_graph():
-    # path = directories.test_data("small_professional_graph.pkl")
-    # with open(path, "rb") as f:
-    #     return pickle.load(f)
     path = directories.test_data("small_professional_graph.json")
     with open(path, "r") as f:
         d = json.load(f)
-    people = [PersonNode(id) for id in d['people']]
-    works = [WorkNode(id) for id in d['works']]
-    edges = [(PersonNode(e["person"]), WorkNode(e["work"])) for e in d['edges']]
+    with open(directories.test_data("small_professional_graph.json"), "w") as f:
+        json.dump(d, f, indent=4)
+    people = [PersonNode(id) for id in d["people"]]
+    works = [WorkNode(id) for id in d["works"]]
+    edges = [(PersonNode(e["person"]), WorkNode(e["work"])) for e in d["edges"]]
     g = nx.Graph()
     g.add_nodes_from(people)
     g.add_nodes_from(works)
     g.add_edges_from(edges)
-    for e in d['edges']:
+    for e in d["edges"]:
         g.edges[(PersonNode(e["person"]), WorkNode(e["work"]))]["job"] = e["job"]
     return g

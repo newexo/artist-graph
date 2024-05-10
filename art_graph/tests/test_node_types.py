@@ -3,7 +3,6 @@ from unittest import TestCase
 from ..cinegraph.node_types import ProfessionalNode, PersonNode, WorkNode
 
 
-
 class TestNodeTypes(TestCase):
     def setUp(self):
         pass
@@ -70,5 +69,3 @@ class TestNodeTypes(TestCase):
         self.assertEqual("ProfessionalNode('0', False)", repr(s0))
         self.assertEqual("WorkNode('2')", repr(sw))
         self.assertEqual("PersonNode('3')", repr(sp))
-
-

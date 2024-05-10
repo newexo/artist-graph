@@ -1,5 +1,6 @@
 from unittest import TestCase
 
+
 class TestProfessionalPath(TestCase):
     def setUp(self):
         pass
