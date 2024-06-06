@@ -133,3 +133,6 @@ dmypy.json
 
 # MacOS nonsense
 .DS_Store
+
+# Project specific
+secrets.py
