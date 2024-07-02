@@ -1,24 +1,30 @@
 from datetime import date
 from typing import List, Optional
 
-from pydantic import BaseModel
+from pydantic import BaseModel, field_validator
 
 
 class Movie(BaseModel):
     adult: bool
-    backdrop_path: str
+    backdrop_path: Optional[str]
     genre_ids: List[int]
     id: int
     original_language: str
     original_title: str
     overview: str
     popularity: float
-    poster_path: str
-    release_date: date
+    poster_path: Optional[str]
+    release_date: Optional[date]
     title: str
     video: bool
     vote_average: float
     vote_count: int
+
+    @field_validator("release_date", mode="before")
+    def check_release_date(cls, v):
+        if v == "":
+            return None
+        return v
 
 
 class Actor(BaseModel):
@@ -89,3 +95,10 @@ class MovieDetails(BaseModel):
     video: bool
     vote_average: float
     vote_count: int
+
+
+class MovieSearchResults(BaseModel):
+    page: int
+    results: List[Movie]
+    total_pages: int
+    total_results: int

@@ -1,7 +1,8 @@
 import pytest
 from datetime import date
+import json
 
-from art_graph.cinema_data_providers.tmdb_models import (
+from ..cinema_data_providers.tmdb_models import (
     Movie,
     Actor,
     BelongsToCollection,
@@ -10,7 +11,9 @@ from art_graph.cinema_data_providers.tmdb_models import (
     ProductionCountry,
     SpokenLanguage,
     MovieDetails,
+    MovieSearchResults,
 )
+from .. import directories
 
 
 @pytest.fixture
@@ -249,3 +252,62 @@ def test_movie_details_initialization(movie_details_data):
     assert movie_details.video == movie_details_data["video"]
     assert movie_details.vote_average == movie_details_data["vote_average"]
     assert movie_details.vote_count == movie_details_data["vote_count"]
+
+
+@pytest.fixture
+def odyssey_search():
+    with open(directories.test_data("tmdb_2001_search.json")) as f:
+        return json.load(f)
+
+
+@pytest.fixture
+def odyssey_details():
+    with open(directories.test_data("tmdb_2001_details.json")) as f:
+        return json.load(f)
+
+
+@pytest.fixture
+def bacon_search():
+    with open(directories.test_data("tmdb_bacon_search.json")) as f:
+        return json.load(f)
+
+
+@pytest.fixture
+def bacon_details():
+    with open(directories.test_data("tmdb_bacon_details.json")) as f:
+        return json.load(f)
+
+
+def test_load_movie_search(odyssey_search):
+    assert len(odyssey_search["results"]) == 6
+    movie = odyssey_search["results"][0]
+    assert movie["id"] == 62
+    assert movie["title"] == "2001: A Space Odyssey"
+    assert movie["release_date"] == "1968-04-02"
+    assert (
+        movie["overview"]
+        == "Humanity finds a mysterious object buried beneath the lunar surface and sets off to find its origins with the help of HAL 9000, the world's most advanced super computer."
+    )
+    assert movie["poster_path"] == "/ve72VxNqjGM69Uky4WTo2bK6rfq.jpg"
+    assert movie["backdrop_path"] == "/w5IDXtifKntw0ajv2co7jFlTQDM.jpg"
+    assert movie["popularity"] == 383.111
+    assert movie["vote_count"] == 11139
+    assert movie["vote_average"] == 8.078
+
+    search_results = MovieSearchResults(**odyssey_search)
+    assert search_results.page == 1
+    assert search_results.total_pages == 1
+    assert search_results.total_results == 6
+    assert len(search_results.results) == 6
+
+    odyssey_movie = search_results.results[0]
+    assert odyssey_movie.id == 62
+    assert odyssey_movie.title == "2001: A Space Odyssey"
+    assert odyssey_movie.release_date == date(1968, 4, 2)
+    assert (
+        odyssey_movie.overview
+        == "Humanity finds a mysterious object buried beneath the lunar surface and sets off to find its origins with the help of HAL 9000, the world's most advanced super computer."
+    )
+
+    movie_no_release_date = search_results.results[1]
+    assert movie_no_release_date.release_date is None
