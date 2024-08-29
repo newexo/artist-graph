@@ -1,232 +1,233 @@
-Parasite
-Nomadland
-CODA
-Everything Everywhere All at Once
-The Shape of Water
-Moonlight
-Spotlight
-Birdman
-12 Years a Slave
-Argo
-The Artist
-The King's Speech
-The Hurt Locker
-Slumdog Millionaire
-No Country for Old Men
-The Departed
-Crash
-Million Dollar Baby
-The Lord of the Rings: The Return of the King
-Chicago
-A Beautiful Mind
-Gladiator
-American Beauty
-Shakespeare in Love
-Titanic
-The English Patient
-Braveheart
-Forrest Gump
-Schindler's List
-Unforgiven
-The Silence of the Lambs
-Dances with Wolves
-Driving Miss Daisy
-Rain Man
-The Last Emperor
-Platoon
-Out of Africa
-Amadeus
-Terms of Endearment
-Gandhi
-Chariots of Fire
-Ordinary People
-The Godfather Part III
-Goodfellas
-Pulp Fiction
-The Shawshank Redemption
-Saving Private Ryan
-Life is Beautiful
-The Pianist
-Lost in Translation
-Eternal Sunshine of the Spotless Mind
-The Usual Suspects
-Fargo
-L.A. Confidential
-Good Will Hunting
-The Matrix
-"Crouching Tiger, Hidden Dragon"
-Memento
-Spirited Away
-The Lord of the Rings: The Fellowship of the Ring
-The Lord of the Rings: The Two Towers
-The Sixth Sense
-Fight Club
-The Green Mile
-Toy Story
-Jurassic Park
-The Lion King
-Shrek
-Finding Nemo
-The Incredibles
-Up
-Toy Story 3
-Inside Out
-Coco
-Spider-Man: Into the Spider-Verse
-The Dark Knight
-Inception
-Interstellar
-The Grand Budapest Hotel
-Whiplash
-La La Land
-"Three Billboards Outside Ebbing, Missouri"
-The Social Network
-The Wolf of Wall Street
-Her
-Django Unchained
-Zero Dark Thirty
-The Tree of Life
-Black Swan
-The Wrestler
-There Will Be Blood
-Pan's Labyrinth
-Letters from Iwo Jima
-Little Miss Sunshine
-The Departed
-Babel
-The Queen
-Capote
-Brokeback Mountain
-Million Dollar Baby
-Sideways
-The Aviator
-Finding Neverland
-Ray
-Mystic River
-Lost in Translation
-The Pianist
-The Hours
-Gangs of New York
-The Lord of the Rings: The Two Towers
-Chicago
-The Pianist
-The Hours
-Adaptation
-Talk to Her
-Spirited Away
-Minority Report
-The Pianist
-The Hours
-Adaptation
-Talk to Her
-Spirited Away
-Minority Report
-A Beautiful Mind
-Moulin Rouge!
-Gosford Park
-In the Bedroom
-The Lord of the Rings: The Fellowship of the Ring
-Memento
-Mulholland Drive
-Amélie
-Gladiator
-"Crouching Tiger, Hidden Dragon"
-Traffic
-Erin Brockovich
-Chocolat
-"O Brother, Where Art Thou?"
-American Beauty
-The Cider House Rules
-The Green Mile
-The Insider
-The Sixth Sense
-Being John Malkovich
-Magnolia
-The Matrix
-Shakespeare in Love
-Saving Private Ryan
-Life Is Beautiful
-The Thin Red Line
-Elizabeth
-Titanic
-L.A. Confidential
-Good Will Hunting
-As Good as It Gets
-The Full Monty
-The English Patient
-Fargo
-Secrets & Lies
-Shine
-Jerry Maguire
-Braveheart
-Apollo 13
-Babe
-The Postman (Il Postino)
-Sense and Sensibility
-Forrest Gump
-Pulp Fiction
-The Shawshank Redemption
-Quiz Show
-Four Weddings and a Funeral
-Schindler's List
-The Piano
-The Remains of the Day
-In the Name of the Father
-The Fugitive
-Unforgiven
-The Crying Game
-Howards End
-A Few Good Men
-Scent of a Woman
-The Silence of the Lambs
-Beauty and the Beast
-JFK
-Bugsy
-The Prince of Tides
-Dances with Wolves
-Goodfellas
-Awakenings
-Ghost
-The Godfather Part III
-Driving Miss Daisy
-Born on the Fourth of July
-Dead Poets Society
-Field of Dreams
-My Left Foot
-Rain Man
-Dangerous Liaisons
-Working Girl
-The Accidental Tourist
-The Last Emperor
-Hope and Glory
-Moonstruck
-The Last Emperor
-Broadcast News
-Fatal Attraction
-Hope and Glory
-Moonstruck
-Platoon
-Hannah and Her Sisters
-The Mission
-A Room with a View
-Children of a Lesser God
-Out of Africa
-The Color Purple
-Kiss of the Spider Woman
-Prizzi's Honor
-Witness
-Amadeus
-The Killing Fields
-A Passage to India
-Places in the Heart
-A Soldier's Story
-Terms of Endearment
-The Big Chill
-The Dresser
-The Right Stuff
-Tender Mercies
-Gandhi
-E.T. the Extra-Terrestrial
-Missing
-Tootsie
-An Officer and a Gentleman
+IMDb_ID,title,year
+6751668,Parasite,2019
+9770150,Nomadland,2020
+10366460,CODA,2021
+6710474,Everything Everywhere All at Once,2022
+5580390,The Shape of Water,2017
+4975722,Moonlight,2016
+1895587,Spotlight,2015
+2562232,Birdman,2014
+2024544,12 Years a Slave,2013
+1024648,Argo,2012
+1655442,The Artist,2011
+1504320,The King's Speech,2010
+0887912,The Hurt Locker,2008
+1010048,Slumdog Millionaire,2008
+0477348,No Country for Old Men,2007
+0407887,The Departed,2006
+0115964,Crash,1996
+0405159,Million Dollar Baby,2004
+0167260,The Lord of the Rings: The Return of the King,2003
+2261391,Chicago,2012
+0268978,A Beautiful Mind,2001
+0172495,Gladiator,2000
+0169547,American Beauty,1999
+0138097,Shakespeare in Love,1998
+0120338,Titanic,1997
+0116209,The English Patient,1996
+0112573,Braveheart,1995
+0109830,Forrest Gump,1994
+0108052,Schindler's List,1993
+0105695,Unforgiven,1992
+0102926,The Silence of the Lambs,1991
+0099348,Dances with Wolves,1990
+0097239,Driving Miss Daisy,1989
+0095953,Rain Man,1988
+0093389,The Last Emperor,1987
+0091763,Platoon,1986
+0089755,Out of Africa,1985
+0086879,Amadeus,1984
+0086425,Terms of Endearment,1983
+0083987,Gandhi,1982
+0082158,Chariots of Fire,1981
+0081283,Ordinary People,1980
+0099674,The Godfather Part III,1990
+0099685,Goodfellas,1990
+0110912,Pulp Fiction,1994
+0111161,The Shawshank Redemption,1994
+0120815,Saving Private Ryan,1998
+0118799,Life is Beautiful,1997
+0253474,The Pianist,2002
+0335266,Lost in Translation,2003
+0338013,Eternal Sunshine of the Spotless Mind,2004
+0114814,The Usual Suspects,1995
+2802850,Fargo,2014
+0119488,L.A. Confidential,1997
+0119217,Good Will Hunting,1997
+0133093,The Matrix,1999
+3981658,"""Crouching Tiger, Hidden Dragon""",2001
+0209144,Memento,2000
+0245429,Spirited Away,2001
+0120737,The Lord of the Rings: The Fellowship of the Ring,2001
+0167261,The Lord of the Rings: The Two Towers,2002
+0167404,The Sixth Sense,1999
+0137523,Fight Club,1999
+0120689,The Green Mile,1999
+0114709,Toy Story,1995
+0107290,Jurassic Park,1993
+0110357,The Lion King,1994
+0126029,Shrek,2001
+0266543,Finding Nemo,2003
+0317705,The Incredibles,2004
+1049413,Up,2009
+0435761,Toy Story 3,2010
+22022452,Inside Out,2024
+2380307,Coco,2017
+4633694,Spider-Man: Into the Spider-Verse,2018
+0468569,The Dark Knight,2008
+1375666,Inception,2010
+0816692,Interstellar,2014
+2278388,The Grand Budapest Hotel,2014
+2582802,Whiplash,2014
+3783958,La La Land,2016
+5027774,"""Three Billboards Outside Ebbing, Missouri""",2017
+1285016,The Social Network,2010
+0993846,The Wolf of Wall Street,2013
+1798709,Her,2013
+1853728,Django Unchained,2012
+1790885,Zero Dark Thirty,2012
+0478304,The Tree of Life,2011
+0947798,Black Swan,2010
+1125849,The Wrestler,2008
+0469494,There Will Be Blood,2007
+0457430,Pan's Labyrinth,2006
+0498380,Letters from Iwo Jima,2006
+0449059,Little Miss Sunshine,2006
+0407887,The Departed,2006
+0449467,Babel,2006
+14022350,The Queen,2022
+0379725,Capote,2005
+0388795,Brokeback Mountain,2005
+0405159,Million Dollar Baby,2004
+0375063,Sideways,2004
+0338751,The Aviator,2004
+0308644,Finding Neverland,2004
+2249007,Ray,2013
+0327056,Mystic River,2003
+0335266,Lost in Translation,2003
+0253474,The Pianist,2002
+0274558,The Hours,2002
+0217505,Gangs of New York,2002
+0167261,The Lord of the Rings: The Two Towers,2002
+2261391,Chicago,2012
+0253474,The Pianist,2002
+0274558,The Hours,2002
+0268126,Adaptation,2002
+0287467,Talk to Her,2002
+0245429,Spirited Away,2001
+0181689,Minority Report,2002
+0253474,The Pianist,2002
+0274558,The Hours,2002
+0268126,Adaptation,2002
+0287467,Talk to Her,2002
+0245429,Spirited Away,2001
+0181689,Minority Report,2002
+0268978,A Beautiful Mind,2001
+0203009,Moulin Rouge!,2001
+0280707,Gosford Park,2001
+0247425,In the Bedroom,2001
+0120737,The Lord of the Rings: The Fellowship of the Ring,2001
+0209144,Memento,2000
+0166924,Mulholland Drive,2001
+0211915,Amélie,2001
+0172495,Gladiator,2000
+3981658,"""Crouching Tiger, Hidden Dragon""",2001
+0181865,Traffic,2000
+0195685,Erin Brockovich,2000
+0241303,Chocolat,2000
+0190590,"""O Brother, Where Art Thou?""",2000
+0169547,American Beauty,1999
+0124315,The Cider House Rules,1999
+0120689,The Green Mile,1999
+0140352,The Insider,1999
+0167404,The Sixth Sense,1999
+0120601,Being John Malkovich,1999
+0175880,Magnolia,1999
+0133093,The Matrix,1999
+0138097,Shakespeare in Love,1998
+0120815,Saving Private Ryan,1998
+0118799,Life Is Beautiful,1997
+0120863,The Thin Red Line,1998
+0127536,Elizabeth,1998
+0120338,Titanic,1997
+0119488,L.A. Confidential,1997
+0119217,Good Will Hunting,1997
+0119822,As Good as It Gets,1997
+0119164,The Full Monty,1997
+0116209,The English Patient,1996
+2802850,Fargo,2014
+0117589,Secrets & Lies,1996
+0117631,Shine,1996
+0116695,Jerry Maguire,1996
+0112573,Braveheart,1995
+0112384,Apollo 13,1995
+0112431,Babe,1995
+9065566,The Postman (Il Postino),1994
+0114388,Sense and Sensibility,1995
+0109830,Forrest Gump,1994
+0110912,Pulp Fiction,1994
+0111161,The Shawshank Redemption,1994
+0110932,Quiz Show,1994
+0109831,Four Weddings and a Funeral,1994
+0108052,Schindler's List,1993
+0107822,The Piano,1993
+0107943,The Remains of the Day,1993
+0107207,In the Name of the Father,1993
+0106977,The Fugitive,1993
+0105695,Unforgiven,1992
+0104036,The Crying Game,1992
+0104454,Howards End,1992
+0104257,A Few Good Men,1992
+0105323,Scent of a Woman,1992
+0102926,The Silence of the Lambs,1991
+2771200,Beauty and the Beast,2017
+0102138,JFK,1991
+0101516,Bugsy,1991
+0102713,The Prince of Tides,1991
+0099348,Dances with Wolves,1990
+0099685,Goodfellas,1990
+0099077,Awakenings,1990
+0099653,Ghost,1990
+0099674,The Godfather Part III,1990
+0097239,Driving Miss Daisy,1989
+0096969,Born on the Fourth of July,1989
+0097165,Dead Poets Society,1989
+0097351,Field of Dreams,1989
+0097937,My Left Foot,1989
+0095953,Rain Man,1988
+0094947,Dangerous Liaisons,1988
+0096463,Working Girl,1988
+0094606,The Accidental Tourist,1988
+0093389,The Last Emperor,1987
+0093209,Hope and Glory,1987
+0093565,Moonstruck,1987
+0093389,The Last Emperor,1987
+0092699,Broadcast News,1987
+0093010,Fatal Attraction,1987
+0093209,Hope and Glory,1987
+0093565,Moonstruck,1987
+0091763,Platoon,1986
+0091167,Hannah and Her Sisters,1986
+0091530,The Mission,1986
+0091867,A Room with a View,1985
+0090830,Children of a Lesser God,1986
+0089755,Out of Africa,1985
+0088939,The Color Purple,1985
+30400277,Kiss of the Spider Woman,
+0089841,Prizzi's Honor,1985
+0115355,Witness,1996
+0086879,Amadeus,1984
+0087553,The Killing Fields,1984
+0087892,A Passage to India,1984
+0087921,Places in the Heart,1984
+0088146,A Soldier's Story,1984
+0086425,Terms of Endearment,1983
+0085244,The Big Chill,1983
+0085461,The Dresser,1983
+0086197,The Right Stuff,1983
+0086423,Tender Mercies,1983
+0083987,Gandhi,1982
+0083866,E.T. the Extra-Terrestrial,1982
+10855768,Missing,2023
+0084805,Tootsie,1982
+0084434,An Officer and a Gentleman,1982
