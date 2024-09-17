@@ -5,12 +5,12 @@ import json
 from ..cinema_data_providers.tmdb_models import (
     Movie,
     Actor,
+    ActorSearchResults,
     BelongsToCollection,
     Genre,
     ProductionCompany,
     ProductionCountry,
     SpokenLanguage,
-    MovieDetails,
     MovieSearchResults,
 )
 from .. import directories
@@ -218,7 +218,7 @@ def movie_details_data():
 
 
 def test_movie_details_initialization(movie_details_data):
-    movie_details = MovieDetails(**movie_details_data)
+    movie_details = Movie(**movie_details_data)
     assert movie_details.adult == movie_details_data["adult"]
     assert movie_details.backdrop_path == movie_details_data["backdrop_path"]
     assert movie_details.belongs_to_collection == BelongsToCollection(
@@ -240,7 +240,7 @@ def test_movie_details_initialization(movie_details_data):
     assert movie_details.production_countries == [
         ProductionCountry(**pc) for pc in movie_details_data["production_countries"]
     ]
-    assert movie_details.release_date == movie_details_data["release_date"]
+    assert movie_details.release_date == date(1968, 4, 2)
     assert movie_details.revenue == movie_details_data["revenue"]
     assert movie_details.runtime == movie_details_data["runtime"]
     assert movie_details.spoken_languages == [
@@ -311,3 +311,125 @@ def test_load_movie_search(odyssey_search):
 
     movie_no_release_date = search_results.results[1]
     assert movie_no_release_date.release_date is None
+
+
+@pytest.fixture
+def actor_search_data():
+    return {
+        "page": 1,
+        "results": [
+            {
+                "adult": False,
+                "gender": 2,
+                "id": 4724,
+                "known_for_department": "Acting",
+                "name": "Kevin Bacon",
+                "original_name": "Kevin Bacon",
+                "popularity": 104.131,
+                "profile_path": "/rjX2Oz3tCZMfSwOoIAyEhdtXnTE.jpg",
+                "known_for": [
+                    {
+                        "backdrop_path": "/bMiOfPhplZu1Lql3hGTRV087QA.jpg",
+                        "id": 49538,
+                        "original_title": "X-Men: First Class",
+                        "overview": "Before Charles Xavier and Erik Lensherr took the names Professor X and Magneto...",
+                        "poster_path": "/vUvlOY575rztBuJV3a0dbHW5MQR.jpg",
+                        "media_type": "movie",
+                        "adult": False,
+                        "title": "X-Men: First Class",
+                        "original_language": "en",
+                        "genre_ids": [28, 878, 12],
+                        "popularity": 2.555,
+                        "release_date": "2011-06-01",
+                        "video": False,
+                        "vote_average": 7.299,
+                        "vote_count": 12410,
+                    },
+                    # Add more movies if needed
+                ],
+            },
+            # Add more actors if needed
+        ],
+        "total_pages": 1,
+        "total_results": 6,
+    }
+
+
+def test_actor_search_results_initialization(actor_search_data):
+    actor_search_results = ActorSearchResults(**actor_search_data)
+    assert actor_search_results.page == actor_search_data["page"]
+    assert len(actor_search_results.results) == len(actor_search_data["results"])
+    assert actor_search_results.total_pages == actor_search_data["total_pages"]
+    assert actor_search_results.total_results == actor_search_data["total_results"]
+
+    for idx, actor_data in enumerate(actor_search_data["results"]):
+        actor = actor_search_results.results[idx]
+        assert actor.adult == actor_data["adult"]
+        assert actor.gender == actor_data["gender"]
+        assert actor.id == actor_data["id"]
+        assert actor.known_for_department == actor_data["known_for_department"]
+        assert actor.name == actor_data["name"]
+        assert actor.original_name == actor_data["original_name"]
+        assert actor.popularity == actor_data["popularity"]
+        assert actor.profile_path == actor_data["profile_path"]
+        assert len(actor.known_for) == len(actor_data["known_for"])
+
+        for movie_idx, known_for_data in enumerate(actor_data["known_for"]):
+            known_for_movie = actor.known_for[movie_idx]
+            assert known_for_movie.backdrop_path == known_for_data["backdrop_path"]
+            assert known_for_movie.id == known_for_data["id"]
+            assert known_for_movie.original_title == known_for_data["original_title"]
+            assert known_for_movie.overview == known_for_data["overview"]
+            assert known_for_movie.poster_path == known_for_data["poster_path"]
+            assert known_for_movie.media_type == known_for_data["media_type"]
+            assert known_for_movie.adult == known_for_data["adult"]
+            assert known_for_movie.title == known_for_data["title"]
+            assert (
+                known_for_movie.original_language == known_for_data["original_language"]
+            )
+            assert known_for_movie.genre_ids == known_for_data["genre_ids"]
+            assert known_for_movie.popularity == known_for_data["popularity"]
+            assert known_for_movie.video == known_for_data["video"]
+            assert known_for_movie.vote_average == known_for_data["vote_average"]
+            assert known_for_movie.vote_count == known_for_data["vote_count"]
+
+
+def test_load_actor_search(bacon_search):
+    assert len(bacon_search["results"]) == 6
+    actor = bacon_search["results"][0]
+    assert actor["id"] == 4724
+    assert actor["name"] == "Kevin Bacon"
+    assert actor["known_for_department"] == "Acting"
+    assert actor["popularity"] == 104.131
+    assert actor["profile_path"] == "/rjX2Oz3tCZMfSwOoIAyEhdtXnTE.jpg"
+    assert len(actor["known_for"]) == 3
+
+    search_results = ActorSearchResults(**bacon_search)
+    assert search_results.page == 1
+    assert search_results.total_pages == 1
+    assert search_results.total_results == 6
+    assert len(search_results.results) == 6
+
+    bacon = search_results.results[0]
+    assert bacon.id == 4724
+    assert bacon.name == "Kevin Bacon"
+    assert bacon.known_for_department == "Acting"
+    assert bacon.popularity == 104.131
+    assert bacon.profile_path == "/rjX2Oz3tCZMfSwOoIAyEhdtXnTE.jpg"
+    assert len(bacon.known_for) == 3
+
+    first_movie = bacon.known_for[0]
+    assert first_movie.id == 49538
+    assert first_movie.title == "X-Men: First Class"
+    assert first_movie.release_date == date(2011, 6, 1)
+    assert first_movie.overview.startswith(
+        "Before Charles Xavier and Erik Lensherr took"
+    )
+    assert first_movie.poster_path == "/vUvlOY575rztBuJV3a0dbHW5MQR.jpg"
+    assert first_movie.popularity == 2.555
+    assert first_movie.vote_count == 12410
+    assert first_movie.vote_average == 7.299
+    assert first_movie.media_type == "movie"
+    assert not first_movie.adult
+    assert first_movie.original_language == "en"
+    assert first_movie.genre_ids == [28, 878, 12]
