@@ -1,0 +1,314 @@
+{
+    "page": 1,
+    "results": [
+        {
+            "adult": false,
+            "gender": 2,
+            "id": 4724,
+            "known_for_department": "Acting",
+            "name": "Kevin Bacon",
+            "original_name": "Kevin Bacon",
+            "popularity": 104.131,
+            "profile_path": "/rjX2Oz3tCZMfSwOoIAyEhdtXnTE.jpg",
+            "known_for": [
+                {
+                    "backdrop_path": "/bMiOfPhplZu1Lql3hGTRV087QA.jpg",
+                    "id": 49538,
+                    "original_title": "X-Men: First Class",
+                    "overview": "Before Charles Xavier and Erik Lensherr took the names Professor X and Magneto, they were two young men discovering their powers for the first time. Before they were arch-enemies, they were closest of friends, working together with other mutants (some familiar, some new), to stop the greatest threat the world has ever known.",
+                    "poster_path": "/vUvlOY575rztBuJV3a0dbHW5MQR.jpg",
+                    "media_type": "movie",
+                    "adult": false,
+                    "title": "X-Men: First Class",
+                    "original_language": "en",
+                    "genre_ids": [
+                        28,
+                        878,
+                        12
+                    ],
+                    "popularity": 2.555,
+                    "release_date": "2011-06-01",
+                    "video": false,
+                    "vote_average": 7.299,
+                    "vote_count": 12410
+                },
+                {
+                    "backdrop_path": "/w2rWEjAMYErpNfoK2Z0GFh1LFhN.jpg",
+                    "id": 819,
+                    "original_title": "Sleepers",
+                    "overview": "Two gangsters seek revenge on the state jail worker who during their stay at a youth prison sexually abused them. A sensational court hearing takes place to charge him for the crimes.",
+                    "poster_path": "/yUpiEk2EojS9ZEXb3nIQonQCYYF.jpg",
+                    "media_type": "movie",
+                    "adult": false,
+                    "title": "Sleepers",
+                    "original_language": "en",
+                    "genre_ids": [
+                        80,
+                        18,
+                        53
+                    ],
+                    "popularity": 34.851,
+                    "release_date": "1996-10-18",
+                    "video": false,
+                    "vote_average": 7.601,
+                    "vote_count": 3410
+                },
+                {
+                    "backdrop_path": "/3L3DUwfRLW18OUiLSdmovfICyY3.jpg",
+                    "id": 9362,
+                    "original_title": "Tremors",
+                    "overview": "Val McKee and Earl Bassett are in a fight for their lives when they discover that their desolate town has been infested with gigantic, man-eating creatures that live below the ground.",
+                    "poster_path": "/cA4ggkZ3r1d5r9hOAUWC8x5ul2i.jpg",
+                    "media_type": "movie",
+                    "adult": false,
+                    "title": "Tremors",
+                    "original_language": "en",
+                    "genre_ids": [
+                        27,
+                        28,
+                        878,
+                        35
+                    ],
+                    "popularity": 76.06,
+                    "release_date": "1990-01-19",
+                    "video": false,
+                    "vote_average": 6.895,
+                    "vote_count": 3111
+                }
+            ]
+        },
+        {
+            "adult": false,
+            "gender": 0,
+            "id": 2503572,
+            "known_for_department": "Camera",
+            "name": "Kevin Bacon",
+            "original_name": "Kevin Bacon",
+            "popularity": 0.701,
+            "profile_path": null,
+            "known_for": [
+                {
+                    "backdrop_path": "/7zHl8J6CODKvUL2o5QH6PfkT8ra.jpg",
+                    "id": 520679,
+                    "original_title": "Her Smell",
+                    "overview": "A self-destructive punk rocker struggles with sobriety while trying to recapture the creative inspiration that led her band to success.",
+                    "poster_path": "/qEvgdGBMORPS0rz8pqkVH3obLee.jpg",
+                    "media_type": "movie",
+                    "adult": false,
+                    "title": "Her Smell",
+                    "original_language": "en",
+                    "genre_ids": [
+                        18,
+                        10402
+                    ],
+                    "popularity": 19.39,
+                    "release_date": "2019-04-12",
+                    "video": false,
+                    "vote_average": 5.8,
+                    "vote_count": 117
+                },
+                {
+                    "backdrop_path": "/fAQlK2dP6cQ2mXRPrhHjwP5qVqX.jpg",
+                    "id": 573081,
+                    "original_title": "Fourteen",
+                    "overview": "Twentysomething Brooklynites Mara and Jo have been close friends since middle school. Gradually, it becomes apparent that the increasingly unstable Jo has troubles that may be the result of substance abuse, or an even deeper problem. Over the course of a decade, the more stable Mara tries to help.",
+                    "poster_path": "/stxk5F7hNNcL7lQUVmjL9H10ZwN.jpg",
+                    "media_type": "movie",
+                    "adult": false,
+                    "title": "Fourteen",
+                    "original_language": "en",
+                    "genre_ids": [
+                        18
+                    ],
+                    "popularity": 6.07,
+                    "release_date": "2019-08-08",
+                    "video": false,
+                    "vote_average": 5.792,
+                    "vote_count": 24
+                },
+                {
+                    "backdrop_path": null,
+                    "id": 661940,
+                    "original_title": "Horizon",
+                    "overview": "Set in February of 1960, 'Horizon' is a film dealing with the struggle of losing a loved one. Charlotte, a widowed woman, raises her two children while being haunted by her past. The reality and fantasy of Charlotte's emotions clash, forcing herself to reevaluate the importance of being a mother.",
+                    "poster_path": null,
+                    "media_type": "movie",
+                    "adult": false,
+                    "title": "Horizon",
+                    "original_language": "en",
+                    "genre_ids": [],
+                    "popularity": 0.851,
+                    "release_date": "",
+                    "video": false,
+                    "vote_average": 0.0,
+                    "vote_count": 0
+                }
+            ]
+        },
+        {
+            "adult": false,
+            "gender": 2,
+            "id": 1878256,
+            "known_for_department": "Sound",
+            "name": "Kevin Bacon",
+            "original_name": "Kevin Bacon",
+            "popularity": 1.107,
+            "profile_path": null,
+            "known_for": [
+                {
+                    "backdrop_path": "/o8M6x5ONOWHE0KIfEgrxtlR2vGU.jpg",
+                    "id": 656850,
+                    "original_title": "Amazing Winter Romance",
+                    "overview": "When journalist Julia goes back home to find inspiration, she discovers her childhood friend has built a giant snow maze which prompts her to find her way to true love.",
+                    "poster_path": "/6WCT88z4TZOK1JXjXHc6jSORLVd.jpg",
+                    "media_type": "movie",
+                    "adult": false,
+                    "title": "Amazing Winter Romance",
+                    "original_language": "en",
+                    "genre_ids": [
+                        10770,
+                        10749
+                    ],
+                    "popularity": 3.472,
+                    "release_date": "2020-01-20",
+                    "video": false,
+                    "vote_average": 6.1,
+                    "vote_count": 25
+                },
+                {
+                    "backdrop_path": "/vXWAAaVxBtMeaFYvnpaFQzkHHsx.jpg",
+                    "id": 428601,
+                    "original_title": "Menorca",
+                    "overview": "A hedonistic soccer mom embarks on a strange journey of self-discovery, seeking to reconnect with her estranged son by returning his pet rock back to the island of Menorca, Spain.",
+                    "poster_path": "/4CF3iYQUVPCvNreCTa2zsVWJw1R.jpg",
+                    "media_type": "movie",
+                    "adult": false,
+                    "title": "Menorca",
+                    "original_language": "en",
+                    "genre_ids": [
+                        18
+                    ],
+                    "popularity": 5.283,
+                    "release_date": "2016-12-09",
+                    "video": false,
+                    "vote_average": 4.6,
+                    "vote_count": 12
+                },
+                {
+                    "backdrop_path": "/gvXUA0dopZNzPcHLv5ery80KZ2B.jpg",
+                    "id": 491838,
+                    "original_title": "Losing Our Religion",
+                    "overview": "Brendan is a pastor in a small, evangelical church, and he has a secret. He doesn't believe in God anymore. His wife is still a true believer - and she just told the wrong person. Losing Our Religion is a feature length documentary about preachers who are not believers, and what atheists do when they miss church. Allowed access to the 600 members of The Clergy Project - a safe haven for preachers from all faiths who no longer believe - the documentary follows ex-members and clergy who are still undercover. They are not just losing their religion, for many they are losing their friends, community and even family. As well as their job. As events unfold that change lives forever, their stories also connect with secular communities that are growing in surprising places. New groups are experimenting in ways to have church without god, and asking the same question as unbelieving clergy - \"what's next?\"",
+                    "poster_path": "/oPxEz4eb3oYML7zeND10vvlI3Gk.jpg",
+                    "media_type": "movie",
+                    "adult": false,
+                    "title": "Losing Our Religion",
+                    "original_language": "en",
+                    "genre_ids": [
+                        99
+                    ],
+                    "popularity": 1.212,
+                    "release_date": "2017-10-06",
+                    "video": false,
+                    "vote_average": 0.0,
+                    "vote_count": 0
+                }
+            ]
+        },
+        {
+            "adult": false,
+            "gender": 2,
+            "id": 1901628,
+            "known_for_department": "Acting",
+            "name": "Kevin Bacon",
+            "original_name": "Kevin Bacon",
+            "popularity": 0.001,
+            "profile_path": null,
+            "known_for": [
+                {
+                    "backdrop_path": null,
+                    "id": 479899,
+                    "original_title": "The Comsat Angels Live 12-12-1981",
+                    "overview": "The Comsat Angels - the legendary post-punk band from Sheffield, England, live recording from Mensa Wilhelmstrausse, Tuebingen, West Germany, on December 12, 1981. They were initially active from 1978 to 1995 with basically this line-up. Named after the J. G. Ballard short story. They debuted in 1979 with the \"Red Planet\" three-track single. This release attracted Polydor A&R man Frank Neilson and the band signed a three-album recording contract. These three albums - \"Waiting for a Miracle\" (1980), which included the single \"Independence Day\", probably their best known song, \"Sleep No More\" (1981) and \"Fiction\" (1982) - are regarded by some as their best, but only sold modestly.",
+                    "poster_path": "/pyArsZVNlLzFhWTrdofCiLogcYs.jpg",
+                    "media_type": "movie",
+                    "adult": false,
+                    "title": "The Comsat Angels Live 12-12-1981",
+                    "original_language": "en",
+                    "genre_ids": [
+                        10402
+                    ],
+                    "popularity": 0.035,
+                    "release_date": "1981-12-12",
+                    "video": false,
+                    "vote_average": 6.0,
+                    "vote_count": 1
+                }
+            ]
+        },
+        {
+            "adult": false,
+            "gender": 0,
+            "id": 2043464,
+            "known_for_department": "Writing",
+            "name": "Kevin Bacon Hervieux",
+            "original_name": "Kevin Bacon Hervieux",
+            "popularity": 0.004,
+            "profile_path": null,
+            "known_for": [
+                {
+                    "backdrop_path": null,
+                    "id": 524447,
+                    "original_title": "Innu Nikamu: Chanter la r\u00e9sistance",
+                    "overview": "The origins and evolution of the Innu Nikamu Music and Aboriginal Arts Festival are intimately linked to the territorial roots of the Innu people and to the life of the Maliotenam Reserve community. For centuries past the Innu had followed a seasonal migration cycle, wintering in the northern territories for the caribou hunt and returning every summer to the north shore of the St-Lawrence. Festivities, meetings, traditional games and weddings marked the latter period, and the Festival has become the modern day reincarnation of the ancient summer celebration.",
+                    "poster_path": "/dau7PZ7P6JnvP4YVpigB0WClkzX.jpg",
+                    "media_type": "movie",
+                    "adult": false,
+                    "title": "Innu Nikamu: Chanter la r\u00e9sistance",
+                    "original_language": "fr",
+                    "genre_ids": [
+                        99
+                    ],
+                    "popularity": 0.877,
+                    "release_date": "2018-05-04",
+                    "video": false,
+                    "vote_average": 0.0,
+                    "vote_count": 0
+                }
+            ]
+        },
+        {
+            "adult": false,
+            "gender": 0,
+            "id": 2043463,
+            "known_for_department": "Directing",
+            "name": "Kevin Bacon Hervieux",
+            "original_name": "Kevin Bacon Hervieux",
+            "popularity": 0.008,
+            "profile_path": null,
+            "known_for": [
+                {
+                    "backdrop_path": null,
+                    "id": 524447,
+                    "original_title": "Innu Nikamu: Chanter la r\u00e9sistance",
+                    "overview": "The origins and evolution of the Innu Nikamu Music and Aboriginal Arts Festival are intimately linked to the territorial roots of the Innu people and to the life of the Maliotenam Reserve community. For centuries past the Innu had followed a seasonal migration cycle, wintering in the northern territories for the caribou hunt and returning every summer to the north shore of the St-Lawrence. Festivities, meetings, traditional games and weddings marked the latter period, and the Festival has become the modern day reincarnation of the ancient summer celebration.",
+                    "poster_path": "/dau7PZ7P6JnvP4YVpigB0WClkzX.jpg",
+                    "media_type": "movie",
+                    "adult": false,
+                    "title": "Innu Nikamu: Chanter la r\u00e9sistance",
+                    "original_language": "fr",
+                    "genre_ids": [
+                        99
+                    ],
+                    "popularity": 0.877,
+                    "release_date": "2018-05-04",
+                    "video": false,
+                    "vote_average": 0.0,
+                    "vote_count": 0
+                }
+            ]
+        }
+    ],
+    "total_pages": 1,
+    "total_results": 6
+}
