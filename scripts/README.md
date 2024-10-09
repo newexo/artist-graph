@@ -7,3 +7,9 @@ Note that these scripts should be used for academic purposes only according to I
 
 ### IMDb data download
 
+From the root of the repository, run the following command to download IMDb data from S3:
+
+```bash
+python scripts/imdb_download.py
+```
+
