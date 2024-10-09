@@ -136,3 +136,8 @@ dmypy.json
 
 # Project specific
 secrets.py
+data/IM.db
+data/name.basics.tsv.gz
+data/title.basics.tsv.gz
+data/title.principals.tsv.gz
+data/title.ratings.tsv.gz
