@@ -5,10 +5,11 @@
 import os
 from tqdm import tqdm
 import requests
-from sqlalchemy import create_engine, Engine
-
 
 from art_graph import directories
+from art_graph.cinema_data_providers.imbd_non_commercial.locations import (
+    imdb_files,
+)
 
 
 def retrieve_imdb_data(filename):
@@ -30,27 +31,12 @@ def retrieve_imdb_data(filename):
     progress_bar.close()
 
 
-def db_path() -> str:
-    return directories.data("IM.db")
-
-
-def get_engine() -> Engine:
-    absolute_path = db_path()
-    return create_engine(f'sqlite:////{absolute_path}')
-
-
 def main():
     print("Downloading data")
-    retrieve_imdb_data("name.basics.tsv.gz")
-    retrieve_imdb_data("title.basics.tsv.gz")
-    retrieve_imdb_data("title.ratings.tsv.gz")
-    retrieve_imdb_data("title.principals.tsv.gz")
 
-    engine = get_engine()
-    print(engine.url)
-
-    os.system(f"s32cinemagoer.py {directories.data()} {engine.url} ")
-
+    # Iterate over each file and download it using retrieve_imdb_data
+    for file_name in imdb_files:
+        retrieve_imdb_data(file_name)
 
 
 if __name__ == "__main__":
