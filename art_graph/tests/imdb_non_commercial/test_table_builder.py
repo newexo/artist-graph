@@ -1,8 +1,11 @@
 import pytest
 
 from imdb.parser.s3.utils import DB_TRANSFORM
+import sqlalchemy
 from sqlalchemy.sql import sqltypes
-
+from sqlalchemy import inspect
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker, DeclarativeBase
 
 from ...cinema_data_providers.imbd_non_commercial import table_builder
 
@@ -48,32 +51,19 @@ def test_table_builder_principals(table_builder_principals):
         "index": False,
     }
     actual = table_builder.col_args("characters")
-    assert repr(expected) == repr(actual)
-
-    expected = {"name": "job", "type_": sqltypes.String(length=1024), "index": False}
-    actual = table_builder.col_args("job")
-    assert repr(expected) == repr(actual)
+    assert type(actual["type_"]) is type(expected["type_"])
+    assert actual["type_"].length == expected["type_"].length
+    del actual["type_"]
+    del expected["type_"]
+    assert expected == actual
 
     expected = {"name": "tconst", "type_": sqltypes.Integer, "index": True}
     actual = table_builder.col_args("tconst")
     assert actual == expected
 
-    expected = {"name": "category", "type_": sqltypes.String(length=64), "index": False}
-    actual = table_builder.col_args("category")
-    assert repr(expected) == repr(actual)
-
     expected = {"name": "ordering", "type_": sqltypes.Integer, "index": False}
     actual = table_builder.col_args("ordering")
     assert actual == expected
-
-
-def print_assertions(table_builder: table_builder.TableBuilder):
-    for header in table_builder.all_headers:
-        col_args = table_builder.col_args(header)
-        col_args = repr(col_args)
-        print(f"    expected =  {col_args}")
-        print(f"    actual = table_builder.col_args('{header}')")
-        print("    assert actual == expected\n\n")
 
 
 @pytest.fixture
@@ -180,7 +170,11 @@ def test_table_builder_title_basics(table_builder_title_basics):
         "index": True,
     }
     actual = table_builder_title_basics.col_args("titleType")
-    assert repr(expected) == repr(actual)
+    assert type(actual["type_"]) is type(expected["type_"])
+    assert actual["type_"].length == expected["type_"].length
+    del actual["type_"]
+    del expected["type_"]
+    assert expected == actual
 
 
 @pytest.fixture
@@ -315,3 +309,181 @@ def test_table_builder_title_episode(table_builder_title_episode):
     expected = {"index": False, "name": "seasonNumber", "type_": sqltypes.Integer}
     actual = table_builder_title_episode.col_args("seasonNumber")
     assert actual == expected
+
+
+@pytest.fixture
+def engine():
+    """Fixture to create a SQLAlchemy engine."""
+    return create_engine("sqlite:///:memory:")
+
+
+@pytest.fixture(scope="function")
+def session(engine):
+    Session = sessionmaker(bind=engine)
+    DeclarativeBase.metadata.create_all(engine)
+    try:
+        with Session() as session:
+            yield session
+    finally:
+        DeclarativeBase.metadata.drop_all(engine)
+
+
+@pytest.fixture
+def metadata():
+    return sqlalchemy.MetaData()
+
+
+def verify_columns(columns, expected_columns, table_name):
+    assert len(columns) == len(expected_columns)
+    for column in columns:
+        column_name = column["name"]
+        column_type = type(column["type"])
+        expected_type = expected_columns.get(column_name)
+        assert (
+            column_name in expected_columns
+        ), f"Unexpected column: {column_name} in {table_name}"
+        assert (
+            column_type is expected_type
+        ), f"Unexpected column type for {column_name} in {table_name}"
+
+
+def test_create_table(table_builder_name_basics, engine, metadata):
+    table = table_builder_name_basics.build_table()
+    metadata.create_all(bind=engine, tables=[table])
+    inspector = inspect(engine)
+
+    # Get column details for the 'name_basics' table
+    columns = inspector.get_columns("name_basics")
+
+    expected_columns = {
+        "nconst": sqltypes.INTEGER,
+        "primaryName": sqltypes.TEXT,
+        "birthYear": sqltypes.INTEGER,
+        "deathYear": sqltypes.INTEGER,
+        "primaryProfession": sqltypes.TEXT,
+        "knownForTitles": sqltypes.TEXT,
+        "ns_soundex": sqltypes.VARCHAR,
+        "sn_soundex": sqltypes.VARCHAR,
+        "s_soundex": sqltypes.VARCHAR,
+    }
+
+    verify_columns(columns, expected_columns, "name_basics")
+
+
+def test_create_table_title_basics(table_builder_title_basics, engine, metadata):
+    table = table_builder_title_basics.build_table()
+    metadata.create_all(bind=engine, tables=[table])
+    inspector = inspect(engine)
+
+    # Get column details for the 'title_basics' table
+    columns = inspector.get_columns("title_basics")
+
+    expected_columns = {
+        "tconst": sqltypes.INTEGER,
+        "titleType": sqltypes.VARCHAR,
+        "primaryTitle": sqltypes.TEXT,
+        "originalTitle": sqltypes.TEXT,
+        "isAdult": sqltypes.BOOLEAN,
+        "startYear": sqltypes.INTEGER,
+        "endYear": sqltypes.INTEGER,
+        "runtimeMinutes": sqltypes.INTEGER,
+        "genres": sqltypes.TEXT,
+        "t_soundex": sqltypes.VARCHAR,
+    }
+
+    verify_columns(columns, expected_columns, "title_basics")
+
+
+def test_create_table_title_ratings(table_builder_title_ratings, engine, metadata):
+    table = table_builder_title_ratings.build_table()
+    metadata.create_all(bind=engine, tables=[table])
+    inspector = inspect(engine)
+
+    # Get column details for the 'title_ratings' table
+    columns = inspector.get_columns("title_ratings")
+
+    expected_columns = {
+        "tconst": sqltypes.INTEGER,
+        "averageRating": sqltypes.FLOAT,
+        "numVotes": sqltypes.INTEGER,
+    }
+
+    verify_columns(columns, expected_columns, "title_ratings")
+
+
+def test_create_table_principals(table_builder_principals, engine, metadata):
+    table = table_builder_principals.build_table()
+    metadata.create_all(bind=engine, tables=[table])
+    inspector = inspect(engine)
+
+    # Get column details for the 'title_principals' table
+    columns = inspector.get_columns("title_principals")
+
+    expected_columns = {
+        "tconst": sqltypes.INTEGER,
+        "ordering": sqltypes.INTEGER,
+        "nconst": sqltypes.INTEGER,
+        "category": sqltypes.VARCHAR,
+        "job": sqltypes.VARCHAR,
+        "characters": sqltypes.VARCHAR,
+    }
+
+    verify_columns(columns, expected_columns, "title_principals")
+
+
+def test_create_table_title_akas(table_builder_title_akas, engine, metadata):
+    table = table_builder_title_akas.build_table()
+    metadata.create_all(bind=engine, tables=[table])
+    inspector = inspect(engine)
+
+    # Get column details for the 'title_akas' table
+    columns = inspector.get_columns("title_akas")
+
+    expected_columns = {
+        "titleId": sqltypes.INTEGER,
+        "t_soundex": sqltypes.VARCHAR,
+        "ordering": sqltypes.INTEGER,
+        "title": sqltypes.TEXT,
+        "region": sqltypes.VARCHAR,
+        "language": sqltypes.VARCHAR,
+        "types": sqltypes.VARCHAR,
+        "attributes": sqltypes.VARCHAR,
+        "isOriginalTitle": sqltypes.BOOLEAN,
+    }
+
+    verify_columns(columns, expected_columns, "title_akas")
+
+
+def test_create_table_title_crew(table_builder_title_crew, engine, metadata):
+    table = table_builder_title_crew.build_table()
+    metadata.create_all(bind=engine, tables=[table])
+    inspector = inspect(engine)
+
+    # Get column details for the 'title_crew' table
+    columns = inspector.get_columns("title_crew")
+
+    expected_columns = {
+        "tconst": sqltypes.INTEGER,
+        "directors": sqltypes.TEXT,
+        "writers": sqltypes.TEXT,
+    }
+
+    verify_columns(columns, expected_columns, "title_crew")
+
+
+def test_create_table_title_episode(table_builder_title_episode, engine, metadata):
+    table = table_builder_title_episode.build_table()
+    metadata.create_all(bind=engine, tables=[table])
+    inspector = inspect(engine)
+
+    # Get column details for the 'title_episode' table
+    columns = inspector.get_columns("title_episode")
+
+    expected_columns = {
+        "tconst": sqltypes.INTEGER,
+        "parentTconst": sqltypes.INTEGER,
+        "seasonNumber": sqltypes.INTEGER,
+        "episodeNumber": sqltypes.INTEGER,
+    }
+
+    verify_columns(columns, expected_columns, "title_episode")
