@@ -1,8 +1,15 @@
+import sqlalchemy
+
 from art_graph import directories
 
 
-def db_path() -> str:
+def db_path_for_sqlite() -> str:
     return directories.data("IM.db")
+
+
+def get_sqlite_engine() -> sqlalchemy.Engine:
+    absolute_path = db_path_for_sqlite()
+    return sqlalchemy.create_engine(f"sqlite:////{absolute_path}")
 
 
 imdb_files = [
