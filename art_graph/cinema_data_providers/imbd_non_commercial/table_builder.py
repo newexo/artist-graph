@@ -32,11 +32,6 @@ class TableBuilder:
         return self.fn.replace(TSV_EXT, "").replace(".", "_")
 
     @property
-    def table_map(self) -> dict:
-        """Fetch column transformation rules from DB_TRANSFORM for the table."""
-        return DB_TRANSFORM.get(self.table_name, {})
-
-    @property
     def all_headers(self) -> set:
         """Combine headers with table_map keys."""
         all_headers = set(self.headers)
