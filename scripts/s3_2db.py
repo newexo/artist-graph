@@ -1,5 +1,6 @@
 import os
 import gzip
+import argparse
 import logging
 import traceback
 import sqlalchemy
@@ -17,9 +18,6 @@ from art_graph.cinema_data_providers.imdb_non_commercial import (
 
 # how many blocks to write before logging
 LOG_BLOCK_SIZE = 10
-
-logging.basicConfig()
-logging.getLogger("sqlalchemy.engine").setLevel(logging.DEBUG)
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
@@ -87,8 +85,8 @@ def import_file(fn, engine):
         connection.close()
 
 
-def main():
-    engine = locations.get_sqlite_engine("IM01.db")
+def main(db_name):
+    engine = locations.get_sqlite_engine(db_name)
     metadata.bind = engine
     fns = [directories.data(fn) for fn in locations.imdb_files]
     for fn in fns:
@@ -99,4 +97,29 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser(description="Process and import IMDb data with optional debug logging.")
+
+    # Add a command-line option for setting the logging level to DEBUG
+    parser.add_argument(
+        "--debug",
+        action="store_true",
+        help="Enable debug logging."
+    )
+
+    # Add a command-line option for specifying the database name
+    parser.add_argument(
+        "--db-name",
+        type=str,
+        default="IM01.db",  # Default value
+        help="Specify the SQLite database name (default: IM01.db)."
+    )
+
+    args = parser.parse_args()
+
+    # Configure logging
+    if args.debug:
+        logging.getLogger("sqlalchemy.engine").setLevel(logging.DEBUG)
+    else:
+        logging.basicConfig(level=logging.INFO)
+
+    main(args.db_name)
