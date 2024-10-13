@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "art_graph"
-version = "0.1.0"
+version = "0.1.1"
 description = "Tools for creating and analyzing art graphs"
 authors = ["Reuben Brasher <rkbrasher@gmail.com>"]
 license = "MIT"
