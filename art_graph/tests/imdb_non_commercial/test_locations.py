@@ -26,5 +26,6 @@ def test_get_sqlite_engine():
     assert isinstance(engine, sqlalchemy.engine.base.Engine)
     assert engine.url.database.endswith("data/IM.db")
 
-    assert locations.get_sqlite_engine("foo-bar.db").url.database.endswith("data/foo-bar.db")
-
+    assert locations.get_sqlite_engine("foo-bar.db").url.database.endswith(
+        "data/foo-bar.db"
+    )

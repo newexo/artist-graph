@@ -5,13 +5,6 @@ import sqlalchemy
 
 from art_graph.cinema_data_providers.imbd_non_commercial.constants import TSV_EXT
 
-try:
-    from tqdm import tqdm
-
-    HAS_TQDM = True
-except ImportError:
-    HAS_TQDM = False
-
 from imdb.parser.s3.utils import DB_TRANSFORM
 
 # how many entries to write to the database at a time.
@@ -61,6 +54,6 @@ class TableBuilder:
         col_args = self.col_args(header)
         return sqlalchemy.Column(**col_args)
 
-    def build_table(self):
+    def build_table(self) -> sqlalchemy.Table:
         columns = [self.col_obj(header) for header in self.all_headers]
         return sqlalchemy.Table(self.table_name, metadata, *columns)

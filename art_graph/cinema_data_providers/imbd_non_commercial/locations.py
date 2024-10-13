@@ -17,7 +17,7 @@ imdb_files = [
     "title.basics.tsv.gz",
     "title.ratings.tsv.gz",
     "title.principals.tsv.gz",
-    "title.akas.tsv.gz",  # Add additional files if necessary
-    "title.crew.tsv.gz",  # Add title.crew.tsv.gz
-    "title.episode.tsv.gz",  # Add title.episode.tsv.gz
+    "title.akas.tsv.gz",
+    "title.crew.tsv.gz",
+    "title.episode.tsv.gz",
 ]
