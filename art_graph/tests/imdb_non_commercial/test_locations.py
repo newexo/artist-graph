@@ -1,6 +1,6 @@
 import sqlalchemy
 
-from ...cinema_data_providers.imbd_non_commercial import locations
+from ...cinema_data_providers.imdb_non_commercial import locations
 
 
 def test_imdb_files():

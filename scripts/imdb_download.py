@@ -7,7 +7,7 @@ from tqdm import tqdm
 import requests
 
 from art_graph import directories
-from art_graph.cinema_data_providers.imbd_non_commercial.locations import (
+from art_graph.cinema_data_providers.imdb_non_commercial.locations import (
     imdb_files,
 )
 

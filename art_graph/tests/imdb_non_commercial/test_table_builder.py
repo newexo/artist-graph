@@ -7,7 +7,7 @@ from sqlalchemy import inspect
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, DeclarativeBase
 
-from ...cinema_data_providers.imbd_non_commercial import table_builder
+from ...cinema_data_providers.imdb_non_commercial import table_builder
 
 
 @pytest.fixture

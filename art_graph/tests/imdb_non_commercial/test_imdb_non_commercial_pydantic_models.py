@@ -1,6 +1,6 @@
 import pytest
 from pydantic import ValidationError
-from ...cinema_data_providers.imbd_non_commercial.imdb_non_commercial_pydantic_models import (
+from ...cinema_data_providers.imdb_non_commercial.imdb_non_commercial_pydantic_models import (
     NameBasics,
     TitleAkas,
     TitleBasics,

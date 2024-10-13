@@ -6,10 +6,10 @@ import sqlalchemy
 from sqlalchemy import exc
 
 from art_graph import directories
-from art_graph.cinema_data_providers.imbd_non_commercial.constants import (
+from art_graph.cinema_data_providers.imdb_non_commercial.constants import (
     BLOCK_SIZE,
 )
-from art_graph.cinema_data_providers.imbd_non_commercial import (
+from art_graph.cinema_data_providers.imdb_non_commercial import (
     locations,
     table_builder,
     utils,

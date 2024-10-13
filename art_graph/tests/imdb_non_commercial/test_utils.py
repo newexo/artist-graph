@@ -1,7 +1,7 @@
 import pytest
 from typing import List
 
-from ...cinema_data_providers.imbd_non_commercial import utils
+from ...cinema_data_providers.imdb_non_commercial import utils
 
 
 @pytest.fixture
