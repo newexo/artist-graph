@@ -3,12 +3,12 @@ import sqlalchemy
 from art_graph import directories
 
 
-def db_path_for_sqlite() -> str:
-    return directories.data("IM.db")
+def db_path_for_sqlite(db_filename="IM.db") -> str:
+    return directories.data(db_filename)
 
 
-def get_sqlite_engine() -> sqlalchemy.Engine:
-    absolute_path = db_path_for_sqlite()
+def get_sqlite_engine(db_filename="IM.db") -> sqlalchemy.Engine:
+    absolute_path = db_path_for_sqlite(db_filename=db_filename)
     return sqlalchemy.create_engine(f"sqlite:////{absolute_path}")
 
 
