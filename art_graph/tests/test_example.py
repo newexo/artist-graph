@@ -33,3 +33,6 @@ class TestExample:
             random.sample(seq, 20)
         for element in random.sample(seq, 5):
             assert element in seq
+
+    def test_failure(self):
+        assert False
