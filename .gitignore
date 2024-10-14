@@ -136,3 +136,5 @@ dmypy.json
 
 # Project specific
 secrets.py
+data/*.db
+data/*.tsv.gz
