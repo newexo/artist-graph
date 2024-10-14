@@ -8,6 +8,38 @@ creates an annotated graph whose nodes are people and works of art. Examples of 
 - Music, and the musicians, composers, and producers who create it
 - Open source software projects and their contributors
 
+## Docker
+
+Build the image:
+
+```
+DOCKER_BUILDKIT=1 docker build --target=runtime -f Dockerfile . -t artist-graph
+```
+
+Run the image with a shell:
+
+```
+docker run --name artist-graph -v /some/host/machine/directory:/app/data/:rw -it artist-graph sh
+```
+
+Remove the container:
+
+```
+docker container rm artist-graph
+```
+
+Download the IMDb data:
+
+```
+docker run --name artist-graph -v /some/host/machine/directory/:/app/data/:rw -it artist-graph python scripts/imdb_download.py
+```
+
+Build the SQLite database:
+
+```
+docker run --name artist-graph -v /some/host/machine/directory/:/app/data/:rw -it artist-graph python scripts/s3_2db.py
+```
+
 ## Acknowledgements
 
 This project began with code originally part of the [Cinema Game](https://github.com/ChiPowers/cinema_game) project,
