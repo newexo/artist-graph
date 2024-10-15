@@ -13,7 +13,7 @@ def test_read_write_name_basics(table_name_basics, name_basics_data, session):
     # First validate the data
     pyd_block = [imdb_pyd.NameBasics(**r) for r in block]
     # Turn into ORM objects
-    orm_block = [imdb_orm.NameBasics(**dict(r)) for r in pyd_block]
+    orm_block = [r.to_orm() for r in pyd_block]
     try:
         # Insert the data
         session.add_all(orm_block)
@@ -40,7 +40,7 @@ def test_read_write_title_basics(table_title_basics, title_basics_data, session)
     # First validate the data
     pyd_block = [imdb_pyd.TitleBasics(**r) for r in block]
     # Turn into ORM objects
-    orm_block = [imdb_orm.TitleBasics(**dict(r)) for r in pyd_block]
+    orm_block = [r.to_orm() for r in pyd_block]
 
     try:
         session.add_all(orm_block)
@@ -67,7 +67,7 @@ def test_read_write_title_ratings(table_title_ratings, title_ratings_data, sessi
     # First validate the data
     pyd_block = [imdb_pyd.TitleRatings(**r) for r in block]
     # Turn into ORM objects
-    orm_block = [imdb_orm.TitleRatings(**dict(r)) for r in pyd_block]
+    orm_block = [r.to_orm() for r in pyd_block]
 
     try:
         session.add_all(orm_block)
@@ -96,7 +96,7 @@ def test_read_write_title_principals(
     # First validate the data
     pyd_block = [imdb_pyd.TitlePrincipals(**r) for r in block]
     # Turn into ORM objects
-    orm_block = [imdb_orm.TitlePrincipals(**dict(r)) for r in pyd_block]
+    orm_block = [r.to_orm() for r in pyd_block]
 
     try:
         session.add_all(orm_block)
@@ -123,7 +123,7 @@ def test_read_write_title_akas(table_title_akas, title_akas_data, session):
     # First validate the data
     pyd_block = [imdb_pyd.TitleAkas(**r) for r in block]
     # Turn into ORM objects
-    orm_block = [imdb_orm.TitleAkas(**dict(r)) for r in pyd_block]
+    orm_block = [r.to_orm() for r in pyd_block]
 
     try:
         session.add_all(orm_block)
@@ -144,7 +144,7 @@ def test_read_write_title_crew(table_title_crew, title_crew_data, session):
     # First validate the data
     pyd_block = [imdb_pyd.TitleCrew(**r) for r in block]
     # Turn into ORM objects
-    orm_block = [imdb_orm.TitleCrew(**dict(r)) for r in pyd_block]
+    orm_block = [r.to_orm() for r in pyd_block]
 
     try:
         session.add_all(orm_block)
@@ -165,7 +165,7 @@ def test_read_write_title_episode(table_title_episode, title_episode_data, sessi
     # First validate the data
     pyd_block = [imdb_pyd.TitleEpisode(**r) for r in block]
     # Turn into ORM objects
-    orm_block = [imdb_orm.TitleEpisode(**dict(r)) for r in pyd_block]
+    orm_block = [r.to_orm() for r in pyd_block]
 
     try:
         session.add_all(orm_block)

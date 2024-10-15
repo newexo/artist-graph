@@ -2,6 +2,8 @@ from pydantic import BaseModel, field_validator
 from typing import Optional
 from imdb.parser.s3 import utils as s3_utils
 
+from . import imdb_non_commercial_orm_models as imdb_orm
+
 
 class NonCommercialIMDbBaseModel(BaseModel):
     class Config:
@@ -29,6 +31,9 @@ class NameBasics(NonCommercialIMDbBaseModel):
             return None
         return s3_utils.transf_multi_imdbid(v)
 
+    def to_orm(self) -> imdb_orm.NameBasics:
+        return imdb_orm.NameBasics(**dict(self))
+
 
 class TitleAkas(NonCommercialIMDbBaseModel):
     titleId: int
@@ -46,6 +51,9 @@ class TitleAkas(NonCommercialIMDbBaseModel):
             return int(v)
         except ValueError:
             return s3_utils.transf_imdbid(v)
+
+    def to_orm(self) -> imdb_orm.TitleAkas:
+        return imdb_orm.TitleAkas(**dict(self))
 
 
 class TitleBasics(NonCommercialIMDbBaseModel):
@@ -70,6 +78,9 @@ class TitleBasics(NonCommercialIMDbBaseModel):
         except ValueError:
             return s3_utils.transf_imdbid(v)
 
+    def to_orm(self) -> imdb_orm.TitleBasics:
+        return imdb_orm.TitleBasics(**dict(self))
+
 
 class TitleCrew(NonCommercialIMDbBaseModel):
     tconst: int
@@ -91,6 +102,9 @@ class TitleCrew(NonCommercialIMDbBaseModel):
     def check_directors(cls, v):
         return s3_utils.transf_multi_imdbid(v)
 
+    def to_orm(self) -> imdb_orm.TitleCrew:
+        return imdb_orm.TitleCrew(**dict(self))
+
 
 class TitleEpisode(NonCommercialIMDbBaseModel):
     tconst: int
@@ -111,6 +125,9 @@ class TitleEpisode(NonCommercialIMDbBaseModel):
             return int(v)
         except ValueError:
             return s3_utils.transf_imdbid(v)
+
+    def to_orm(self) -> imdb_orm.TitleEpisode:
+        return imdb_orm.TitleEpisode(**dict(self))
 
 
 class TitlePrincipals(NonCommercialIMDbBaseModel):
@@ -135,6 +152,9 @@ class TitlePrincipals(NonCommercialIMDbBaseModel):
         except ValueError:
             return s3_utils.transf_imdbid(v)
 
+    def to_orm(self) -> imdb_orm.TitlePrincipals:
+        return imdb_orm.TitlePrincipals(**dict(self))
+
 
 class TitleRatings(NonCommercialIMDbBaseModel):
     tconst: int
@@ -147,3 +167,6 @@ class TitleRatings(NonCommercialIMDbBaseModel):
             return int(v)
         except ValueError:
             return s3_utils.transf_imdbid(v)
+
+    def to_orm(self) -> imdb_orm.TitleRatings:
+        return imdb_orm.TitleRatings(**dict(self))
