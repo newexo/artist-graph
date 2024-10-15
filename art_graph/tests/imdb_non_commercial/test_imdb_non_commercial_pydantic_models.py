@@ -30,6 +30,18 @@ def test_name_basics_happy_path():
     assert name.knownForTitles == "1234567,2345678"
 
 
+def test_name_basics_from_raw():
+    expected = {'nconst': 1, 'primaryName': 'Fred Astaire', 'birthYear': 1899, 'deathYear': 1987,
+                'primaryProfession': 'actor,miscellaneous,producer',
+                'knownForTitles': '0072308,0050419,0053137,0027125'}
+    data = {'nconst': 'nm0000001', 'primaryName': 'Fred Astaire', 'birthYear': '1899', 'deathYear': '1987',
+            'primaryProfession': 'actor,miscellaneous,producer',
+            'knownForTitles': 'tt0072308,tt0050419,tt0053137,tt0027125'}
+
+    name = NameBasics(**data)
+    assert expected == dict(name)
+
+
 def test_name_basics_optional_fields():
     """Test that the NameBasics model can initialize with optional fields omitted."""
     data = {"nconst": "nm1234567", "primaryName": "Jane Doe"}

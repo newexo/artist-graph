@@ -31,14 +31,6 @@ def test_table_builder_principals(table_builder_principals):
     ]
     assert table_builder_principals.table_name == "title_principals"
     assert table_builder_principals.table_map == DB_TRANSFORM["title_principals"]
-    assert table_builder_principals.all_headers == {
-        "tconst",
-        "ordering",
-        "nconst",
-        "category",
-        "job",
-        "characters",
-    }
 
     table_builder = table_builder_principals
     expected = {"name": "nconst", "type_": sqltypes.Integer, "index": True}
@@ -93,17 +85,6 @@ def test_table_builder_name_basics(table_builder_name_basics):
     ]
     assert table_builder_name_basics.table_name == "name_basics"
     assert table_builder_name_basics.table_map == DB_TRANSFORM["name_basics"]
-    assert table_builder_name_basics.all_headers == {
-        "nconst",
-        "primaryName",
-        "birthYear",
-        "deathYear",
-        "primaryProfession",
-        "knownForTitles",
-        "ns_soundex",
-        "sn_soundex",
-        "s_soundex",
-    }
 
     expected = {"index": True, "name": "nconst", "type_": sqltypes.Integer}
     actual = table_builder_name_basics.col_args("nconst")
@@ -147,18 +128,6 @@ def test_table_builder_title_basics(table_builder_title_basics):
     ]
     assert table_builder_title_basics.table_name == "title_basics"
     assert table_builder_title_basics.table_map == DB_TRANSFORM["title_basics"]
-    assert table_builder_title_basics.all_headers == {
-        "tconst",
-        "titleType",
-        "primaryTitle",
-        "originalTitle",
-        "isAdult",
-        "startYear",
-        "endYear",
-        "runtimeMinutes",
-        "genres",
-        "t_soundex",
-    }
 
     expected = {"index": True, "name": "tconst", "type_": sqltypes.Integer}
     actual = table_builder_title_basics.col_args("tconst")
@@ -194,11 +163,6 @@ def test_table_builder_title_ratings(table_builder_title_ratings):
     ]
     assert table_builder_title_ratings.table_name == "title_ratings"
     assert table_builder_title_ratings.table_map == DB_TRANSFORM["title_ratings"]
-    assert table_builder_title_ratings.all_headers == {
-        "tconst",
-        "averageRating",
-        "numVotes",
-    }
 
     expected = {"index": True, "name": "tconst", "type_": sqltypes.Integer}
     actual = table_builder_title_ratings.col_args("tconst")
@@ -240,17 +204,6 @@ def test_table_builder_title_akas(table_builder_title_akas):
     ]
     assert table_builder_title_akas.table_name == "title_akas"
     assert table_builder_title_akas.table_map == DB_TRANSFORM["title_akas"]
-    assert table_builder_title_akas.all_headers == {
-        "titleId",
-        "ordering",
-        "title",
-        "region",
-        "language",
-        "types",
-        "attributes",
-        "isOriginalTitle",
-        "t_soundex",
-    }
 
 
 @pytest.fixture
@@ -266,7 +219,6 @@ def test_table_builder_title_crew(table_builder_title_crew):
     assert table_builder_title_crew.headers == ["tconst", "directors", "writers"]
     assert table_builder_title_crew.table_name == "title_crew"
     assert table_builder_title_crew.table_map == DB_TRANSFORM["title_crew"]
-    assert table_builder_title_crew.all_headers == {"tconst", "directors", "writers"}
 
     expected = {"index": True, "name": "tconst", "type_": sqltypes.Integer}
     actual = table_builder_title_crew.col_args("tconst")
@@ -295,12 +247,6 @@ def test_table_builder_title_episode(table_builder_title_episode):
     ]
     assert table_builder_title_episode.table_name == "title_episode"
     assert table_builder_title_episode.table_map == DB_TRANSFORM["title_episode"]
-    assert table_builder_title_episode.all_headers == {
-        "tconst",
-        "parentTconst",
-        "seasonNumber",
-        "episodeNumber",
-    }
 
     expected = {"index": True, "name": "tconst", "type_": sqltypes.Integer}
     actual = table_builder_title_episode.col_args("tconst")
@@ -362,9 +308,6 @@ def test_create_table(table_builder_name_basics, engine, metadata):
         "deathYear": sqltypes.INTEGER,
         "primaryProfession": sqltypes.TEXT,
         "knownForTitles": sqltypes.TEXT,
-        "ns_soundex": sqltypes.VARCHAR,
-        "sn_soundex": sqltypes.VARCHAR,
-        "s_soundex": sqltypes.VARCHAR,
     }
 
     verify_columns(columns, expected_columns, "name_basics")
@@ -388,7 +331,6 @@ def test_create_table_title_basics(table_builder_title_basics, engine, metadata)
         "endYear": sqltypes.INTEGER,
         "runtimeMinutes": sqltypes.INTEGER,
         "genres": sqltypes.TEXT,
-        "t_soundex": sqltypes.VARCHAR,
     }
 
     verify_columns(columns, expected_columns, "title_basics")
@@ -441,7 +383,6 @@ def test_create_table_title_akas(table_builder_title_akas, engine, metadata):
 
     expected_columns = {
         "titleId": sqltypes.INTEGER,
-        "t_soundex": sqltypes.VARCHAR,
         "ordering": sqltypes.INTEGER,
         "title": sqltypes.TEXT,
         "region": sqltypes.VARCHAR,

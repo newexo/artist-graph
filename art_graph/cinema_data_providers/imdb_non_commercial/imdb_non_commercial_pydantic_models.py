@@ -1,5 +1,5 @@
 from pydantic import BaseModel, field_validator
-from typing import List, Optional
+from typing import Optional
 from imdb.parser.s3 import utils as s3_utils
 
 
@@ -8,10 +8,7 @@ class NameBasics(BaseModel):
     knownForTitles: Optional[str] = None
     primaryName: Optional[str] = None
     primaryProfession: Optional[str] = None
-    s_soundex: Optional[str] = None
-    ns_soundex: Optional[str] = None
     deathYear: Optional[int] = None
-    sn_soundex: Optional[str] = None
     birthYear: Optional[int] = None
 
     @field_validator("nconst", mode="before")
@@ -39,7 +36,6 @@ class TitleAkas(BaseModel):
     title: Optional[str] = None
     isOriginalTitle: Optional[bool] = None
     language: Optional[str] = None
-    t_soundex: Optional[str] = None
     region: Optional[str] = None
 
     @field_validator("titleId", mode="before")
@@ -62,7 +58,6 @@ class TitleBasics(BaseModel):
     startYear: Optional[int] = None
     endYear: Optional[int] = None
     runtimeMinutes: Optional[int] = None
-    t_soundex: Optional[str] = None
     genres: Optional[str] = None
 
     @field_validator("titleType", mode="before")
