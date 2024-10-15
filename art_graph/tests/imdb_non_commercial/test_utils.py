@@ -65,7 +65,7 @@ def test_process_line_info(title_principals_line_raw_info):
         "nconst": 1588970,
         "category": "self",
         "job": None,
-        "characters": None,
+        "characters": '["Self"]',
     }
     actual = info
     assert actual == expected
