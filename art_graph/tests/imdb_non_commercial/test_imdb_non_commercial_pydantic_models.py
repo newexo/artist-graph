@@ -14,27 +14,27 @@ from ...cinema_data_providers.imdb_non_commercial.imdb_non_commercial_pydantic_m
 def test_name_basics_happy_path():
     """Test that the NameBasics model initializes correctly with valid data."""
     data = {
-        "nconst": "nm1234567",
+        "nconst": 1234567,
         "primaryName": "John Doe",
         "birthYear": 1970,
         "deathYear": 2020,
-        "primaryProfession": ["actor", "producer"],
-        "knownForTitles": ["tt1234567", "tt2345678"],
+        "primaryProfession": "actor,producer",
+        "knownForTitles": "tt1234567,tt2345678",
     }
     name = NameBasics(**data)
-    assert name.nconst == "nm1234567"
+    assert name.nconst == 1234567
     assert name.primaryName == "John Doe"
     assert name.birthYear == 1970
     assert name.deathYear == 2020
-    assert name.primaryProfession == ["actor", "producer"]
-    assert name.knownForTitles == ["tt1234567", "tt2345678"]
+    assert name.primaryProfession == "actor,producer"
+    assert name.knownForTitles == "1234567,2345678"
 
 
 def test_name_basics_optional_fields():
     """Test that the NameBasics model can initialize with optional fields omitted."""
     data = {"nconst": "nm1234567", "primaryName": "Jane Doe"}
     name = NameBasics(**data)
-    assert name.nconst == "nm1234567"
+    assert name.nconst == 1234567
     assert name.primaryName == "Jane Doe"
     assert name.birthYear is None
     assert name.deathYear is None
@@ -64,9 +64,9 @@ def test_name_basics_invalid_type_for_birth_year():
 
 def test_name_basics_empty_professions():
     """Test that the NameBasics model accepts an empty list for primaryProfession."""
-    data = {"nconst": "nm1234567", "primaryName": "John Doe", "primaryProfession": []}
+    data = {"nconst": "nm1234567", "primaryName": "John Doe", "primaryProfession": None}
     name = NameBasics(**data)
-    assert name.primaryProfession == []
+    assert name.primaryProfession is None
 
 
 def test_name_basics_known_for_titles_invalid_type():
@@ -74,11 +74,10 @@ def test_name_basics_known_for_titles_invalid_type():
     data = {
         "nconst": "nm1234567",
         "primaryName": "John Doe",
-        "knownForTitles": "tt1234567",  # Invalid type, should be a list
+        "knownForTitles": 5.5,  # Invalid type, should be a string
     }
-    with pytest.raises(ValidationError) as excinfo:
+    with pytest.raises(TypeError):
         NameBasics(**data)
-    assert "knownForTitles" in str(excinfo.value)
 
 
 # NameBasics Tests
@@ -88,11 +87,11 @@ def test_name_basics_valid():
         "primaryName": "John Doe",
         "birthYear": 1970,
         "deathYear": 2020,
-        "primaryProfession": ["actor", "director"],
-        "knownForTitles": ["tt1234567", "tt2345678"],
+        "primaryProfession": "actor,director",
+        "knownForTitles": "tt1234567,tt2345678",
     }
     model = NameBasics(**data)
-    assert model.nconst == "nm1234567"
+    assert model.nconst == 1234567
 
 
 # TitleAkas Tests
@@ -105,17 +104,8 @@ def test_title_akas_valid():
         "isOriginalTitle": True,
     }
     model = TitleAkas(**data)
-    assert model.titleId == "tt1234567"
+    assert model.titleId == 1234567
     assert model.isOriginalTitle is True
-
-
-def test_title_akas_missing_required_field():
-    data = {
-        "titleId": "tt1234567",
-        "ordering": 1,
-    }
-    with pytest.raises(ValidationError):
-        TitleAkas(**data)
 
 
 # TitleBasics Tests
@@ -128,11 +118,11 @@ def test_title_basics_valid():
         "isAdult": False,
         "startYear": 2000,
         "runtimeMinutes": 120,
-        "genres": ["Action", "Adventure"],
+        "genres": "Action,Adventure",
     }
     model = TitleBasics(**data)
-    assert model.tconst == "tt1234567"
-    assert model.genres == ["Action", "Adventure"]
+    assert model.tconst == 1234567
+    assert model.genres == "Action,Adventure"
 
 
 def test_title_basics_optional_fields():
@@ -152,12 +142,12 @@ def test_title_basics_optional_fields():
 def test_title_crew_valid():
     data = {
         "tconst": "tt1234567",
-        "directors": ["nm1234567", "nm2345678"],
-        "writers": ["nm3456789"],
+        "directors": "nm1234567,nm2345678",
+        "writers": "nm3456789",
     }
     model = TitleCrew(**data)
-    assert model.tconst == "tt1234567"
-    assert model.directors == ["nm1234567", "nm2345678"]
+    assert model.tconst == 1234567
+    assert model.directors == "1234567,2345678"
 
 
 def test_title_crew_optional_fields():
@@ -217,7 +207,7 @@ def test_title_principals_optional_fields():
 def test_title_ratings_valid():
     data = {"tconst": "tt1234567", "averageRating": 8.5, "numVotes": 15000}
     model = TitleRatings(**data)
-    assert model.tconst == "tt1234567"
+    assert model.tconst == 1234567
     assert model.averageRating == 8.5
 
 

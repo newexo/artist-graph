@@ -1,88 +1,83 @@
-from pydantic import BaseModel
-from typing import Optional
+from sqlalchemy import Column, Integer, String, Text, Float
+from sqlalchemy.ext.declarative import declarative_base
+
+Base = declarative_base()
 
 
-class NameBasics(BaseModel):
-    nconst: int
-    knownForTitles: Optional[str] = None
-    primaryName: Optional[str] = None
-    primaryProfession: Optional[str] = None
-    s_soundex: Optional[str] = None
-    ns_soundex: Optional[str] = None
-    deathYear: Optional[int] = None
-    sn_soundex: Optional[str] = None
-    birthYear: Optional[int] = None
+class NameBasics(Base):
+    __tablename__ = "name_basics"
 
-    class Config:
-        orm_mode = True
-
-
-class TitleAkas(BaseModel):
-    titleId: int
-    ordering: Optional[int] = None
-    attributes: Optional[str] = None
-    types: Optional[str] = None
-    title: Optional[str] = None
-    isOriginalTitle: Optional[bool] = None
-    language: Optional[str] = None
-    t_soundex: Optional[str] = None
-    region: Optional[str] = None
-
-    class Config:
-        orm_mode = True
+    nconst = Column(Integer, primary_key=True)
+    knownForTitles = Column(Text)
+    primaryName = Column(Text)
+    primaryProfession = Column(Text)
+    s_soundex = Column(String(5))
+    ns_soundex = Column(String(5))
+    deathYear = Column(Integer)
+    sn_soundex = Column(String(5))
+    birthYear = Column(Integer)
 
 
-class TitleBasics(BaseModel):
-    tconst: int
-    primaryTitle: Optional[str] = None
-    originalTitle: Optional[str] = None
-    titleType: Optional[str] = None
-    isAdult: Optional[bool] = None
-    startYear: Optional[int] = None
-    endYear: Optional[int] = None
-    runtimeMinutes: Optional[int] = None
-    t_soundex: Optional[str] = None
-    genres: Optional[str] = None
+class TitleAkas(Base):
+    __tablename__ = "title_akas"
 
-    class Config:
-        orm_mode = True
+    titleId = Column(Integer, primary_key=True)
+    ordering = Column(Integer)
+    attributes = Column(String(127))
+    types = Column(String(31))
+    title = Column(Text)
+    isOriginalTitle = Column(Integer)  # BOOLEAN as INTEGER in SQLite
+    language = Column(String(5))
+    t_soundex = Column(String(5))
+    region = Column(String(5))
 
 
-class TitleCrew(BaseModel):
-    tconst: int
-    writers: Optional[str] = None
-    directors: Optional[str] = None
+class TitleBasics(Base):
+    __tablename__ = "title_basics"
 
-    class Config:
-        orm_mode = True
-
-
-class TitleEpisode(BaseModel):
-    tconst: int
-    parentTconst: Optional[int] = None
-    seasonNumber: Optional[int] = None
-    episodeNumber: Optional[int] = None
-
-    class Config:
-        orm_mode = True
+    tconst = Column(Integer, primary_key=True)
+    primaryTitle = Column(Text)
+    originalTitle = Column(Text)
+    titleType = Column(String(16))
+    isAdult = Column(Integer)  # BOOLEAN as INTEGER in SQLite
+    startYear = Column(Integer)
+    endYear = Column(Integer)
+    runtimeMinutes = Column(Integer)
+    t_soundex = Column(String(5))
+    genres = Column(Text)
 
 
-class TitlePrincipals(BaseModel):
-    tconst: int
-    nconst: int
-    ordering: Optional[int] = None
-    job: Optional[str] = None
-    category: Optional[str] = None
-    characters: Optional[str] = None
+class TitleCrew(Base):
+    __tablename__ = "title_crew"
 
-    class Config:
-        orm_mode = True
+    tconst = Column(Integer, primary_key=True)
+    writers = Column(Text)
+    directors = Column(Text)
 
 
-class TitleRatings(BaseModel):
-    tconst: int
-    averageRating: Optional[float] = None
-    numVotes: Optional[int] = None
+class TitleEpisode(Base):
+    __tablename__ = "title_episode"
 
-    class Config:
-        orm_mode = True
+    tconst = Column(Integer, primary_key=True)
+    parentTconst = Column(Integer)
+    seasonNumber = Column(Integer)
+    episodeNumber = Column(Integer)
+
+
+class TitlePrincipals(Base):
+    __tablename__ = "title_principals"
+
+    tconst = Column(Integer, primary_key=True)
+    nconst = Column(Integer, primary_key=True)
+    ordering = Column(Integer)
+    job = Column(String(1024))
+    category = Column(String(64))
+    characters = Column(String(1024))
+
+
+class TitleRatings(Base):
+    __tablename__ = "title_ratings"
+
+    tconst = Column(Integer, primary_key=True)
+    averageRating = Column(Float)
+    numVotes = Column(Integer)
