@@ -1,27 +1,12 @@
-import pytest
-
 from imdb.parser.s3.utils import DB_TRANSFORM
-import sqlalchemy
 from sqlalchemy.sql import sqltypes
 from sqlalchemy import inspect
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, DeclarativeBase
-
-from ...cinema_data_providers.imdb_non_commercial import table_builder
-
-
-@pytest.fixture
-def table_builder_principals():
-    """Fixture to create a TableBuilder for the 'title.principals.tsv.gz' file."""
-    fn = "title.principals.tsv.gz"
-    headers = ["tconst", "ordering", "nconst", "category", "job", "characters"]
-    return table_builder.TableBuilder(fn=fn, headers=headers)
 
 
 # Example test function using the fixture
-def test_table_builder_principals(table_builder_principals):
-    assert table_builder_principals.fn == "title.principals.tsv.gz"
-    assert table_builder_principals.headers == [
+def test_table_builder_title_principals(table_builder_title_principals):
+    assert table_builder_title_principals.fn == "title.principals.tsv.gz"
+    assert table_builder_title_principals.headers == [
         "tconst",
         "ordering",
         "nconst",
@@ -29,10 +14,10 @@ def test_table_builder_principals(table_builder_principals):
         "job",
         "characters",
     ]
-    assert table_builder_principals.table_name == "title_principals"
-    assert table_builder_principals.table_map == DB_TRANSFORM["title_principals"]
+    assert table_builder_title_principals.table_name == "title_principals"
+    assert table_builder_title_principals.table_map == DB_TRANSFORM["title_principals"]
 
-    table_builder = table_builder_principals
+    table_builder = table_builder_title_principals
     expected = {"name": "nconst", "type_": sqltypes.Integer, "index": True}
     actual = table_builder.col_args("nconst")
     assert actual == expected
@@ -58,21 +43,6 @@ def test_table_builder_principals(table_builder_principals):
     assert actual == expected
 
 
-@pytest.fixture
-def table_builder_name_basics():
-    """Fixture to create a TableBuilder for the 'name.basics.tsv.gz' file."""
-    fn = "name.basics.tsv.gz"
-    headers = [
-        "nconst",
-        "primaryName",
-        "birthYear",
-        "deathYear",
-        "primaryProfession",
-        "knownForTitles",
-    ]
-    return table_builder.TableBuilder(fn=fn, headers=headers)
-
-
 def test_table_builder_name_basics(table_builder_name_basics):
     assert table_builder_name_basics.fn == "name.basics.tsv.gz"
     assert table_builder_name_basics.headers == [
@@ -93,24 +63,6 @@ def test_table_builder_name_basics(table_builder_name_basics):
     expected = {"index": False, "name": "primaryName", "type_": sqltypes.UnicodeText}
     actual = table_builder_name_basics.col_args("primaryName")
     assert expected == actual
-
-
-@pytest.fixture
-def table_builder_title_basics():
-    """Fixture to create a TableBuilder for the 'title.basics.tsv.gz' file."""
-    fn = "title.basics.tsv.gz"
-    headers = [
-        "tconst",
-        "titleType",
-        "primaryTitle",
-        "originalTitle",
-        "isAdult",
-        "startYear",
-        "endYear",
-        "runtimeMinutes",
-        "genres",
-    ]
-    return table_builder.TableBuilder(fn=fn, headers=headers)
 
 
 def test_table_builder_title_basics(table_builder_title_basics):
@@ -146,14 +98,6 @@ def test_table_builder_title_basics(table_builder_title_basics):
     assert expected == actual
 
 
-@pytest.fixture
-def table_builder_title_ratings():
-    """Fixture to create a TableBuilder for the 'title.ratings.tsv.gz' file."""
-    fn = "title.ratings.tsv.gz"
-    headers = ["tconst", "averageRating", "numVotes"]
-    return table_builder.TableBuilder(fn=fn, headers=headers)
-
-
 def test_table_builder_title_ratings(table_builder_title_ratings):
     assert table_builder_title_ratings.fn == "title.ratings.tsv.gz"
     assert table_builder_title_ratings.headers == [
@@ -173,23 +117,6 @@ def test_table_builder_title_ratings(table_builder_title_ratings):
     assert actual == expected
 
 
-@pytest.fixture
-def table_builder_title_akas():
-    """Fixture to create a TableBuilder for the 'title.akas.tsv.gz' file."""
-    fn = "title.akas.tsv.gz"
-    headers = [
-        "titleId",
-        "ordering",
-        "title",
-        "region",
-        "language",
-        "types",
-        "attributes",
-        "isOriginalTitle",
-    ]
-    return table_builder.TableBuilder(fn=fn, headers=headers)
-
-
 def test_table_builder_title_akas(table_builder_title_akas):
     assert table_builder_title_akas.fn == "title.akas.tsv.gz"
     assert table_builder_title_akas.headers == [
@@ -206,14 +133,6 @@ def test_table_builder_title_akas(table_builder_title_akas):
     assert table_builder_title_akas.table_map == DB_TRANSFORM["title_akas"]
 
 
-@pytest.fixture
-def table_builder_title_crew():
-    """Fixture to create a TableBuilder for the 'title.crew.tsv.gz' file."""
-    fn = "title.crew.tsv.gz"
-    headers = ["tconst", "directors", "writers"]
-    return table_builder.TableBuilder(fn=fn, headers=headers)
-
-
 def test_table_builder_title_crew(table_builder_title_crew):
     assert table_builder_title_crew.fn == "title.crew.tsv.gz"
     assert table_builder_title_crew.headers == ["tconst", "directors", "writers"]
@@ -227,14 +146,6 @@ def test_table_builder_title_crew(table_builder_title_crew):
     expected = {"index": False, "name": "directors", "type_": sqltypes.UnicodeText}
     actual = table_builder_title_crew.col_args("directors")
     assert actual == expected
-
-
-@pytest.fixture
-def table_builder_title_episode():
-    """Fixture to create a TableBuilder for the 'title.episode.tsv.gz' file."""
-    fn = "title.episode.tsv.gz"
-    headers = ["tconst", "parentTconst", "seasonNumber", "episodeNumber"]
-    return table_builder.TableBuilder(fn=fn, headers=headers)
 
 
 def test_table_builder_title_episode(table_builder_title_episode):
@@ -257,28 +168,6 @@ def test_table_builder_title_episode(table_builder_title_episode):
     assert actual == expected
 
 
-@pytest.fixture
-def engine():
-    """Fixture to create a SQLAlchemy engine."""
-    return create_engine("sqlite:///:memory:")
-
-
-@pytest.fixture(scope="function")
-def session(engine):
-    Session = sessionmaker(bind=engine)
-    DeclarativeBase.metadata.create_all(engine)
-    try:
-        with Session() as session:
-            yield session
-    finally:
-        DeclarativeBase.metadata.drop_all(engine)
-
-
-@pytest.fixture
-def metadata():
-    return sqlalchemy.MetaData()
-
-
 def verify_columns(columns, expected_columns, table_name):
     assert len(columns) == len(expected_columns)
     for column in columns:
@@ -293,9 +182,7 @@ def verify_columns(columns, expected_columns, table_name):
         ), f"Unexpected column type for {column_name} in {table_name}"
 
 
-def test_create_table(table_builder_name_basics, engine, metadata):
-    table = table_builder_name_basics.build_table()
-    metadata.create_all(bind=engine, tables=[table])
+def test_create_table_name_basics(table_name_basics, engine):
     inspector = inspect(engine)
 
     # Get column details for the 'name_basics' table
@@ -313,9 +200,7 @@ def test_create_table(table_builder_name_basics, engine, metadata):
     verify_columns(columns, expected_columns, "name_basics")
 
 
-def test_create_table_title_basics(table_builder_title_basics, engine, metadata):
-    table = table_builder_title_basics.build_table()
-    metadata.create_all(bind=engine, tables=[table])
+def test_create_table_title_basics(table_title_basics, engine):
     inspector = inspect(engine)
 
     # Get column details for the 'title_basics' table
@@ -336,9 +221,7 @@ def test_create_table_title_basics(table_builder_title_basics, engine, metadata)
     verify_columns(columns, expected_columns, "title_basics")
 
 
-def test_create_table_title_ratings(table_builder_title_ratings, engine, metadata):
-    table = table_builder_title_ratings.build_table()
-    metadata.create_all(bind=engine, tables=[table])
+def test_create_table_title_ratings(table_title_ratings, engine):
     inspector = inspect(engine)
 
     # Get column details for the 'title_ratings' table
@@ -353,9 +236,7 @@ def test_create_table_title_ratings(table_builder_title_ratings, engine, metadat
     verify_columns(columns, expected_columns, "title_ratings")
 
 
-def test_create_table_principals(table_builder_principals, engine, metadata):
-    table = table_builder_principals.build_table()
-    metadata.create_all(bind=engine, tables=[table])
+def test_create_table_title_principals(table_title_principals, engine):
     inspector = inspect(engine)
 
     # Get column details for the 'title_principals' table
@@ -373,9 +254,7 @@ def test_create_table_principals(table_builder_principals, engine, metadata):
     verify_columns(columns, expected_columns, "title_principals")
 
 
-def test_create_table_title_akas(table_builder_title_akas, engine, metadata):
-    table = table_builder_title_akas.build_table()
-    metadata.create_all(bind=engine, tables=[table])
+def test_create_table_title_akas(table_title_akas, engine):
     inspector = inspect(engine)
 
     # Get column details for the 'title_akas' table
@@ -395,9 +274,7 @@ def test_create_table_title_akas(table_builder_title_akas, engine, metadata):
     verify_columns(columns, expected_columns, "title_akas")
 
 
-def test_create_table_title_crew(table_builder_title_crew, engine, metadata):
-    table = table_builder_title_crew.build_table()
-    metadata.create_all(bind=engine, tables=[table])
+def test_create_table_title_crew(table_title_crew, engine):
     inspector = inspect(engine)
 
     # Get column details for the 'title_crew' table
@@ -412,9 +289,7 @@ def test_create_table_title_crew(table_builder_title_crew, engine, metadata):
     verify_columns(columns, expected_columns, "title_crew")
 
 
-def test_create_table_title_episode(table_builder_title_episode, engine, metadata):
-    table = table_builder_title_episode.build_table()
-    metadata.create_all(bind=engine, tables=[table])
+def test_create_table_title_episode(table_title_episode, engine):
     inspector = inspect(engine)
 
     # Get column details for the 'title_episode' table

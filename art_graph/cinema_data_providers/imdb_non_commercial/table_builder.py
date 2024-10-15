@@ -1,4 +1,3 @@
-import logging
 from dataclasses import dataclass
 from typing import List
 import sqlalchemy
@@ -6,12 +5,6 @@ import sqlalchemy
 from art_graph.cinema_data_providers.imdb_non_commercial.constants import TSV_EXT
 
 from imdb.parser.s3.utils import DB_TRANSFORM
-
-# how many entries to write to the database at a time.
-
-logger = logging.getLogger()
-logger.setLevel(logging.INFO)
-metadata = sqlalchemy.MetaData()
 
 
 @dataclass
@@ -47,6 +40,6 @@ class TableBuilder:
         col_args = self.col_args(header)
         return sqlalchemy.Column(**col_args)
 
-    def build_table(self) -> sqlalchemy.Table:
+    def build_table(self, metadata: sqlalchemy.MetaData) -> sqlalchemy.Table:
         columns = [self.col_obj(header) for header in self.headers]
         return sqlalchemy.Table(self.table_name, metadata, *columns)
