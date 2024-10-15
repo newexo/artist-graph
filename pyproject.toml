@@ -21,6 +21,7 @@ requests = "^2.31.0"
 gensim = "^4.3.2"
 tqdm = "^4.66.4"
 pydantic = "^2.7.3"
+psycopg2-binary = "^2.9.9"
 
 [build-system]
 requires = ["poetry-core"]

@@ -85,8 +85,11 @@ def import_file(fn, engine):
         connection.close()
 
 
-def main(db_name):
-    engine = locations.get_sqlite_engine(db_name)
+def main(db_name, db_uri=None):
+    if db_uri:
+        engine = sqlalchemy.create_engine(db_uri, echo=False)
+    else:
+        engine = locations.get_sqlite_engine(db_name)
     metadata.bind = engine
     fns = [directories.data(fn) for fn in locations.imdb_files]
     for fn in fns:
@@ -114,6 +117,14 @@ if __name__ == "__main__":
         help="Specify the SQLite database name (default: IM01.db)."
     )
 
+    # Add a command-line option for specifying the database URI
+    parser.add_argument(
+        "--db-uri",
+        type=str,
+        default=None,  # Default value
+        help="Specify the database URI."
+    )
+
     args = parser.parse_args()
 
     # Configure logging
@@ -122,4 +133,4 @@ if __name__ == "__main__":
     else:
         logging.basicConfig(level=logging.INFO)
 
-    main(args.db_name)
+    main(args.db_name, args.db_uri)
