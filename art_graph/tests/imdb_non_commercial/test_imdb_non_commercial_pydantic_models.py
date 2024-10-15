@@ -31,12 +31,22 @@ def test_name_basics_happy_path():
 
 
 def test_name_basics_from_raw():
-    expected = {'nconst': 1, 'primaryName': 'Fred Astaire', 'birthYear': 1899, 'deathYear': 1987,
-                'primaryProfession': 'actor,miscellaneous,producer',
-                'knownForTitles': '0072308,0050419,0053137,0027125'}
-    data = {'nconst': 'nm0000001', 'primaryName': 'Fred Astaire', 'birthYear': '1899', 'deathYear': '1987',
-            'primaryProfession': 'actor,miscellaneous,producer',
-            'knownForTitles': 'tt0072308,tt0050419,tt0053137,tt0027125'}
+    expected = {
+        "nconst": 1,
+        "primaryName": "Fred Astaire",
+        "birthYear": 1899,
+        "deathYear": 1987,
+        "primaryProfession": "actor,miscellaneous,producer",
+        "knownForTitles": "0072308,0050419,0053137,0027125",
+    }
+    data = {
+        "nconst": "nm0000001",
+        "primaryName": "Fred Astaire",
+        "birthYear": "1899",
+        "deathYear": "1987",
+        "primaryProfession": "actor,miscellaneous,producer",
+        "knownForTitles": "tt0072308,tt0050419,tt0053137,tt0027125",
+    }
 
     name = NameBasics(**data)
     assert expected == dict(name)

@@ -124,7 +124,7 @@ def test_title_akas():
         "language": None,
         "types": "original",
         "attributes": None,
-        "isOriginalTitle": True
+        "isOriginalTitle": True,
     }
     assert actual == expected
 
@@ -138,7 +138,7 @@ def test_title_akas():
         "language": None,
         "types": None,
         "attributes": "literal title",
-        "isOriginalTitle": False
+        "isOriginalTitle": False,
     }
     assert actual == expected
 
@@ -171,7 +171,7 @@ def test_title_basics():
         "startYear": 1894,
         "endYear": None,
         "runtimeMinutes": 1,
-        "genres": "Documentary,Short"
+        "genres": "Documentary,Short",
     }
     assert actual == expected
 
