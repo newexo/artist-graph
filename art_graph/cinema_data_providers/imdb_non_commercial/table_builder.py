@@ -25,13 +25,6 @@ class TableBuilder:
         return self.fn.replace(TSV_EXT, "").replace(".", "_")
 
     @property
-    def all_headers(self) -> set:
-        """Combine headers with table_map keys."""
-        all_headers = set(self.headers)
-        all_headers.update(self.table_map.keys())
-        return all_headers
-
-    @property
     def table_map(self) -> dict:
         """Fetch column transformation rules from DB_TRANSFORM for the table."""
         return DB_TRANSFORM.get(self.table_name, {})
@@ -55,5 +48,5 @@ class TableBuilder:
         return sqlalchemy.Column(**col_args)
 
     def build_table(self) -> sqlalchemy.Table:
-        columns = [self.col_obj(header) for header in self.all_headers]
+        columns = [self.col_obj(header) for header in self.headers]
         return sqlalchemy.Table(self.table_name, metadata, *columns)

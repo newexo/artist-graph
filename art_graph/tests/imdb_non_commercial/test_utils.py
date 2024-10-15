@@ -94,9 +94,6 @@ def test_name_basics():
         "deathYear": 1987,
         "primaryProfession": "actor,miscellaneous,producer",
         "knownForTitles": "0072308,0050419,0053137,0027125",
-        "ns_soundex": "F6323",
-        "sn_soundex": "A2361",
-        "s_soundex": "A236",
     }
     assert actual == expected
 
@@ -127,8 +124,7 @@ def test_title_akas():
         "language": None,
         "types": "original",
         "attributes": None,
-        "isOriginalTitle": True,
-        "t_soundex": "C6523",
+        "isOriginalTitle": True
     }
     assert actual == expected
 
@@ -142,8 +138,7 @@ def test_title_akas():
         "language": None,
         "types": None,
         "attributes": "literal title",
-        "isOriginalTitle": False,
-        "t_soundex": "C6523",
+        "isOriginalTitle": False
     }
     assert actual == expected
 
@@ -176,8 +171,7 @@ def test_title_basics():
         "startYear": 1894,
         "endYear": None,
         "runtimeMinutes": 1,
-        "genres": "Documentary,Short",
-        "t_soundex": "C6523",
+        "genres": "Documentary,Short"
     }
     assert actual == expected
 
