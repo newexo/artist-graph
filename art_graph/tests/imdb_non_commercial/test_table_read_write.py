@@ -1,6 +1,5 @@
 import pytest
 
-from sqlalchemy import exc
 from ...cinema_data_providers.imdb_non_commercial import (
     imdb_non_commercial_orm_models as imdb_orm,
 )
