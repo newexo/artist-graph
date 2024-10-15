@@ -105,21 +105,19 @@ def main(db_name, db_uri=None):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Process and import IMDb data with optional debug logging.")
+    parser = argparse.ArgumentParser(
+        description="Process and import IMDb data with optional debug logging."
+    )
 
     # Add a command-line option for setting the logging level to DEBUG
-    parser.add_argument(
-        "--debug",
-        action="store_true",
-        help="Enable debug logging."
-    )
+    parser.add_argument("--debug", action="store_true", help="Enable debug logging.")
 
     # Add a command-line option for specifying the database name
     parser.add_argument(
         "--db-name",
         type=str,
         default="IM01.db",  # Default value
-        help="Specify the SQLite database name (default: IM01.db)."
+        help="Specify the SQLite database name (default: IM01.db).",
     )
 
     # Add a command-line option for specifying the database URI
