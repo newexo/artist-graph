@@ -19,6 +19,8 @@ def get_data_transformers(table_name: str) -> Dict[str, Callable[[str], Any]]:
     for column, conf in DB_TRANSFORM.get(table_name, {}).items():
         if "transform" in conf:
             data_transf[column] = conf["transform"]
+    if table_name == "title_principals":
+        del data_transf["characters"]
     return data_transf
 
 
