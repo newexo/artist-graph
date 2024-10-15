@@ -5,7 +5,7 @@ from imdb.parser.s3 import utils as s3_utils
 
 class NonCommercialIMDbBaseModel(BaseModel):
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class NameBasics(NonCommercialIMDbBaseModel):

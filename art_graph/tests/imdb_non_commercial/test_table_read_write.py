@@ -30,10 +30,10 @@ def test_read_write_name_basics(
                 .all()
             )
             pyd_objs = [
-                imdb_pyd.NameBasics(**r.__dict__) for r in results
+                imdb_pyd.NameBasics.model_validate(r) for r in results
             ]  # convert to pydantic objects
             actual = [
-                dict(pyd_obj) for pyd_obj in pyd_objs
+                dict(pyd) for pyd in pyd_objs
             ]  # convert to list of dictionaries
             assert actual == block
             transaction.rollback()
@@ -56,7 +56,7 @@ def test_read_write_title_basics(
                 .all()
             )
             pyd_objs = [
-                imdb_pyd.TitleBasics(**r.__dict__) for r in results
+                imdb_pyd.TitleBasics.model_validate(r) for r in results
             ]  # convert to pydantic objects
             actual = [
                 dict(pyd_obj) for pyd_obj in pyd_objs
@@ -82,7 +82,7 @@ def test_read_write_title_ratings(
                 .all()
             )
             pyd_objs = [
-                imdb_pyd.TitleRatings(**r.__dict__) for r in results
+                imdb_pyd.TitleRatings.model_validate(r) for r in results
             ]  # convert to pydantic objects
             actual = [
                 dict(pyd_obj) for pyd_obj in pyd_objs
@@ -108,7 +108,7 @@ def test_read_write_title_principals(
                 .all()
             )
             pyd_objs = [
-                imdb_pyd.TitlePrincipals(**r.__dict__) for r in results
+                imdb_pyd.TitlePrincipals.model_validate(r) for r in results
             ]  # convert to pydantic objects
             actual = [
                 dict(pyd_obj) for pyd_obj in pyd_objs
@@ -131,7 +131,7 @@ def test_read_write_title_akas(table_title_akas, connection, title_akas_data, se
                 .order_by(imdb_orm.TitleAkas.titleId)
                 .all()
             )
-            pyd_objs = [imdb_pyd.TitleAkas(**r.__dict__) for r in results]
+            pyd_objs = [imdb_pyd.TitleAkas.model_validate(r) for r in results]
             actual = [dict(pyd_obj) for pyd_obj in pyd_objs]
             assert actual == block
             transaction.rollback()
@@ -151,7 +151,7 @@ def test_read_write_title_crew(table_title_crew, connection, title_crew_data, se
                 .order_by(imdb_orm.TitleCrew.tconst)
                 .all()
             )
-            pyd_objs = [imdb_pyd.TitleCrew(**r.__dict__) for r in results]
+            pyd_objs = [imdb_pyd.TitleCrew.model_validate(r) for r in results]
             actual = [dict(pyd_obj) for pyd_obj in pyd_objs]
             assert actual == block
             transaction.rollback()
@@ -173,7 +173,7 @@ def test_read_write_title_episode(
                 .order_by(imdb_orm.TitleEpisode.tconst)
                 .all()
             )
-            pyd_objs = [imdb_pyd.TitleEpisode(**r.__dict__) for r in results]
+            pyd_objs = [imdb_pyd.TitleEpisode.model_validate(r) for r in results]
             actual = [dict(pyd_obj) for pyd_obj in pyd_objs]
             assert actual == block
             transaction.rollback()
