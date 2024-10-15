@@ -3,7 +3,12 @@ from typing import Optional
 from imdb.parser.s3 import utils as s3_utils
 
 
-class NameBasics(BaseModel):
+class NonCommercialIMDbBaseModel(BaseModel):
+    class Config:
+        orm_mode = True
+
+
+class NameBasics(NonCommercialIMDbBaseModel):
     nconst: int
     knownForTitles: Optional[str] = None
     primaryName: Optional[str] = None
@@ -24,11 +29,8 @@ class NameBasics(BaseModel):
             return None
         return s3_utils.transf_multi_imdbid(v)
 
-    class Config:
-        orm_mode = True
 
-
-class TitleAkas(BaseModel):
+class TitleAkas(NonCommercialIMDbBaseModel):
     titleId: int
     ordering: Optional[int] = None
     attributes: Optional[str] = None
@@ -45,11 +47,8 @@ class TitleAkas(BaseModel):
         except ValueError:
             return s3_utils.transf_imdbid(v)
 
-    class Config:
-        orm_mode = True
 
-
-class TitleBasics(BaseModel):
+class TitleBasics(NonCommercialIMDbBaseModel):
     tconst: int
     primaryTitle: Optional[str] = None
     originalTitle: Optional[str] = None
@@ -71,11 +70,8 @@ class TitleBasics(BaseModel):
         except ValueError:
             return s3_utils.transf_imdbid(v)
 
-    class Config:
-        orm_mode = True
 
-
-class TitleCrew(BaseModel):
+class TitleCrew(NonCommercialIMDbBaseModel):
     tconst: int
     writers: Optional[str] = None
     directors: Optional[str] = None
@@ -95,11 +91,8 @@ class TitleCrew(BaseModel):
     def check_directors(cls, v):
         return s3_utils.transf_multi_imdbid(v)
 
-    class Config:
-        orm_mode = True
 
-
-class TitleEpisode(BaseModel):
+class TitleEpisode(NonCommercialIMDbBaseModel):
     tconst: int
     parentTconst: Optional[int] = None
     seasonNumber: Optional[int] = None
@@ -119,11 +112,8 @@ class TitleEpisode(BaseModel):
         except ValueError:
             return s3_utils.transf_imdbid(v)
 
-    class Config:
-        orm_mode = True
 
-
-class TitlePrincipals(BaseModel):
+class TitlePrincipals(NonCommercialIMDbBaseModel):
     tconst: int
     nconst: int
     ordering: Optional[int] = None
@@ -145,11 +135,8 @@ class TitlePrincipals(BaseModel):
         except ValueError:
             return s3_utils.transf_imdbid(v)
 
-    class Config:
-        orm_mode = True
 
-
-class TitleRatings(BaseModel):
+class TitleRatings(NonCommercialIMDbBaseModel):
     tconst: int
     averageRating: Optional[float] = None
     numVotes: Optional[int] = None
@@ -160,6 +147,3 @@ class TitleRatings(BaseModel):
             return int(v)
         except ValueError:
             return s3_utils.transf_imdbid(v)
-
-    class Config:
-        orm_mode = True

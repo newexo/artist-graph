@@ -11,10 +11,7 @@ class NameBasics(Base):
     knownForTitles = Column(Text)
     primaryName = Column(Text)
     primaryProfession = Column(Text)
-    s_soundex = Column(String(5))
-    ns_soundex = Column(String(5))
     deathYear = Column(Integer)
-    sn_soundex = Column(String(5))
     birthYear = Column(Integer)
 
 
@@ -28,7 +25,6 @@ class TitleAkas(Base):
     title = Column(Text)
     isOriginalTitle = Column(Integer)  # BOOLEAN as INTEGER in SQLite
     language = Column(String(5))
-    t_soundex = Column(String(5))
     region = Column(String(5))
 
 
@@ -43,7 +39,6 @@ class TitleBasics(Base):
     startYear = Column(Integer)
     endYear = Column(Integer)
     runtimeMinutes = Column(Integer)
-    t_soundex = Column(String(5))
     genres = Column(Text)
 
 

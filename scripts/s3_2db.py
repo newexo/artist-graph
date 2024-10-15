@@ -49,7 +49,7 @@ def import_file(fn, engine):
             headers = utils.process_tsv_gz_line(line)
             builder = table_builder.TableBuilder(fn_basename, headers)
             logging.debug(f"headers of file {fn}: {','.join(headers)}")
-            table = builder.build_table()
+            table = builder.build_table(metadata)
             try:
                 table.drop(bind=engine)
                 logging.debug(f"table {table.name} dropped")
