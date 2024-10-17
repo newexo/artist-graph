@@ -12,7 +12,6 @@ from sqlalchemy.orm import Session
 from art_graph import directories
 from art_graph.cinema_data_providers.imdb_non_commercial import (
     locations,
-    table_builder,
     utils,
     imdb_non_commercial_pydantic_models as imdb_pyd,
     imdb_non_commercial_orm_models as imdb_orm,
@@ -50,10 +49,10 @@ def import_file(fn, engine):
     with gzip.GzipFile(fn, "rb") as gz_file, Session(bind=engine) as session:
         line = gz_file.readline()
         headers = utils.process_tsv_gz_line(line)
-        builder = table_builder.TableBuilder(fn_basename, headers)
+        table_name = utils.table_name_from_file(fn)
         logging.debug(f"headers of file {fn}: {','.join(headers)}")
         try:
-            for block in fetch_block(gz_file, headers, builder.table_name):
+            for block in fetch_block(gz_file, headers, table_name):
                 session.add_all(block)
                 session.commit()
                 count += len(block)
@@ -62,7 +61,7 @@ def import_file(fn, engine):
                 # if count >= 3 * BLOCK_SIZE:
                 #     break
         except exc.SQLAlchemyError as e:
-            logging.error(f"error processing data on table {builder.table_name}")
+            logging.error(f"error processing data on table {table_name}")
             logging.error(f"Exception: {e}")
             logging.error(traceback.format_exc())
             logging.debug("Rolling back transaction")
