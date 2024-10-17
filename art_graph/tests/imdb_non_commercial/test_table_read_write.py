@@ -108,9 +108,7 @@ def test_read_write_title_ratings(title_ratings_data, session):
         session.rollback()
 
 
-def test_read_write_title_principals(
-    title_principals_data, session
-):
+def test_read_write_title_principals(title_principals_data, session):
     block = title_principals_data
     # First validate the data
     pyd_block = [imdb_pyd.TitlePrincipals(**r) for r in block]

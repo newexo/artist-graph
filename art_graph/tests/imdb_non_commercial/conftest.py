@@ -2,8 +2,9 @@ import pytest
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-from art_graph.cinema_data_providers.imdb_non_commercial import table_builder
-from ...cinema_data_providers.imdb_non_commercial import imdb_non_commercial_orm_models as imdb_orm
+from ...cinema_data_providers.imdb_non_commercial import (
+    imdb_non_commercial_orm_models as imdb_orm,
+)
 
 
 @pytest.fixture
@@ -23,33 +24,10 @@ def session(engine):
 
 
 @pytest.fixture
-def table_builder_title_principals():
-    """Fixture to create a TableBuilder for the 'title.principals.tsv.gz' file."""
-    fn = "title.principals.tsv.gz"
-    headers = ["tconst", "ordering", "nconst", "category", "job", "characters"]
-    return table_builder.TableBuilder(fn=fn, headers=headers)
-
-
-@pytest.fixture
 def table_title_principals(engine, metadata, table_builder_title_principals):
     table = table_builder_title_principals.build_table(metadata)
     metadata.create_all(bind=engine, tables=[table])
     return table
-
-
-@pytest.fixture
-def table_builder_name_basics():
-    """Fixture to create a TableBuilder for the 'name.basics.tsv.gz' file."""
-    fn = "name.basics.tsv.gz"
-    headers = [
-        "nconst",
-        "primaryName",
-        "birthYear",
-        "deathYear",
-        "primaryProfession",
-        "knownForTitles",
-    ]
-    return table_builder.TableBuilder(fn=fn, headers=headers)
 
 
 @pytest.fixture
@@ -60,36 +38,10 @@ def table_name_basics(engine, metadata, table_builder_name_basics):
 
 
 @pytest.fixture
-def table_builder_title_basics():
-    """Fixture to create a TableBuilder for the 'title.basics.tsv.gz' file."""
-    fn = "title.basics.tsv.gz"
-    headers = [
-        "tconst",
-        "titleType",
-        "primaryTitle",
-        "originalTitle",
-        "isAdult",
-        "startYear",
-        "endYear",
-        "runtimeMinutes",
-        "genres",
-    ]
-    return table_builder.TableBuilder(fn=fn, headers=headers)
-
-
-@pytest.fixture
 def table_title_basics(engine, metadata, table_builder_title_basics):
     table = table_builder_title_basics.build_table(metadata)
     metadata.create_all(bind=engine, tables=[table])
     return table
-
-
-@pytest.fixture
-def table_builder_title_ratings():
-    """Fixture to create a TableBuilder for the 'title.ratings.tsv.gz' file."""
-    fn = "title.ratings.tsv.gz"
-    headers = ["tconst", "averageRating", "numVotes"]
-    return table_builder.TableBuilder(fn=fn, headers=headers)
 
 
 @pytest.fixture
@@ -100,23 +52,6 @@ def table_title_ratings(engine, metadata, table_builder_title_ratings):
 
 
 @pytest.fixture
-def table_builder_title_akas():
-    """Fixture to create a TableBuilder for the 'title.akas.tsv.gz' file."""
-    fn = "title.akas.tsv.gz"
-    headers = [
-        "titleId",
-        "ordering",
-        "title",
-        "region",
-        "language",
-        "types",
-        "attributes",
-        "isOriginalTitle",
-    ]
-    return table_builder.TableBuilder(fn=fn, headers=headers)
-
-
-@pytest.fixture
 def table_title_akas(engine, metadata, table_builder_title_akas):
     table = table_builder_title_akas.build_table(metadata)
     metadata.create_all(bind=engine, tables=[table])
@@ -124,26 +59,10 @@ def table_title_akas(engine, metadata, table_builder_title_akas):
 
 
 @pytest.fixture
-def table_builder_title_crew():
-    """Fixture to create a TableBuilder for the 'title.crew.tsv.gz' file."""
-    fn = "title.crew.tsv.gz"
-    headers = ["tconst", "directors", "writers"]
-    return table_builder.TableBuilder(fn=fn, headers=headers)
-
-
-@pytest.fixture
 def table_title_crew(engine, metadata, table_builder_title_crew):
     table = table_builder_title_crew.build_table(metadata)
     metadata.create_all(bind=engine, tables=[table])
     return table
-
-
-@pytest.fixture
-def table_builder_title_episode():
-    """Fixture to create a TableBuilder for the 'title.episode.tsv.gz' file."""
-    fn = "title.episode.tsv.gz"
-    headers = ["tconst", "parentTconst", "seasonNumber", "episodeNumber"]
-    return table_builder.TableBuilder(fn=fn, headers=headers)
 
 
 @pytest.fixture

@@ -1,6 +1,12 @@
 from typing import Any, List, Dict, Optional, Callable
 from imdb.parser.s3.utils import DB_TRANSFORM
 
+from .constants import TSV_EXT
+
+
+def table_name_from_file(fn: str) -> str:
+    return fn.replace(TSV_EXT, "").replace(".", "_")
+
 
 def process_tsv_gz_line(line: bytes) -> List[str]:
     """Process a line from a .tsv.gz file (expected to be a byte string)."""
