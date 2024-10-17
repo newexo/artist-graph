@@ -105,7 +105,7 @@ if __name__ == "__main__":
         "--db-uri",
         type=str,
         default=None,  # Default value
-        help="Specify the database URI."
+        help="Specify the database URI.",
     )
 
     args = parser.parse_args()
