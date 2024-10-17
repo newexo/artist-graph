@@ -49,7 +49,7 @@ def import_file(fn, engine):
     with gzip.GzipFile(fn, "rb") as gz_file, Session(bind=engine) as session:
         line = gz_file.readline()
         headers = utils.process_tsv_gz_line(line)
-        table_name = utils.table_name_from_file(fn)
+        table_name = utils.table_name_from_file(fn_basename)
         logging.debug(f"headers of file {fn}: {','.join(headers)}")
         try:
             for block in fetch_block(gz_file, headers, table_name):
