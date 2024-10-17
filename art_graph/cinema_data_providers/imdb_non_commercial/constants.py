@@ -1,2 +1,1 @@
 TSV_EXT = ".tsv.gz"
-BLOCK_SIZE = 10000

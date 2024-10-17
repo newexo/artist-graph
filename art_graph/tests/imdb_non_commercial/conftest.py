@@ -1,9 +1,9 @@
 import pytest
-import sqlalchemy
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, DeclarativeBase
+from sqlalchemy.orm import sessionmaker
 
 from art_graph.cinema_data_providers.imdb_non_commercial import table_builder
+from ...cinema_data_providers.imdb_non_commercial import imdb_non_commercial_orm_models as imdb_orm
 
 
 @pytest.fixture
@@ -14,14 +14,12 @@ def engine():
 
 @pytest.fixture(scope="function")
 def session(engine):
-    Session = sessionmaker(bind=engine)
-    with Session() as session:
+    imdb_orm.Base.metadata.create_all(bind=engine)
+
+    with sessionmaker(bind=engine)() as session:
         yield session
 
-
-@pytest.fixture
-def metadata():
-    return sqlalchemy.MetaData()
+    imdb_orm.Base.metadata.drop_all(bind=engine)
 
 
 @pytest.fixture

@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from typing import List
 import sqlalchemy
 
-from art_graph.cinema_data_providers.imdb_non_commercial.constants import TSV_EXT
+from .constants import TSV_EXT
 
 from imdb.parser.s3.utils import DB_TRANSFORM
 

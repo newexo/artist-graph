@@ -8,7 +8,26 @@ from ...cinema_data_providers.imdb_non_commercial import (
 )
 
 
-def test_read_write_name_basics(table_name_basics, name_basics_data, session):
+def test_name2orm():
+    assert imdb_orm.NAME2ORM["name_basics"] == imdb_orm.NameBasics
+    assert imdb_orm.NAME2ORM["title_akas"] == imdb_orm.TitleAkas
+    assert imdb_orm.NAME2ORM["title_basics"] == imdb_orm.TitleBasics
+    assert imdb_orm.NAME2ORM["title_crew"] == imdb_orm.TitleCrew
+    assert imdb_orm.NAME2ORM["title_episode"] == imdb_orm.TitleEpisode
+    assert imdb_orm.NAME2ORM["title_principals"] == imdb_orm.TitlePrincipals
+
+
+def test_name2pyd():
+    assert set(imdb_pyd.NAME2PYD.keys()) == set(imdb_orm.NAME2ORM.keys())
+    assert imdb_pyd.NAME2PYD["name_basics"] == imdb_pyd.NameBasics
+    assert imdb_pyd.NAME2PYD["title_akas"] == imdb_pyd.TitleAkas
+    assert imdb_pyd.NAME2PYD["title_basics"] == imdb_pyd.TitleBasics
+    assert imdb_pyd.NAME2PYD["title_crew"] == imdb_pyd.TitleCrew
+    assert imdb_pyd.NAME2PYD["title_episode"] == imdb_pyd.TitleEpisode
+    assert imdb_pyd.NAME2PYD["title_principals"] == imdb_pyd.TitlePrincipals
+
+
+def test_read_write_name_basics(name_basics_data, session):
     block = name_basics_data
     # First validate the data
     pyd_block = [imdb_pyd.NameBasics(**r) for r in block]
@@ -35,7 +54,7 @@ def test_read_write_name_basics(table_name_basics, name_basics_data, session):
         session.rollback()
 
 
-def test_read_write_title_basics(table_title_basics, title_basics_data, session):
+def test_read_write_title_basics(title_basics_data, session):
     block = title_basics_data
     # First validate the data
     pyd_block = [imdb_pyd.TitleBasics(**r) for r in block]
@@ -62,7 +81,7 @@ def test_read_write_title_basics(table_title_basics, title_basics_data, session)
         session.rollback()
 
 
-def test_read_write_title_ratings(table_title_ratings, title_ratings_data, session):
+def test_read_write_title_ratings(title_ratings_data, session):
     block = title_ratings_data
     # First validate the data
     pyd_block = [imdb_pyd.TitleRatings(**r) for r in block]
@@ -90,7 +109,7 @@ def test_read_write_title_ratings(table_title_ratings, title_ratings_data, sessi
 
 
 def test_read_write_title_principals(
-    table_title_principals, title_principals_data, session
+    title_principals_data, session
 ):
     block = title_principals_data
     # First validate the data
@@ -118,7 +137,7 @@ def test_read_write_title_principals(
         session.rollback()
 
 
-def test_read_write_title_akas(table_title_akas, title_akas_data, session):
+def test_read_write_title_akas(title_akas_data, session):
     block = title_akas_data
     # First validate the data
     pyd_block = [imdb_pyd.TitleAkas(**r) for r in block]
@@ -139,7 +158,7 @@ def test_read_write_title_akas(table_title_akas, title_akas_data, session):
         session.rollback()
 
 
-def test_read_write_title_crew(table_title_crew, title_crew_data, session):
+def test_read_write_title_crew(title_crew_data, session):
     block = title_crew_data
     # First validate the data
     pyd_block = [imdb_pyd.TitleCrew(**r) for r in block]
@@ -160,7 +179,7 @@ def test_read_write_title_crew(table_title_crew, title_crew_data, session):
         session.rollback()
 
 
-def test_read_write_title_episode(table_title_episode, title_episode_data, session):
+def test_read_write_title_episode(title_episode_data, session):
     block = title_episode_data
     # First validate the data
     pyd_block = [imdb_pyd.TitleEpisode(**r) for r in block]

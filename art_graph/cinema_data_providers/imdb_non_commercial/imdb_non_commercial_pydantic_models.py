@@ -170,3 +170,14 @@ class TitleRatings(NonCommercialIMDbBaseModel):
 
     def to_orm(self) -> imdb_orm.TitleRatings:
         return imdb_orm.TitleRatings(**dict(self))
+
+
+NAME2PYD = {
+    imdb_orm.NameBasics.__tablename__: NameBasics,
+    imdb_orm.TitleAkas.__tablename__: TitleAkas,
+    imdb_orm.TitleBasics.__tablename__: TitleBasics,
+    imdb_orm.TitleCrew.__tablename__: TitleCrew,
+    imdb_orm.TitleEpisode.__tablename__: TitleEpisode,
+    imdb_orm.TitlePrincipals.__tablename__: TitlePrincipals,
+    imdb_orm.TitleRatings.__tablename__: TitleRatings,
+}
