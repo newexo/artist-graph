@@ -182,7 +182,7 @@ def verify_columns(columns, expected_columns, table_name):
         ), f"Unexpected column type for {column_name} in {table_name}"
 
 
-def test_create_table_name_basics(table_name_basics, engine):
+def test_create_table_name_basics(session, engine):
     inspector = inspect(engine)
 
     # Get column details for the 'name_basics' table
@@ -200,7 +200,7 @@ def test_create_table_name_basics(table_name_basics, engine):
     verify_columns(columns, expected_columns, "name_basics")
 
 
-def test_create_table_title_basics(table_title_basics, engine):
+def test_create_table_title_basics(session, engine):
     inspector = inspect(engine)
 
     # Get column details for the 'title_basics' table
@@ -221,7 +221,7 @@ def test_create_table_title_basics(table_title_basics, engine):
     verify_columns(columns, expected_columns, "title_basics")
 
 
-def test_create_table_title_ratings(table_title_ratings, engine):
+def test_create_table_title_ratings(session, engine):
     inspector = inspect(engine)
 
     # Get column details for the 'title_ratings' table
@@ -236,13 +236,14 @@ def test_create_table_title_ratings(table_title_ratings, engine):
     verify_columns(columns, expected_columns, "title_ratings")
 
 
-def test_create_table_title_principals(table_title_principals, engine):
+def test_create_table_title_principals(session, engine):
     inspector = inspect(engine)
 
     # Get column details for the 'title_principals' table
     columns = inspector.get_columns("title_principals")
 
     expected_columns = {
+        "id": sqltypes.INTEGER,
         "tconst": sqltypes.INTEGER,
         "ordering": sqltypes.INTEGER,
         "nconst": sqltypes.INTEGER,
@@ -254,13 +255,14 @@ def test_create_table_title_principals(table_title_principals, engine):
     verify_columns(columns, expected_columns, "title_principals")
 
 
-def test_create_table_title_akas(table_title_akas, engine):
+def test_create_table_title_akas(session, engine):
     inspector = inspect(engine)
 
     # Get column details for the 'title_akas' table
     columns = inspector.get_columns("title_akas")
 
     expected_columns = {
+        "id": sqltypes.INTEGER,
         "titleId": sqltypes.INTEGER,
         "ordering": sqltypes.INTEGER,
         "title": sqltypes.TEXT,
@@ -274,7 +276,7 @@ def test_create_table_title_akas(table_title_akas, engine):
     verify_columns(columns, expected_columns, "title_akas")
 
 
-def test_create_table_title_crew(table_title_crew, engine):
+def test_create_table_title_crew(session, engine):
     inspector = inspect(engine)
 
     # Get column details for the 'title_crew' table
@@ -289,7 +291,7 @@ def test_create_table_title_crew(table_title_crew, engine):
     verify_columns(columns, expected_columns, "title_crew")
 
 
-def test_create_table_title_episode(table_title_episode, engine):
+def test_create_table_title_episode(session, engine):
     inspector = inspect(engine)
 
     # Get column details for the 'title_episode' table

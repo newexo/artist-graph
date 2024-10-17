@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Text, Float
+from sqlalchemy import Column, Integer, String, Text, Float, Boolean
 from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
@@ -18,12 +18,14 @@ class NameBasics(Base):
 class TitleAkas(Base):
     __tablename__ = "title_akas"
 
-    titleId = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True, autoincrement=True)
+
+    titleId = Column(Integer)
     ordering = Column(Integer)
     attributes = Column(String(127))
     types = Column(String(31))
     title = Column(Text)
-    isOriginalTitle = Column(Integer)  # BOOLEAN as INTEGER in SQLite
+    isOriginalTitle = Column(Boolean)
     language = Column(String(5))
     region = Column(String(5))
 
@@ -35,7 +37,7 @@ class TitleBasics(Base):
     primaryTitle = Column(Text)
     originalTitle = Column(Text)
     titleType = Column(String(16))
-    isAdult = Column(Integer)  # BOOLEAN as INTEGER in SQLite
+    isAdult = Column(Boolean)
     startYear = Column(Integer)
     endYear = Column(Integer)
     runtimeMinutes = Column(Integer)
@@ -62,8 +64,10 @@ class TitleEpisode(Base):
 class TitlePrincipals(Base):
     __tablename__ = "title_principals"
 
-    tconst = Column(Integer, primary_key=True)
-    nconst = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True, autoincrement=True)
+
+    tconst = Column(Integer)
+    nconst = Column(Integer)
     ordering = Column(Integer)
     job = Column(String(1024))
     category = Column(String(64))
@@ -76,3 +80,14 @@ class TitleRatings(Base):
     tconst = Column(Integer, primary_key=True)
     averageRating = Column(Float)
     numVotes = Column(Integer)
+
+
+NAME2ORM = {
+    NameBasics.__tablename__: NameBasics,
+    TitleAkas.__tablename__: TitleAkas,
+    TitleBasics.__tablename__: TitleBasics,
+    TitleCrew.__tablename__: TitleCrew,
+    TitleEpisode.__tablename__: TitleEpisode,
+    TitlePrincipals.__tablename__: TitlePrincipals,
+    TitleRatings.__tablename__: TitleRatings,
+}

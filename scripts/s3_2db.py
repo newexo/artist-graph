@@ -1,36 +1,40 @@
 import os
 import gzip
 import argparse
+import time
 import logging
 import traceback
 import sqlalchemy
 from sqlalchemy import exc
-import time
+from sqlalchemy.orm import Session
+
 
 from art_graph import directories
-from art_graph.cinema_data_providers.imdb_non_commercial.constants import (
-    BLOCK_SIZE,
-)
 from art_graph.cinema_data_providers.imdb_non_commercial import (
     locations,
     table_builder,
     utils,
+    imdb_non_commercial_pydantic_models as imdb_pyd,
+    imdb_non_commercial_orm_models as imdb_orm,
 )
 
 # how many blocks to write before logging
+BLOCK_SIZE = 10000
 LOG_BLOCK_SIZE = 10
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
-metadata = sqlalchemy.MetaData()
 
 
-def fetch_block(fd, headers, table):
+def fetch_block(fd, headers, table_name):
+    pyd_cls = imdb_pyd.NAME2PYD[table_name]
     block = []
-    transformers = utils.get_data_transformers(table.name)
+    transformers = utils.get_data_transformers(table_name)
     for line in fd:
-        info = utils.line2info(line, headers, table.name, transformers)
-        block.append(info)
+        info = utils.line2info(line, headers, table_name, transformers)
+        pyd = pyd_cls(**info)
+        orm = pyd.to_orm()
+        block.append(orm)
         if len(block) >= BLOCK_SIZE:
             yield block
             block = []
@@ -40,50 +44,31 @@ def fetch_block(fd, headers, table):
 
 def import_file(fn, engine):
     logging.info(f"begin processing file {fn}")
-    connection = engine.connect()
-    try:
-        count = 0
-        fn_basename = os.path.basename(fn)
-        with gzip.GzipFile(fn, "rb") as gz_file:
-            line = gz_file.readline()
-            headers = utils.process_tsv_gz_line(line)
-            builder = table_builder.TableBuilder(fn_basename, headers)
-            logging.debug(f"headers of file {fn}: {','.join(headers)}")
-            table = builder.build_table(metadata)
-            try:
-                table.drop(bind=engine)
-                logging.debug(f"table {table.name} dropped")
-            except exc.SQLAlchemyError as e:
-                logging.debug(f"table {table.name} not dropped: {e}")
-            insert = table.insert()
-            metadata.create_all(bind=engine, tables=[table])
-            try:
-                for block in fetch_block(gz_file, headers, table):
-                    logging.debug("Starting transaction")
-                    with connection.begin() as transaction:
-                        try:
-                            connection.execute(insert, block)
-                            logging.debug("Committing transaction")
-                        except Exception as e:
-                            logging.error(
-                                f"error processing data: {len(block)} entries lost: {e}"
-                            )
-                            logging.error(f"Exception: {e}")
-                            logging.error(traceback.format_exc())
-                            logging.debug("Rolling back transaction")
-                            transaction.rollback()
-                            continue
-                    count += len(block)
-                    if count % (BLOCK_SIZE * LOG_BLOCK_SIZE) == 0:
-                        logging.info(f"processed file {fn}: {count} entries")
-                    # if count >= 3 * BLOCK_SIZE:
-                    #     break
-            except exc.SQLAlchemyError as e:
-                logging.error(f"error processing data on table {table.name}: {e}")
-            logging.info(f"processed file {fn}: {count} entries")
 
-    finally:
-        connection.close()
+    count = 0
+    fn_basename = os.path.basename(fn)
+    with gzip.GzipFile(fn, "rb") as gz_file, Session(bind=engine) as session:
+        line = gz_file.readline()
+        headers = utils.process_tsv_gz_line(line)
+        builder = table_builder.TableBuilder(fn_basename, headers)
+        logging.debug(f"headers of file {fn}: {','.join(headers)}")
+        try:
+            for block in fetch_block(gz_file, headers, builder.table_name):
+                session.add_all(block)
+                session.commit()
+                count += len(block)
+                if count % (BLOCK_SIZE * LOG_BLOCK_SIZE) == 0:
+                    logging.info(f"processing file {fn}: {count} entries")
+                # if count >= 3 * BLOCK_SIZE:
+                #     break
+        except exc.SQLAlchemyError as e:
+            logging.error(f"error processing data on table {builder.table_name}")
+            logging.error(f"Exception: {e}")
+            logging.error(traceback.format_exc())
+            logging.debug("Rolling back transaction")
+            session.rollback()
+        finally:
+            logging.info(f"processed file {fn}: {count} entries")
 
 
 def main(db_name, db_uri=None):
@@ -92,7 +77,10 @@ def main(db_name, db_uri=None):
         engine = sqlalchemy.create_engine(db_uri, echo=False)
     else:
         engine = locations.get_sqlite_engine(db_name)
-    metadata.bind = engine
+
+    imdb_orm.Base.metadata.drop_all(bind=engine)
+    imdb_orm.Base.metadata.create_all(bind=engine)
+
     fns = [directories.data(fn) for fn in locations.imdb_files]
     for fn in fns:
         if not os.path.isfile(fn):
