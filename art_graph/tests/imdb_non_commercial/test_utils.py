@@ -1,7 +1,7 @@
 import pytest
 from typing import List
 
-from ...cinema_data_providers.imdb_non_commercial import utils
+from ...cinema_data_providers.imdb_non_commercial import utils, imdb_non_commercial_pydantic_models as imdb_pyd
 
 
 @pytest.fixture
@@ -57,8 +57,8 @@ def test_tsv_gz_line_info(
 def test_process_line_info(title_principals_line_raw_info):
     info = title_principals_line_raw_info
     table_name = "title_principals"
-    data_transf = utils.get_data_transformers(table_name)
-    utils.process_line_info(info, data_transf, table_name)
+    pyd_cls = imdb_pyd.NAME2PYD[table_name]
+    pyd = pyd_cls(**info)
     expected = {
         "tconst": 1,
         "ordering": 1,
@@ -67,7 +67,7 @@ def test_process_line_info(title_principals_line_raw_info):
         "job": None,
         "characters": '["Self"]',
     }
-    actual = info
+    actual = dict(pyd)
     assert actual == expected
 
 
@@ -86,7 +86,10 @@ def test_name_basics():
     assert headers == expected
 
     line = b"nm0000001\tFred Astaire\t1899\t1987\tactor,miscellaneous,producer\ttt0072308,tt0050419,tt0053137,tt0027125\n"
-    actual = utils.line2info(line, headers, table_name)
+    info = utils.line2info(line, headers)
+    pyd_cls = imdb_pyd.NAME2PYD[table_name]
+    pyd = pyd_cls(**info)
+    actual = dict(pyd)
     expected = {
         "nconst": 1,
         "primaryName": "Fred Astaire",
@@ -115,7 +118,10 @@ def test_title_akas():
     assert headers == expected
 
     line = b"tt0000001\t1\tCarmencita\t\\N\t\\N\toriginal\t\\N\t1\n"
-    actual = utils.line2info(line, headers, table_name)
+    info = utils.line2info(line, headers)
+    pyd_cls = imdb_pyd.NAME2PYD[table_name]
+    pyd = pyd_cls(**info)
+    actual = dict(pyd)
     expected = {
         "titleId": 1,
         "ordering": 1,
@@ -129,7 +135,10 @@ def test_title_akas():
     assert actual == expected
 
     line = b"tt0000001\t2\tCarmencita\tDE\t\\N\t\\N\tliteral title\t0\n"
-    actual = utils.line2info(line, headers, table_name)
+    info = utils.line2info(line, headers)
+    pyd_cls = imdb_pyd.NAME2PYD[table_name]
+    pyd = pyd_cls(**info)
+    actual = dict(pyd)
     expected = {
         "titleId": 1,
         "ordering": 2,
@@ -161,7 +170,10 @@ def test_title_basics():
     assert headers == expected
 
     line = b"tt0000001\tshort\tCarmencita\tCarmencita\t0\t1894\t\\N\t1\tDocumentary,Short\n"
-    actual = utils.line2info(line, headers, table_name)
+    info = utils.line2info(line, headers)
+    pyd_cls = imdb_pyd.NAME2PYD[table_name]
+    pyd = pyd_cls(**info)
+    actual = dict(pyd)
     expected = {
         "tconst": 1,
         "titleType": "short",
@@ -184,7 +196,10 @@ def test_title_crew():
     assert headers == expected
 
     line = b"tt0000001\tnm0005690\t\\N\n"
-    actual = utils.line2info(line, headers, table_name)
+    info = utils.line2info(line, headers)
+    pyd_cls = imdb_pyd.NAME2PYD[table_name]
+    pyd = pyd_cls(**info)
+    actual = dict(pyd)
     expected = {"tconst": 1, "directors": "0005690", "writers": None}
     assert actual == expected
 
@@ -197,7 +212,10 @@ def test_title_episode():
     assert headers == expected
 
     line = b"tt0041951\ttt0041038\t1\t9\n"
-    actual = utils.line2info(line, headers, table_name)
+    info = utils.line2info(line, headers)
+    pyd_cls = imdb_pyd.NAME2PYD[table_name]
+    pyd = pyd_cls(**info)
+    actual = dict(pyd)
     expected = {
         "tconst": 41951,
         "parentTconst": 41038,
@@ -215,6 +233,9 @@ def test_title_ratings():
     assert headers == expected
 
     line = b"tt0000001\t5.7\t2089\n"
-    actual = utils.line2info(line, headers, table_name)
+    info = utils.line2info(line, headers)
+    pyd_cls = imdb_pyd.NAME2PYD[table_name]
+    pyd = pyd_cls(**info)
+    actual = dict(pyd)
     expected = {"tconst": 1, "averageRating": 5.7, "numVotes": 2089}
     assert actual == expected

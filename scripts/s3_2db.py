@@ -28,9 +28,8 @@ logger.setLevel(logging.INFO)
 def fetch_block(fd, headers, table_name):
     pyd_cls = imdb_pyd.NAME2PYD[table_name]
     block = []
-    transformers = utils.get_data_transformers(table_name)
     for line in fd:
-        info = utils.line2info(line, headers, table_name, transformers)
+        info = utils.line2info(line, headers)
         pyd = pyd_cls(**info)
         orm = pyd.to_orm()
         block.append(orm)
