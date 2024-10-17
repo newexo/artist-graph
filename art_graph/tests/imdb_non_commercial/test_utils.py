@@ -1,7 +1,10 @@
 import pytest
 from typing import List
 
-from ...cinema_data_providers.imdb_non_commercial import utils, imdb_non_commercial_pydantic_models as imdb_pyd
+from ...cinema_data_providers.imdb_non_commercial import (
+    utils,
+    imdb_non_commercial_pydantic_models as imdb_pyd,
+)
 
 
 @pytest.fixture
