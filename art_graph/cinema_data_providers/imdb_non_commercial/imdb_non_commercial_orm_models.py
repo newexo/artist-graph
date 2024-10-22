@@ -8,7 +8,7 @@ Base = declarative_base()
 class NameBasics(Base):
     __tablename__ = "name_basics"
 
-    nconst = Column(Integer, primary_key=True)
+    nconst = Column(Integer, primary_key=True, index=True)
     knownForTitles = Column(Text)
     primaryName = Column(Text)
     primaryProfession = Column(Text)
@@ -21,7 +21,7 @@ class NameBasics(Base):
 class TitleBasics(Base):
     __tablename__ = "title_basics"
 
-    tconst = Column(Integer, primary_key=True)
+    tconst = Column(Integer, primary_key=True, index=True)
     primaryTitle = Column(Text)
     originalTitle = Column(Text)
     titleType = Column(String(16))
@@ -100,6 +100,21 @@ class TitleRatings(Base):
     numVotes = Column(Integer)
 
     title_basics = relationship("TitleBasics", back_populates="title_ratings")
+
+
+class NConstTemp(Base):
+    __tablename__ = "nconst_temp"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    nconst = Column(Integer, index=True)
+
+
+class TConstTemp(Base):
+    __tablename__ = "tconst_temp"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    tconst = Column(Integer, index=True)
+
 
 
 NAME2ORM = {

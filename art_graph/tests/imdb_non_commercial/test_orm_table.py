@@ -34,6 +34,16 @@ def test_create_table_name_basics(session, engine):
     verify_columns(columns, expected_columns, "name_basics")
 
 
+def test_indexes_name_basics(session, engine):
+    inspector = inspect(engine)
+
+    # Get index details for the 'name_basics' table
+    indexes = inspector.get_indexes("name_basics")
+
+    assert len(indexes) == 1
+    assert indexes[0]["name"] == "ix_name_basics_nconst"
+
+
 def test_create_table_title_basics(session, engine):
     inspector = inspect(engine)
 
@@ -53,6 +63,16 @@ def test_create_table_title_basics(session, engine):
     }
 
     verify_columns(columns, expected_columns, "title_basics")
+
+
+def test_indexes_title_basics(session, engine):
+    inspector = inspect(engine)
+
+    # Get index details for the 'title_basics' table
+    indexes = inspector.get_indexes("title_basics")
+
+    assert len(indexes) == 1
+    assert indexes[0]["name"] == "ix_title_basics_tconst"
 
 
 def test_create_table_title_ratings(session, engine):
