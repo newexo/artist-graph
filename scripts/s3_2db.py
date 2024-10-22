@@ -5,6 +5,7 @@ import logging
 import traceback
 import sqlalchemy
 from sqlalchemy import exc
+import time
 
 from art_graph import directories
 from art_graph.cinema_data_providers.imdb_non_commercial.constants import (
@@ -86,6 +87,7 @@ def import_file(fn, engine):
 
 
 def main(db_name, db_uri=None):
+    t0 = time.time()
     if db_uri:
         engine = sqlalchemy.create_engine(db_uri, echo=False)
     else:
@@ -96,7 +98,10 @@ def main(db_name, db_uri=None):
         if not os.path.isfile(fn):
             logging.debug(f"skipping file {fn}")
             continue
+        t1 = time.time()
         import_file(fn, engine)
+        logging.info(f"total time for file {fn}: {(time.time() - t1) / 60:.2f} minutes")
+    logging.info(f"total time: {(time.time() - t0) / 60:.2f} minutes")
 
 
 if __name__ == "__main__":
