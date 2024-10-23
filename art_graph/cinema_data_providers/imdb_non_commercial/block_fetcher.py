@@ -107,9 +107,19 @@ class BlockFetcher:
 
 
 def get_block_fetcher(
-    table_name, headers, session: Session, infos: LineInfos, block_size, logger: Logger, filter_missing_keys: bool
+    table_name,
+    headers,
+    session: Session,
+    infos: LineInfos,
+    block_size,
+    logger: Logger,
+    filter_missing_keys: bool,
 ) -> BlockFetcher:
-    if not filter_missing_keys or table_name == "title_basics" or table_name == "name_basics":
+    if (
+        not filter_missing_keys
+        or table_name == "title_basics"
+        or table_name == "name_basics"
+    ):
         processor = BlockProcessor()
     elif table_name == "title_principals":
         processor = BlockValidatorTitlePrincipals(table_name, session, logger)
