@@ -53,8 +53,8 @@ def import_file(fn, engine):
                     logging.info(
                         f"processing file {fn}: {processed_count} entries processed, {len(block)} inserted"
                     )
-                if processed_count >= 3 * BLOCK_SIZE:
-                    break
+                # if processed_count >= 3 * BLOCK_SIZE:
+                #     break
         except exc.SQLAlchemyError as e:
             logging.error(f"error processing data on table {table_name}")
             logging.error(f"Exception: {e}")
