@@ -116,7 +116,6 @@ class TConstTemp(Base):
     tconst = Column(Integer, index=True)
 
 
-
 NAME2ORM = {
     NameBasics.__tablename__: NameBasics,
     TitleAkas.__tablename__: TitleAkas,
