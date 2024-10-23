@@ -28,7 +28,7 @@ logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
 
-def import_file(fn, engine):
+def import_file(fn, engine, filter_missing_keys):
     logging.info(f"begin processing file {fn}")
 
     iterations = 0
@@ -41,7 +41,7 @@ def import_file(fn, engine):
         table_name = utils.table_name_from_file(fn_basename)
         infos = LineInfos(gz_file, headers)
         fetcher = get_block_fetcher(
-            table_name, headers, session, infos, BLOCK_SIZE, logger
+            table_name, headers, session, infos, BLOCK_SIZE, logger, filter_missing_keys
         )
         logging.debug(f"headers of file {fn}: {','.join(headers)}")
         try:
@@ -69,7 +69,7 @@ def import_file(fn, engine):
             )
 
 
-def main(db_name, db_uri=None):
+def main(db_name, db_uri, filter_missing_keys):
     t0 = time.time()
     if db_uri:
         engine = sqlalchemy.create_engine(db_uri, echo=False)
@@ -85,7 +85,7 @@ def main(db_name, db_uri=None):
             logging.debug(f"skipping file {fn}")
             continue
         t1 = time.time()
-        import_file(fn, engine)
+        import_file(fn, engine, filter_missing_keys)
         logging.info(f"total time for file {fn}: {(time.time() - t1) / 60:.2f} minutes")
     logging.info(f"total time: {(time.time() - t0) / 60:.2f} minutes")
 
@@ -114,6 +114,13 @@ if __name__ == "__main__":
         help="Specify the database URI.",
     )
 
+    # Add a command-line option for filtering out rows corresponding to missing nconst or tconst values
+    parser.add_argument(
+        "--filter-missing-keys",
+        action="store_true",
+        help="Filter out rows corresponding to missing nconst or tconst values.",
+    )
+
     args = parser.parse_args()
 
     # Configure logging
@@ -122,4 +129,4 @@ if __name__ == "__main__":
     else:
         logging.basicConfig(level=logging.INFO)
 
-    main(args.db_name, args.db_uri)
+    main(args.db_name, args.db_uri, args.filter_missing_keys)
