@@ -31,6 +31,7 @@ logger.setLevel(logging.INFO)
 def import_file(fn, engine):
     logging.info(f"begin processing file {fn}")
 
+    iterations = 0
     processed_count = 0
     inserted_count = 0
     fn_basename = os.path.basename(fn)
@@ -44,16 +45,17 @@ def import_file(fn, engine):
         )
         logging.debug(f"headers of file {fn}: {','.join(headers)}")
         try:
-            for block in fetcher.fetch_block(gz_file):
-                session.add_all(block)
-                session.commit()
-                processed_count += BLOCK_SIZE
+            for count, block in fetcher.fetch_block(gz_file):
+                iterations += 1
+                processed_count += count
                 inserted_count += len(block)
-                if processed_count % (BLOCK_SIZE * LOG_BLOCK_SIZE) == 0:
+                if iterations % LOG_BLOCK_SIZE == 0:
                     logging.info(
                         f"processing file {fn}: {processed_count} entries processed, {len(block)} inserted"
                     )
-                # if processed_count >= 3 * BLOCK_SIZE:
+                session.add_all(block)
+                session.commit()
+                # if processed_count >= 3:
                 #     break
         except exc.SQLAlchemyError as e:
             logging.error(f"error processing data on table {table_name}")
