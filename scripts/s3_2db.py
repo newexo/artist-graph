@@ -1,125 +1,109 @@
 import os
 import gzip
 import argparse
+import time
 import logging
 import traceback
 import sqlalchemy
 from sqlalchemy import exc
-import time
+from sqlalchemy.orm import Session
+
 
 from art_graph import directories
-from art_graph.cinema_data_providers.imdb_non_commercial.constants import (
-    BLOCK_SIZE,
-)
 from art_graph.cinema_data_providers.imdb_non_commercial import (
     locations,
-    table_builder,
     utils,
+    imdb_non_commercial_orm_models as imdb_orm,
 )
+from art_graph.cinema_data_providers.imdb_non_commercial.block_fetcher import (
+    get_block_fetcher,
+)
+from art_graph.cinema_data_providers.imdb_non_commercial.line_infos import LineInfos
 
 # how many blocks to write before logging
+BLOCK_SIZE = 10000
 LOG_BLOCK_SIZE = 10
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
-metadata = sqlalchemy.MetaData()
 
 
-def fetch_block(fd, headers, table):
-    block = []
-    transformers = utils.get_data_transformers(table.name)
-    for line in fd:
-        info = utils.line2info(line, headers, table.name, transformers)
-        block.append(info)
-        if len(block) >= BLOCK_SIZE:
-            yield block
-            block = []
-    if block:
-        yield block
-
-
-def import_file(fn, engine):
+def import_file(fn, engine, filter_missing_keys):
     logging.info(f"begin processing file {fn}")
-    connection = engine.connect()
-    try:
-        count = 0
-        fn_basename = os.path.basename(fn)
-        with gzip.GzipFile(fn, "rb") as gz_file:
-            line = gz_file.readline()
-            headers = utils.process_tsv_gz_line(line)
-            builder = table_builder.TableBuilder(fn_basename, headers)
-            logging.debug(f"headers of file {fn}: {','.join(headers)}")
-            table = builder.build_table()
-            try:
-                table.drop(bind=engine)
-                logging.debug(f"table {table.name} dropped")
-            except exc.SQLAlchemyError as e:
-                logging.debug(f"table {table.name} not dropped: {e}")
-            insert = table.insert()
-            metadata.create_all(bind=engine, tables=[table])
-            try:
-                for block in fetch_block(gz_file, headers, table):
-                    logging.debug("Starting transaction")
-                    with connection.begin() as transaction:
-                        try:
-                            connection.execute(insert, block)
-                            logging.debug("Committing transaction")
-                        except Exception as e:
-                            logging.error(
-                                f"error processing data: {len(block)} entries lost: {e}"
-                            )
-                            logging.error(f"Exception: {e}")
-                            logging.error(traceback.format_exc())
-                            logging.debug("Rolling back transaction")
-                            transaction.rollback()
-                            continue
-                    count += len(block)
-                    if count % (BLOCK_SIZE * LOG_BLOCK_SIZE) == 0:
-                        logging.info(f"processed file {fn}: {count} entries")
-                    # if count >= 3 * BLOCK_SIZE:
-                    #     break
-            except exc.SQLAlchemyError as e:
-                logging.error(f"error processing data on table {table.name}: {e}")
-            logging.info(f"processed file {fn}: {count} entries")
 
-    finally:
-        connection.close()
+    iterations = 0
+    processed_count = 0
+    inserted_count = 0
+    fn_basename = os.path.basename(fn)
+    with gzip.GzipFile(fn, "rb") as gz_file, Session(bind=engine) as session:
+        line = gz_file.readline()
+        headers = utils.process_tsv_gz_line(line)
+        table_name = utils.table_name_from_file(fn_basename)
+        infos = LineInfos(gz_file, headers)
+        fetcher = get_block_fetcher(
+            table_name, headers, session, infos, BLOCK_SIZE, logger, filter_missing_keys
+        )
+        logging.debug(f"headers of file {fn}: {','.join(headers)}")
+        try:
+            for count, block in fetcher.fetch_block(gz_file):
+                iterations += 1
+                processed_count += count
+                inserted_count += len(block)
+                if iterations % LOG_BLOCK_SIZE == 0:
+                    logging.info(
+                        f"processing file {fn}: {processed_count} entries processed, {len(block)} inserted"
+                    )
+                session.add_all(block)
+                session.commit()
+                # if processed_count >= 3:
+                #     break
+        except exc.SQLAlchemyError as e:
+            logging.error(f"error processing data on table {table_name}")
+            logging.error(f"Exception: {e}")
+            logging.error(traceback.format_exc())
+            logging.debug("Rolling back transaction")
+            session.rollback()
+        finally:
+            logging.info(
+                f"processed file {fn}: {processed_count} entries processed, {inserted_count} inserted"
+            )
 
 
-def main(db_name, db_uri=None):
+def main(db_name, db_uri, filter_missing_keys):
     t0 = time.time()
     if db_uri:
         engine = sqlalchemy.create_engine(db_uri, echo=False)
     else:
         engine = locations.get_sqlite_engine(db_name)
-    metadata.bind = engine
+
+    imdb_orm.Base.metadata.drop_all(bind=engine)
+    imdb_orm.Base.metadata.create_all(bind=engine)
+
     fns = [directories.data(fn) for fn in locations.imdb_files]
     for fn in fns:
         if not os.path.isfile(fn):
             logging.debug(f"skipping file {fn}")
             continue
         t1 = time.time()
-        import_file(fn, engine)
+        import_file(fn, engine, filter_missing_keys)
         logging.info(f"total time for file {fn}: {(time.time() - t1) / 60:.2f} minutes")
     logging.info(f"total time: {(time.time() - t0) / 60:.2f} minutes")
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Process and import IMDb data with optional debug logging.")
+    parser = argparse.ArgumentParser(
+        description="Process and import IMDb data with optional debug logging."
+    )
 
     # Add a command-line option for setting the logging level to DEBUG
-    parser.add_argument(
-        "--debug",
-        action="store_true",
-        help="Enable debug logging."
-    )
+    parser.add_argument("--debug", action="store_true", help="Enable debug logging.")
 
     # Add a command-line option for specifying the database name
     parser.add_argument(
         "--db-name",
         type=str,
         default="IM01.db",  # Default value
-        help="Specify the SQLite database name (default: IM01.db)."
+        help="Specify the SQLite database name (default: IM01.db).",
     )
 
     # Add a command-line option for specifying the database URI
@@ -127,7 +111,14 @@ if __name__ == "__main__":
         "--db-uri",
         type=str,
         default=None,  # Default value
-        help="Specify the database URI."
+        help="Specify the database URI.",
+    )
+
+    # Add a command-line option for filtering out rows corresponding to missing nconst or tconst values
+    parser.add_argument(
+        "--filter-missing-keys",
+        action="store_true",
+        help="Filter out rows corresponding to missing nconst or tconst values.",
     )
 
     args = parser.parse_args()
@@ -138,4 +129,4 @@ if __name__ == "__main__":
     else:
         logging.basicConfig(level=logging.INFO)
 
-    main(args.db_name, args.db_uri)
+    main(args.db_name, args.db_uri, args.filter_missing_keys)
