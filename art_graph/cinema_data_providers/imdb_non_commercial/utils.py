@@ -1,4 +1,4 @@
-from typing import Any, List, Dict, Optional
+from typing import List, Dict, Optional
 
 from .constants import TSV_EXT
 
