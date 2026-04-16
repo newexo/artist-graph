@@ -76,7 +76,7 @@ class Movie(BaseModel):
         return v
 
 
-class Actor(BaseModel):
+class Person(BaseModel):
     adult: bool
     gender: int
     id: int
@@ -95,8 +95,71 @@ class MovieSearchResults(BaseModel):
     total_results: int
 
 
-class ActorSearchResults(BaseModel):
+class PersonSearchResults(BaseModel):
     page: int
-    results: List[Actor]
+    results: List[Person]
     total_pages: int
     total_results: int
+
+
+class CastMember(Person):
+    """A Person appearing in a movie's cast.
+
+    Matches one entry in /movie/{id}/credits.cast.
+    """
+
+    known_for: List[Movie] = Field(default_factory=list)
+    cast_id: Optional[int] = None
+    character: Optional[str] = None
+    credit_id: Optional[str] = None
+    order: Optional[int] = None
+
+
+class CrewMember(Person):
+    """A Person serving on a movie's crew (writer, director, producer, etc.).
+
+    Matches one entry in /movie/{id}/credits.crew.
+    """
+
+    known_for: List[Movie] = Field(default_factory=list)
+    credit_id: Optional[str] = None
+    department: Optional[str] = None
+    job: Optional[str] = None
+
+
+class MovieCreditRole(Movie):
+    """A Movie in which a person acted.
+
+    Matches one entry in /person/{id}/movie_credits.cast.
+    """
+
+    character: Optional[str] = None
+    credit_id: Optional[str] = None
+    order: Optional[int] = None
+
+
+class MovieCrewRole(Movie):
+    """A Movie in which a person served on the crew.
+
+    Matches one entry in /person/{id}/movie_credits.crew.
+    """
+
+    credit_id: Optional[str] = None
+    department: Optional[str] = None
+    job: Optional[str] = None
+
+
+class MovieCredits(BaseModel):
+    """Response shape for /movie/{id}/credits."""
+
+    id: int
+    cast: List[CastMember] = Field(default_factory=list)
+    crew: List[CrewMember] = Field(default_factory=list)
+
+
+class PersonMovieCredits(BaseModel):
+    """Response shape for /person/{id}/movie_credits."""
+
+    id: int
+    cast: List[MovieCreditRole] = Field(default_factory=list)
+    crew: List[MovieCrewRole] = Field(default_factory=list)
