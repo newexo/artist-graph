@@ -85,7 +85,7 @@ class Person(BaseModel):
     original_name: str
     popularity: float
     profile_path: Optional[str] = None
-    known_for: List[Movie]
+    known_for: List[Movie] = Field(default_factory=list)
 
 
 class MovieSearchResults(BaseModel):
@@ -108,7 +108,6 @@ class CastMember(Person):
     Matches one entry in /movie/{id}/credits.cast.
     """
 
-    known_for: List[Movie] = Field(default_factory=list)
     cast_id: Optional[int] = None
     character: Optional[str] = None
     credit_id: Optional[str] = None
@@ -121,7 +120,6 @@ class CrewMember(Person):
     Matches one entry in /movie/{id}/credits.crew.
     """
 
-    known_for: List[Movie] = Field(default_factory=list)
     credit_id: Optional[str] = None
     department: Optional[str] = None
     job: Optional[str] = None
