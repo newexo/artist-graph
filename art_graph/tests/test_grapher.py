@@ -57,10 +57,6 @@ class TestGrapher(TestCase):
         )
 
     def test_professional_node_in_graph(self):
-        # IMDB ids are integers. There are movies and people which have the same id.
-        # We need node objects which can be either movies or people and which are distinct even having the same
-        # integer id.
-
         g = nx.Graph()
         n0 = ProfessionalNode(42, True)
         n1 = ProfessionalNode(42, False)

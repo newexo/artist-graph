@@ -1,233 +1,174 @@
-IMDb_ID,title,year
-6751668,Parasite,2019
-9770150,Nomadland,2020
-10366460,CODA,2021
-6710474,Everything Everywhere All at Once,2022
-5580390,The Shape of Water,2017
-4975722,Moonlight,2016
-1895587,Spotlight,2015
-2562232,Birdman,2014
-2024544,12 Years a Slave,2013
-1024648,Argo,2012
-1655442,The Artist,2011
-1504320,The King's Speech,2010
-0887912,The Hurt Locker,2008
-1010048,Slumdog Millionaire,2008
-0477348,No Country for Old Men,2007
-0407887,The Departed,2006
-0115964,Crash,1996
-0405159,Million Dollar Baby,2004
-0167260,The Lord of the Rings: The Return of the King,2003
-2261391,Chicago,2012
-0268978,A Beautiful Mind,2001
-0172495,Gladiator,2000
-0169547,American Beauty,1999
-0138097,Shakespeare in Love,1998
-0120338,Titanic,1997
-0116209,The English Patient,1996
-0112573,Braveheart,1995
-0109830,Forrest Gump,1994
-0108052,Schindler's List,1993
-0105695,Unforgiven,1992
-0102926,The Silence of the Lambs,1991
-0099348,Dances with Wolves,1990
-0097239,Driving Miss Daisy,1989
-0095953,Rain Man,1988
-0093389,The Last Emperor,1987
-0091763,Platoon,1986
-0089755,Out of Africa,1985
-0086879,Amadeus,1984
-0086425,Terms of Endearment,1983
-0083987,Gandhi,1982
-0082158,Chariots of Fire,1981
-0081283,Ordinary People,1980
-0099674,The Godfather Part III,1990
-0099685,Goodfellas,1990
-0110912,Pulp Fiction,1994
-0111161,The Shawshank Redemption,1994
-0120815,Saving Private Ryan,1998
-0118799,Life is Beautiful,1997
-0253474,The Pianist,2002
-0335266,Lost in Translation,2003
-0338013,Eternal Sunshine of the Spotless Mind,2004
-0114814,The Usual Suspects,1995
-2802850,Fargo,2014
-0119488,L.A. Confidential,1997
-0119217,Good Will Hunting,1997
-0133093,The Matrix,1999
-3981658,"""Crouching Tiger, Hidden Dragon""",2001
-0209144,Memento,2000
-0245429,Spirited Away,2001
-0120737,The Lord of the Rings: The Fellowship of the Ring,2001
-0167261,The Lord of the Rings: The Two Towers,2002
-0167404,The Sixth Sense,1999
-0137523,Fight Club,1999
-0120689,The Green Mile,1999
-0114709,Toy Story,1995
-0107290,Jurassic Park,1993
-0110357,The Lion King,1994
-0126029,Shrek,2001
-0266543,Finding Nemo,2003
-0317705,The Incredibles,2004
-1049413,Up,2009
-0435761,Toy Story 3,2010
-22022452,Inside Out,2024
-2380307,Coco,2017
-4633694,Spider-Man: Into the Spider-Verse,2018
-0468569,The Dark Knight,2008
-1375666,Inception,2010
-0816692,Interstellar,2014
-2278388,The Grand Budapest Hotel,2014
-2582802,Whiplash,2014
-3783958,La La Land,2016
-5027774,"""Three Billboards Outside Ebbing, Missouri""",2017
-1285016,The Social Network,2010
-0993846,The Wolf of Wall Street,2013
-1798709,Her,2013
-1853728,Django Unchained,2012
-1790885,Zero Dark Thirty,2012
-0478304,The Tree of Life,2011
-0947798,Black Swan,2010
-1125849,The Wrestler,2008
-0469494,There Will Be Blood,2007
-0457430,Pan's Labyrinth,2006
-0498380,Letters from Iwo Jima,2006
-0449059,Little Miss Sunshine,2006
-0407887,The Departed,2006
-0449467,Babel,2006
-14022350,The Queen,2022
-0379725,Capote,2005
-0388795,Brokeback Mountain,2005
-0405159,Million Dollar Baby,2004
-0375063,Sideways,2004
-0338751,The Aviator,2004
-0308644,Finding Neverland,2004
-2249007,Ray,2013
-0327056,Mystic River,2003
-0335266,Lost in Translation,2003
-0253474,The Pianist,2002
-0274558,The Hours,2002
-0217505,Gangs of New York,2002
-0167261,The Lord of the Rings: The Two Towers,2002
-2261391,Chicago,2012
-0253474,The Pianist,2002
-0274558,The Hours,2002
-0268126,Adaptation,2002
-0287467,Talk to Her,2002
-0245429,Spirited Away,2001
-0181689,Minority Report,2002
-0253474,The Pianist,2002
-0274558,The Hours,2002
-0268126,Adaptation,2002
-0287467,Talk to Her,2002
-0245429,Spirited Away,2001
-0181689,Minority Report,2002
-0268978,A Beautiful Mind,2001
-0203009,Moulin Rouge!,2001
-0280707,Gosford Park,2001
-0247425,In the Bedroom,2001
-0120737,The Lord of the Rings: The Fellowship of the Ring,2001
-0209144,Memento,2000
-0166924,Mulholland Drive,2001
-0211915,Amélie,2001
-0172495,Gladiator,2000
-3981658,"""Crouching Tiger, Hidden Dragon""",2001
-0181865,Traffic,2000
-0195685,Erin Brockovich,2000
-0241303,Chocolat,2000
-0190590,"""O Brother, Where Art Thou?""",2000
-0169547,American Beauty,1999
-0124315,The Cider House Rules,1999
-0120689,The Green Mile,1999
-0140352,The Insider,1999
-0167404,The Sixth Sense,1999
-0120601,Being John Malkovich,1999
-0175880,Magnolia,1999
-0133093,The Matrix,1999
-0138097,Shakespeare in Love,1998
-0120815,Saving Private Ryan,1998
-0118799,Life Is Beautiful,1997
-0120863,The Thin Red Line,1998
-0127536,Elizabeth,1998
-0120338,Titanic,1997
-0119488,L.A. Confidential,1997
-0119217,Good Will Hunting,1997
-0119822,As Good as It Gets,1997
-0119164,The Full Monty,1997
-0116209,The English Patient,1996
-2802850,Fargo,2014
-0117589,Secrets & Lies,1996
-0117631,Shine,1996
-0116695,Jerry Maguire,1996
-0112573,Braveheart,1995
-0112384,Apollo 13,1995
-0112431,Babe,1995
-9065566,The Postman (Il Postino),1994
-0114388,Sense and Sensibility,1995
-0109830,Forrest Gump,1994
-0110912,Pulp Fiction,1994
-0111161,The Shawshank Redemption,1994
-0110932,Quiz Show,1994
-0109831,Four Weddings and a Funeral,1994
-0108052,Schindler's List,1993
-0107822,The Piano,1993
-0107943,The Remains of the Day,1993
-0107207,In the Name of the Father,1993
-0106977,The Fugitive,1993
-0105695,Unforgiven,1992
-0104036,The Crying Game,1992
-0104454,Howards End,1992
-0104257,A Few Good Men,1992
-0105323,Scent of a Woman,1992
-0102926,The Silence of the Lambs,1991
-2771200,Beauty and the Beast,2017
-0102138,JFK,1991
-0101516,Bugsy,1991
-0102713,The Prince of Tides,1991
-0099348,Dances with Wolves,1990
-0099685,Goodfellas,1990
-0099077,Awakenings,1990
-0099653,Ghost,1990
-0099674,The Godfather Part III,1990
-0097239,Driving Miss Daisy,1989
-0096969,Born on the Fourth of July,1989
-0097165,Dead Poets Society,1989
-0097351,Field of Dreams,1989
-0097937,My Left Foot,1989
-0095953,Rain Man,1988
-0094947,Dangerous Liaisons,1988
-0096463,Working Girl,1988
-0094606,The Accidental Tourist,1988
-0093389,The Last Emperor,1987
-0093209,Hope and Glory,1987
-0093565,Moonstruck,1987
-0093389,The Last Emperor,1987
-0092699,Broadcast News,1987
-0093010,Fatal Attraction,1987
-0093209,Hope and Glory,1987
-0093565,Moonstruck,1987
-0091763,Platoon,1986
-0091167,Hannah and Her Sisters,1986
-0091530,The Mission,1986
-0091867,A Room with a View,1985
-0090830,Children of a Lesser God,1986
-0089755,Out of Africa,1985
-0088939,The Color Purple,1985
-30400277,Kiss of the Spider Woman,
-0089841,Prizzi's Honor,1985
-0115355,Witness,1996
-0086879,Amadeus,1984
-0087553,The Killing Fields,1984
-0087892,A Passage to India,1984
-0087921,Places in the Heart,1984
-0088146,A Soldier's Story,1984
-0086425,Terms of Endearment,1983
-0085244,The Big Chill,1983
-0085461,The Dresser,1983
-0086197,The Right Stuff,1983
-0086423,Tender Mercies,1983
-0083987,Gandhi,1982
-0083866,E.T. the Extra-Terrestrial,1982
-10855768,Missing,2023
-0084805,Tootsie,1982
-0084434,An Officer and a Gentleman,1982
+TMDb_ID,title,year
+496243,Parasite,2019
+581734,Nomadland,2020
+776503,CODA,2021
+545611,Everything Everywhere All at Once,2022
+399055,The Shape of Water,2017
+376867,Moonlight,2016
+314365,Spotlight,2015
+194662,Birdman,2014
+76203,12 Years a Slave,2013
+68734,Argo,2012
+74643,The Artist,2011
+45269,The King's Speech,2010
+12162,The Hurt Locker,2008
+12405,Slumdog Millionaire,2008
+6977,No Country for Old Men,2007
+1422,The Departed,2006
+884,Crash,1996
+70,Million Dollar Baby,2004
+122,The Lord of the Rings: The Return of the King,2003
+453,A Beautiful Mind,2001
+98,Gladiator,2000
+14,American Beauty,1999
+1934,Shakespeare in Love,1998
+597,Titanic,1997
+409,The English Patient,1996
+197,Braveheart,1995
+13,Forrest Gump,1994
+424,Schindler's List,1993
+33,Unforgiven,1992
+274,The Silence of the Lambs,1991
+581,Dances with Wolves,1990
+403,Driving Miss Daisy,1989
+380,Rain Man,1988
+746,The Last Emperor,1987
+792,Platoon,1986
+606,Out of Africa,1985
+279,Amadeus,1984
+11050,Terms of Endearment,1983
+783,Gandhi,1982
+9443,Chariots of Fire,1981
+16619,Ordinary People,1980
+242,The Godfather Part III,1990
+769,Goodfellas,1990
+680,Pulp Fiction,1994
+278,The Shawshank Redemption,1994
+857,Saving Private Ryan,1998
+637,Life is Beautiful,1997
+423,The Pianist,2002
+153,Lost in Translation,2003
+38,Eternal Sunshine of the Spotless Mind,2004
+629,The Usual Suspects,1995
+2118,L.A. Confidential,1997
+489,Good Will Hunting,1997
+603,The Matrix,1999
+77,Memento,2000
+129,Spirited Away,2001
+120,The Lord of the Rings: The Fellowship of the Ring,2001
+121,The Lord of the Rings: The Two Towers,2002
+745,The Sixth Sense,1999
+550,Fight Club,1999
+497,The Green Mile,1999
+862,Toy Story,1995
+329,Jurassic Park,1993
+8587,The Lion King,1994
+808,Shrek,2001
+12,Finding Nemo,2003
+9806,The Incredibles,2004
+14160,Up,2009
+10193,Toy Story 3,2010
+1022789,Inside Out,2024
+354912,Coco,2017
+324857,Spider-Man: Into the Spider-Verse,2018
+155,The Dark Knight,2008
+27205,Inception,2010
+157336,Interstellar,2014
+120467,The Grand Budapest Hotel,2014
+244786,Whiplash,2014
+313369,La La Land,2016
+359940,"""Three Billboards Outside Ebbing, Missouri""",2017
+37799,The Social Network,2010
+106646,The Wolf of Wall Street,2013
+152601,Her,2013
+68718,Django Unchained,2012
+97630,Zero Dark Thirty,2012
+8967,The Tree of Life,2011
+44214,Black Swan,2010
+12163,The Wrestler,2008
+7345,There Will Be Blood,2007
+1417,Pan's Labyrinth,2006
+1251,Letters from Iwo Jima,2006
+773,Little Miss Sunshine,2006
+1164,Babel,2006
+398,Capote,2005
+142,Brokeback Mountain,2005
+9675,Sideways,2004
+2567,The Aviator,2004
+866,Finding Neverland,2004
+322,Mystic River,2003
+590,The Hours,2002
+3131,Gangs of New York,2002
+2757,Adaptation,2002
+64,Talk to Her,2002
+180,Minority Report,2002
+824,Moulin Rouge!,2001
+5279,Gosford Park,2001
+1999,In the Bedroom,2001
+1018,Mulholland Drive,2001
+194,Amélie,2001
+1900,Traffic,2000
+462,Erin Brockovich,2000
+392,Chocolat,2000
+134,"""O Brother, Where Art Thou?""",2000
+1715,The Cider House Rules,1999
+9008,The Insider,1999
+492,Being John Malkovich,1999
+334,Magnolia,1999
+637,Life Is Beautiful,1997
+8741,The Thin Red Line,1998
+4518,Elizabeth,1998
+2898,As Good as It Gets,1997
+9427,The Full Monty,1997
+11159,Secrets & Lies,1996
+7863,Shine,1996
+9390,Jerry Maguire,1996
+568,Apollo 13,1995
+9598,Babe,1995
+4584,Sense and Sensibility,1995
+11450,Quiz Show,1994
+712,Four Weddings and a Funeral,1994
+713,The Piano,1993
+1245,The Remains of the Day,1993
+7984,In the Name of the Father,1993
+5503,The Fugitive,1993
+11386,The Crying Game,1992
+8293,Howards End,1992
+881,A Few Good Men,1992
+9475,Scent of a Woman,1992
+321612,Beauty and the Beast,2017
+820,JFK,1991
+10337,Bugsy,1991
+10333,The Prince of Tides,1991
+11005,Awakenings,1990
+251,Ghost,1990
+2604,Born on the Fourth of July,1989
+207,Dead Poets Society,1989
+2323,Field of Dreams,1989
+10161,My Left Foot,1989
+859,Dangerous Liaisons,1988
+3525,Working Girl,1988
+31052,The Accidental Tourist,1988
+32054,Hope and Glory,1987
+2039,Moonstruck,1987
+12626,Broadcast News,1987
+10998,Fatal Attraction,1987
+5143,Hannah and Her Sisters,1986
+11416,The Mission,1986
+11257,A Room with a View,1985
+1890,Children of a Lesser God,1986
+873,The Color Purple,1985
+1214684,Kiss of the Spider Woman,
+2075,Prizzi's Honor,1985
+625,The Killing Fields,1984
+15927,A Passage to India,1984
+13681,Places in the Heart,1984
+26522,A Soldier's Story,1984
+12560,The Big Chill,1983
+42122,The Dresser,1983
+9549,The Right Stuff,1983
+42121,Tender Mercies,1983
+601,E.T. the Extra-Terrestrial,1982
+768362,Missing,2023
+9576,Tootsie,1982
+2623,An Officer and a Gentleman,1982
