@@ -25,7 +25,9 @@ def movie_data():
         "id": 62,
         "original_language": "en",
         "original_title": "2001: A Space Odyssey",
-        "overview": "Humanity finds a mysterious object buried beneath the lunar surface and sets off to find its origins with the help of HAL 9000, the world's most advanced super computer.",
+        "overview": "Humanity finds a mysterious object buried beneath the lunar "
+                    "surface and sets off to find its origins with the help of HAL "
+                    "9000, the world's most advanced super computer.",
         "popularity": 383.111,
         "poster_path": "/ve72VxNqjGM69Uky4WTo2bK6rfq.jpg",
         "release_date": "1968-04-02",
@@ -73,7 +75,12 @@ def actor_data():
                 "backdrop_path": "/bMiOfPhplZu1Lql3hGTRV087QA.jpg",
                 "id": 49538,
                 "original_title": "X-Men: First Class",
-                "overview": "Before Charles Xavier and Erik Lensherr took the names Professor X and Magneto, they were two young men discovering their powers for the first time. Before they were arch-enemies, they were closest of friends, working together with other mutants (some familiar, some new), to stop the greatest threat the world has ever known.",
+                "overview": "Before Charles Xavier and Erik Lensherr took the names "
+                            "Professor X and Magneto, they were two young men "
+                            "discovering their powers for the first time. Before they "
+                            "were arch-enemies, they were closest of friends, working "
+                            "together with other mutants (some familiar, some new), to "
+                            "stop the greatest threat the world has ever known.",
                 "poster_path": "/vUvlOY575rztBuJV3a0dbHW5MQR.jpg",
                 "media_type": "movie",
                 "adult": False,
@@ -90,7 +97,10 @@ def actor_data():
                 "backdrop_path": "/w2rWEjAMYErpNfoK2Z0GFh1LFhN.jpg",
                 "id": 819,
                 "original_title": "Sleepers",
-                "overview": "Two gangsters seek revenge on the state jail worker who during their stay at a youth prison sexually abused them. A sensational court hearing takes place to charge him for the crimes.",
+                "overview": "Two gangsters seek revenge on the state jail worker who "
+                            "during their stay at a youth prison sexually abused them. "
+                            "A sensational court hearing takes place to charge him for "
+                            "the crimes.",
                 "poster_path": "/yUpiEk2EojS9ZEXb3nIQonQCYYF.jpg",
                 "media_type": "movie",
                 "adult": False,
@@ -107,7 +117,10 @@ def actor_data():
                 "backdrop_path": "/3L3DUwfRLW18OUiLSdmovfICyY3.jpg",
                 "id": 9362,
                 "original_title": "Tremors",
-                "overview": "Val McKee and Earl Bassett are in a fight for their lives when they discover that their desolate town has been infested with gigantic, man-eating creatures that live below the ground.",
+                "overview": "Val McKee and Earl Bassett are in a fight for their lives "
+                            "when they discover that their desolate town has been "
+                            "infested with gigantic, man-eating creatures that live "
+                            "below the ground.",
                 "poster_path": "/cA4ggkZ3r1d5r9hOAUWC8x5ul2i.jpg",
                 "media_type": "movie",
                 "adult": False,
@@ -180,7 +193,9 @@ def movie_details_data():
         "imdb_id": "tt0062622",
         "original_language": "en",
         "original_title": "2001: A Space Odyssey",
-        "overview": "Humanity finds a mysterious object buried beneath the lunar surface and sets off to find its origins with the help of HAL 9000, the world's most advanced super computer.",
+        "overview": "Humanity finds a mysterious object buried beneath the lunar "
+                    "surface and sets off to find its origins with the help of HAL "
+                    "9000, the world's most advanced super computer.",
         "popularity": 57.456,
         "poster_path": "/ve72VxNqjGM69Uky4WTo2bK6rfq.jpg",
         "production_companies": [
@@ -286,7 +301,9 @@ def test_load_movie_search(odyssey_search):
     assert movie["release_date"] == "1968-04-02"
     assert (
         movie["overview"]
-        == "Humanity finds a mysterious object buried beneath the lunar surface and sets off to find its origins with the help of HAL 9000, the world's most advanced super computer."
+        == "Humanity finds a mysterious object buried beneath the lunar surface and "
+           "sets off to find its origins with the help of HAL 9000, the world's most "
+           "advanced super computer."
     )
     assert movie["poster_path"] == "/ve72VxNqjGM69Uky4WTo2bK6rfq.jpg"
     assert movie["backdrop_path"] == "/w5IDXtifKntw0ajv2co7jFlTQDM.jpg"
@@ -306,7 +323,9 @@ def test_load_movie_search(odyssey_search):
     assert odyssey_movie.release_date == date(1968, 4, 2)
     assert (
         odyssey_movie.overview
-        == "Humanity finds a mysterious object buried beneath the lunar surface and sets off to find its origins with the help of HAL 9000, the world's most advanced super computer."
+        == "Humanity finds a mysterious object buried beneath the lunar surface and "
+           "sets off to find its origins with the help of HAL 9000, the world's most "
+           "advanced super computer."
     )
 
     movie_no_release_date = search_results.results[1]
@@ -332,7 +351,8 @@ def actor_search_data():
                         "backdrop_path": "/bMiOfPhplZu1Lql3hGTRV087QA.jpg",
                         "id": 49538,
                         "original_title": "X-Men: First Class",
-                        "overview": "Before Charles Xavier and Erik Lensherr took the names Professor X and Magneto...",
+                        "overview": "Before Charles Xavier and Erik Lensherr took the "
+                                    "names Professor X and Magneto...",
                         "poster_path": "/vUvlOY575rztBuJV3a0dbHW5MQR.jpg",
                         "media_type": "movie",
                         "adult": False,
