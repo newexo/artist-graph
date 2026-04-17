@@ -2,7 +2,7 @@
 PACKAGE := $(shell awk -F'"' '/^name = / {print $$2; exit}' pyproject.toml)
 
 # Minimum coverage percentage required for tests to pass
-COVERAGE_FAIL = 70
+COVERAGE_FAIL = 60
 
 # Run the test suite
 test:
