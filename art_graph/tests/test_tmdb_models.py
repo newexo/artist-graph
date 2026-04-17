@@ -4,8 +4,8 @@ import json
 
 from ..cinema_data_providers.tmdb_models import (
     Movie,
-    Actor,
-    ActorSearchResults,
+    Person,
+    PersonSearchResults,
     BelongsToCollection,
     Genre,
     ProductionCompany,
@@ -26,8 +26,8 @@ def movie_data():
         "original_language": "en",
         "original_title": "2001: A Space Odyssey",
         "overview": "Humanity finds a mysterious object buried beneath the lunar "
-                    "surface and sets off to find its origins with the help of HAL "
-                    "9000, the world's most advanced super computer.",
+        "surface and sets off to find its origins with the help of HAL "
+        "9000, the world's most advanced super computer.",
         "popularity": 383.111,
         "poster_path": "/ve72VxNqjGM69Uky4WTo2bK6rfq.jpg",
         "release_date": "1968-04-02",
@@ -76,11 +76,11 @@ def actor_data():
                 "id": 49538,
                 "original_title": "X-Men: First Class",
                 "overview": "Before Charles Xavier and Erik Lensherr took the names "
-                            "Professor X and Magneto, they were two young men "
-                            "discovering their powers for the first time. Before they "
-                            "were arch-enemies, they were closest of friends, working "
-                            "together with other mutants (some familiar, some new), to "
-                            "stop the greatest threat the world has ever known.",
+                "Professor X and Magneto, they were two young men "
+                "discovering their powers for the first time. Before they "
+                "were arch-enemies, they were closest of friends, working "
+                "together with other mutants (some familiar, some new), to "
+                "stop the greatest threat the world has ever known.",
                 "poster_path": "/vUvlOY575rztBuJV3a0dbHW5MQR.jpg",
                 "media_type": "movie",
                 "adult": False,
@@ -98,9 +98,9 @@ def actor_data():
                 "id": 819,
                 "original_title": "Sleepers",
                 "overview": "Two gangsters seek revenge on the state jail worker who "
-                            "during their stay at a youth prison sexually abused them. "
-                            "A sensational court hearing takes place to charge him for "
-                            "the crimes.",
+                "during their stay at a youth prison sexually abused them. "
+                "A sensational court hearing takes place to charge him for "
+                "the crimes.",
                 "poster_path": "/yUpiEk2EojS9ZEXb3nIQonQCYYF.jpg",
                 "media_type": "movie",
                 "adult": False,
@@ -118,9 +118,9 @@ def actor_data():
                 "id": 9362,
                 "original_title": "Tremors",
                 "overview": "Val McKee and Earl Bassett are in a fight for their lives "
-                            "when they discover that their desolate town has been "
-                            "infested with gigantic, man-eating creatures that live "
-                            "below the ground.",
+                "when they discover that their desolate town has been "
+                "infested with gigantic, man-eating creatures that live "
+                "below the ground.",
                 "poster_path": "/cA4ggkZ3r1d5r9hOAUWC8x5ul2i.jpg",
                 "media_type": "movie",
                 "adult": False,
@@ -138,7 +138,7 @@ def actor_data():
 
 
 def test_actor_initialization(actor_data):
-    actor = Actor(**actor_data)
+    actor = Person(**actor_data)
     assert actor.adult == actor_data["adult"]
     assert actor.gender == actor_data["gender"]
     assert actor.id == actor_data["id"]
@@ -194,8 +194,8 @@ def movie_details_data():
         "original_language": "en",
         "original_title": "2001: A Space Odyssey",
         "overview": "Humanity finds a mysterious object buried beneath the lunar "
-                    "surface and sets off to find its origins with the help of HAL "
-                    "9000, the world's most advanced super computer.",
+        "surface and sets off to find its origins with the help of HAL "
+        "9000, the world's most advanced super computer.",
         "popularity": 57.456,
         "poster_path": "/ve72VxNqjGM69Uky4WTo2bK6rfq.jpg",
         "production_companies": [
@@ -302,8 +302,8 @@ def test_load_movie_search(odyssey_search):
     assert (
         movie["overview"]
         == "Humanity finds a mysterious object buried beneath the lunar surface and "
-           "sets off to find its origins with the help of HAL 9000, the world's most "
-           "advanced super computer."
+        "sets off to find its origins with the help of HAL 9000, the world's most "
+        "advanced super computer."
     )
     assert movie["poster_path"] == "/ve72VxNqjGM69Uky4WTo2bK6rfq.jpg"
     assert movie["backdrop_path"] == "/w5IDXtifKntw0ajv2co7jFlTQDM.jpg"
@@ -324,8 +324,8 @@ def test_load_movie_search(odyssey_search):
     assert (
         odyssey_movie.overview
         == "Humanity finds a mysterious object buried beneath the lunar surface and "
-           "sets off to find its origins with the help of HAL 9000, the world's most "
-           "advanced super computer."
+        "sets off to find its origins with the help of HAL 9000, the world's most "
+        "advanced super computer."
     )
 
     movie_no_release_date = search_results.results[1]
@@ -352,7 +352,7 @@ def actor_search_data():
                         "id": 49538,
                         "original_title": "X-Men: First Class",
                         "overview": "Before Charles Xavier and Erik Lensherr took the "
-                                    "names Professor X and Magneto...",
+                        "names Professor X and Magneto...",
                         "poster_path": "/vUvlOY575rztBuJV3a0dbHW5MQR.jpg",
                         "media_type": "movie",
                         "adult": False,
@@ -376,7 +376,7 @@ def actor_search_data():
 
 
 def test_actor_search_results_initialization(actor_search_data):
-    actor_search_results = ActorSearchResults(**actor_search_data)
+    actor_search_results = PersonSearchResults(**actor_search_data)
     assert actor_search_results.page == actor_search_data["page"]
     assert len(actor_search_results.results) == len(actor_search_data["results"])
     assert actor_search_results.total_pages == actor_search_data["total_pages"]
@@ -424,7 +424,7 @@ def test_load_actor_search(bacon_search):
     assert actor["profile_path"] == "/rjX2Oz3tCZMfSwOoIAyEhdtXnTE.jpg"
     assert len(actor["known_for"]) == 3
 
-    search_results = ActorSearchResults(**bacon_search)
+    search_results = PersonSearchResults(**bacon_search)
     assert search_results.page == 1
     assert search_results.total_pages == 1
     assert search_results.total_results == 6
