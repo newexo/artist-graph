@@ -12,8 +12,9 @@ def blurt(s):
 
 def add_arc(g: nx.Graph, work, person, job=None):
     """
-    Add an edge between a work and a person in a professional graph. Add movie and person as nodes if not already in
-    graph. A person can be added multiple times to the same work with different jobs by calling this function multiple
+    Add an edge between a work and a person in a professional graph. Add movie and
+    person as nodes if not already in graph. A person can be added multiple times to the
+    same work with different jobs by calling this function multiple
     times.
     :param g: graph
     :param work: id for professional work such as a movie, document or music album
@@ -51,8 +52,9 @@ def try_get_objects(ids: str, getter):
 
 def interpret_objects(objs, getter):
     """
-    If objs is a list of objects, return those objects without alteration. If objs is a comma separated string, spit
-    the string and attempt to get the objects corresponding to string parts interpreted as ids using getter.
+    If objs is a list of objects, return those objects without alteration. If objs is a
+    comma separated string, spit the string and attempt to get the objects corresponding
+    to string parts interpreted as ids using getter.
     :param objs: A list of objects or a comma separated string of ids.
     :param getter: A function for looking up objects by ids.
     :return: A list of objects
@@ -71,7 +73,8 @@ class GraphMaker:
     def __init__(self, ia, g: nx.Graph = None):
         """
         Initializer
-        :param ia: database of professional works. Could be imdbpy imdb object for example.
+        :param ia: database of professional works. Could be imdbpy imdb object for
+        example.
         :param g: A graph. If none, initializer will create a graph.
         """
         self.depth_record = dict()
@@ -98,10 +101,12 @@ class GraphMaker:
 
     def traverse_from_person(self, person, depth):
         """
-        Add nodes and edges to a professional graph up to depth works started with person and all works to which that
+        Add nodes and edges to a professional graph up to depth works started with
+        person and all works to which that
         person has contributed.
         :param person: id of person in database
-        :param depth: depth for which to travers professional graph. Stop if less than zero
+        :param depth: depth for which to travers professional graph. Stop if less than
+        zero
         """
         if depth <= 0:
             blurt("done")
@@ -114,10 +119,11 @@ class GraphMaker:
 
     def traverse_from_work(self, work, depth):
         """
-        Add nodes and edges to a professional graph up to depth works started with a work and all collaborators on that
-        work.
+        Add nodes and edges to a professional graph up to depth works started with a
+        work and all collaborators on that work.
         :param work: id of work in database
-        :param depth: depth for which to travers professional graph. Stop if less than zero
+        :param depth: depth for which to travers professional graph. Stop if less than
+        zero
         """
         if depth <= 0:
             blurt("done")
@@ -145,7 +151,8 @@ class GraphMaker:
     def traverse(self, depth, works=None, people=None):
         """
         Populate graph starting at possibly multiple works.
-        :param depth: depth to which to populate graph from starting works and collaborators
+        :param depth: depth to which to populate graph from starting works and
+            collaborators
         :param works: None or a list of ids for works
         :param people: None or a list of ids for people
         """
