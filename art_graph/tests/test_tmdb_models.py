@@ -453,3 +453,82 @@ def test_load_actor_search(bacon_search):
     assert not first_movie.adult
     assert first_movie.original_language == "en"
     assert first_movie.genre_ids == [28, 878, 12]
+
+
+class TestMovieDefaults:
+    def test_minimal_construction(self):
+        movie = Movie(id=1, title="Test")
+        assert movie.adult is False
+        assert movie.original_language == "en"
+        assert movie.original_title == "Test"
+        assert movie.overview == ""
+        assert movie.popularity == 0.0
+        assert movie.video is False
+        assert movie.vote_average == 0.0
+        assert movie.vote_count == 0
+        assert movie.poster_path is None
+        assert movie.backdrop_path is None
+        assert movie.release_date is None
+
+    def test_original_title_defaults_from_title(self):
+        movie = Movie(id=1, title="My Movie")
+        assert movie.original_title == "My Movie"
+
+    def test_original_title_preserved_when_explicit(self):
+        movie = Movie(id=1, title="My Movie", original_title="Mon Film")
+        assert movie.original_title == "Mon Film"
+
+    def test_year_property(self):
+        movie = Movie(id=1, title="Test", release_date=date(2023, 6, 15))
+        assert movie.year == "2023"
+
+    def test_year_none_when_no_release_date(self):
+        movie = Movie(id=1, title="Test")
+        assert movie.year is None
+
+    def test_poster_url(self):
+        movie = Movie(id=1, title="Test", poster_path="/poster.jpg")
+        assert movie.poster_url.endswith("/poster.jpg")
+        assert "w500" in movie.poster_url
+
+    def test_poster_url_none(self):
+        movie = Movie(id=1, title="Test")
+        assert movie.poster_url is None
+
+    def test_backdrop_url(self):
+        movie = Movie(id=1, title="Test", backdrop_path="/bg.jpg")
+        assert movie.backdrop_url.endswith("/bg.jpg")
+        assert "w1280" in movie.backdrop_url
+
+    def test_backdrop_url_none(self):
+        movie = Movie(id=1, title="Test")
+        assert movie.backdrop_url is None
+
+
+class TestPersonDefaults:
+    def test_minimal_construction(self):
+        person = Person(id=1, name="Brad Pitt")
+        assert person.adult is False
+        assert person.gender == 0
+        assert person.known_for_department == "Acting"
+        assert person.original_name == "Brad Pitt"
+        assert person.popularity == 0.0
+        assert person.profile_path is None
+        assert person.known_for == []
+
+    def test_original_name_defaults_from_name(self):
+        person = Person(id=1, name="Brad Pitt")
+        assert person.original_name == "Brad Pitt"
+
+    def test_original_name_preserved_when_explicit(self):
+        person = Person(id=1, name="Brad Pitt", original_name="William Bradley Pitt")
+        assert person.original_name == "William Bradley Pitt"
+
+    def test_profile_url(self):
+        person = Person(id=1, name="Test", profile_path="/abc.jpg")
+        assert person.profile_url.endswith("/abc.jpg")
+        assert "w500" in person.profile_url
+
+    def test_profile_url_none(self):
+        person = Person(id=1, name="Test")
+        assert person.profile_url is None
