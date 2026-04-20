@@ -532,3 +532,45 @@ class TestPersonDefaults:
     def test_profile_url_none(self):
         person = Person(id=1, name="Test")
         assert person.profile_url is None
+
+    def test_known_for_with_tv_shows(self):
+        """TMDb known_for can contain TV shows which have 'name' instead of 'title'."""
+        person = Person(
+            id=4724,
+            name="Kevin Bacon",
+            known_for=[
+                {
+                    "adult": False,
+                    "backdrop_path": "/bg.jpg",
+                    "id": 49538,
+                    "original_language": "en",
+                    "original_title": "X-Men: First Class",
+                    "overview": "Mutants.",
+                    "popularity": 2.5,
+                    "poster_path": "/poster.jpg",
+                    "release_date": "2011-06-01",
+                    "title": "X-Men: First Class",
+                    "video": False,
+                    "vote_average": 7.3,
+                    "vote_count": 12410,
+                    "media_type": "movie",
+                },
+                {
+                    "adult": False,
+                    "backdrop_path": "/tv_bg.jpg",
+                    "id": 1399,
+                    "original_language": "en",
+                    "overview": "A TV show.",
+                    "popularity": 80.0,
+                    "poster_path": "/tv_poster.jpg",
+                    "vote_average": 8.4,
+                    "vote_count": 20000,
+                    "name": "The Following",
+                    "origin_country": ["US"],
+                    "media_type": "tv",
+                },
+            ],
+        )
+        assert len(person.known_for) == 2
+        assert person.known_for[0].title == "X-Men: First Class"
+        assert person.known_for[1].title == "The Following"
