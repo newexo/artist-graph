@@ -47,7 +47,8 @@ class Movie(BaseModel):
     popularity: float = 0.0
     poster_path: Optional[str] = None
     release_date: Optional[date] = None
-    title: str
+    title: str = ""
+    name: Optional[str] = None
     video: bool = False
     vote_average: float = 0.0
     vote_count: int = 0
@@ -76,7 +77,9 @@ class Movie(BaseModel):
         return v
 
     @model_validator(mode="after")
-    def _default_original_title(self):
+    def _default_title_and_original_title(self):
+        if not self.title and self.name:
+            self.title = self.name
         if not self.original_title:
             self.original_title = self.title
         return self
