@@ -90,11 +90,17 @@ class Movie(BaseModel):
 
     @property
     def poster_url(self) -> Optional[str]:
-        return f"{DEFAULT_TMDB_IMAGE_BASE}{self.poster_path}" if self.poster_path else None
+        return (
+            f"{DEFAULT_TMDB_IMAGE_BASE}{self.poster_path}" if self.poster_path else None
+        )
 
     @property
     def backdrop_url(self) -> Optional[str]:
-        return f"{DEFAULT_TMDB_BACKDROP_BASE}{self.backdrop_path}" if self.backdrop_path else None
+        return (
+            f"{DEFAULT_TMDB_BACKDROP_BASE}{self.backdrop_path}"
+            if self.backdrop_path
+            else None
+        )
 
 
 class Person(BaseModel):
@@ -116,7 +122,11 @@ class Person(BaseModel):
 
     @property
     def profile_url(self) -> Optional[str]:
-        return f"{DEFAULT_TMDB_IMAGE_BASE}{self.profile_path}" if self.profile_path else None
+        return (
+            f"{DEFAULT_TMDB_IMAGE_BASE}{self.profile_path}"
+            if self.profile_path
+            else None
+        )
 
 
 class MovieSearchResults(BaseModel):
