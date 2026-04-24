@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Float, Date, ForeignKey
+from sqlalchemy import Boolean, Column, Integer, String, Float, Date, ForeignKey
 from sqlalchemy.orm import DeclarativeBase, relationship
 
 
@@ -13,6 +13,7 @@ class PersonRecord(Base):
     name = Column(String, nullable=False)
     profile_path = Column(String, nullable=True)
     popularity = Column(Float, default=0.0)
+    has_full_filmography = Column(Boolean, default=False, nullable=False)
 
     credits = relationship("CreditRecord", back_populates="person")
 
@@ -25,6 +26,7 @@ class MovieRecord(Base):
     release_date = Column(Date, nullable=True)
     poster_path = Column(String, nullable=True)
     popularity = Column(Float, default=0.0)
+    has_full_cast = Column(Boolean, default=False, nullable=False)
 
     credits = relationship("CreditRecord", back_populates="movie")
 

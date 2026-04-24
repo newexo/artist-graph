@@ -12,7 +12,7 @@ from sqlalchemy.orm import Session
 from ..tmdb.client import TMDbClient
 from ..tmdb.config import TMDbConfig
 from ..tmdb_models import CastMember, Movie, MovieCreditRole, Person
-from .orm_models import Base
+from .orm_models import Base, PersonRecord, MovieRecord
 from .operations import (
     get_cached_movie_cast,
     get_cached_person_movies,
@@ -28,32 +28,31 @@ class CachedTMDbClient(TMDbClient):
         Base.metadata.create_all(bind=engine)
 
     async def get_person_movies(
-        self, person_id: int, limit: int = 20
+        self, person_id: int, limit: int = 20, trust_cache: bool = False
     ) -> List[MovieCreditRole]:
-        with Session(bind=self.engine) as session:
-            cached = get_cached_person_movies(session, person_id)
-            if cached is not None and len(cached) > 0:
-                results = []
-                for credit in cached:
-                    movie = credit.movie
-                    results.append(
-                        MovieCreditRole(
-                            id=movie.tmdb_id,
-                            title=movie.title,
-                            release_date=movie.release_date,
-                            poster_path=movie.poster_path,
-                            popularity=movie.popularity,
-                            character=credit.character,
-                            order=credit.credit_order,
-                        )
-                    )
-                results.sort(key=lambda m: m.popularity, reverse=True)
-                return results[:limit]
+        if trust_cache:
+            with Session(bind=self.engine) as session:
+                person = session.get(PersonRecord, person_id)
+                if person is not None and person.has_full_filmography:
+                    cached = get_cached_person_movies(session, person_id)
+                    if cached:
+                        results = [
+                            MovieCreditRole(
+                                id=credit.movie.tmdb_id,
+                                title=credit.movie.title,
+                                release_date=credit.movie.release_date,
+                                poster_path=credit.movie.poster_path,
+                                popularity=credit.movie.popularity,
+                                character=credit.character,
+                                order=credit.credit_order,
+                            )
+                            for credit in cached
+                        ]
+                        results.sort(key=lambda m: m.popularity, reverse=True)
+                        return results[:limit]
 
-        # Cache miss — call the API
         movies = await super().get_person_movies(person_id, limit=limit)
 
-        # We need the person record to store; fetch details if needed
         person = await self.search_person_by_id(person_id)
         if person is not None:
             with Session(bind=self.engine) as session:
@@ -61,26 +60,29 @@ class CachedTMDbClient(TMDbClient):
 
         return movies
 
-    async def get_movie_cast(self, movie_id: int) -> List[CastMember]:
-        with Session(bind=self.engine) as session:
-            cached = get_cached_movie_cast(session, movie_id)
-            if cached is not None and len(cached) > 0:
-                return [
-                    CastMember(
-                        id=credit.person.tmdb_id,
-                        name=credit.person.name,
-                        profile_path=credit.person.profile_path,
-                        popularity=credit.person.popularity,
-                        character=credit.character,
-                        order=credit.credit_order,
-                    )
-                    for credit in cached
-                ]
+    async def get_movie_cast(
+        self, movie_id: int, trust_cache: bool = True
+    ) -> List[CastMember]:
+        if trust_cache:
+            with Session(bind=self.engine) as session:
+                movie = session.get(MovieRecord, movie_id)
+                if movie is not None and movie.has_full_cast:
+                    cached = get_cached_movie_cast(session, movie_id)
+                    if cached:
+                        return [
+                            CastMember(
+                                id=credit.person.tmdb_id,
+                                name=credit.person.name,
+                                profile_path=credit.person.profile_path,
+                                popularity=credit.person.popularity,
+                                character=credit.character,
+                                order=credit.credit_order,
+                            )
+                            for credit in cached
+                        ]
 
-        # Cache miss — call the API
         cast = await super().get_movie_cast(movie_id)
 
-        # We need the movie record to store; fetch via search
         movie = await self.search_movie_by_id(movie_id)
         if movie is not None:
             with Session(bind=self.engine) as session:
