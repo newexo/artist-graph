@@ -30,7 +30,13 @@ class TestTableCreation:
         engine = in_memory_engine()
         inspector = sqlalchemy.inspect(engine)
         columns = {c["name"] for c in inspector.get_columns("person")}
-        assert columns == {"tmdb_id", "name", "profile_path", "popularity", "has_full_filmography"}
+        assert columns == {
+            "tmdb_id",
+            "name",
+            "profile_path",
+            "popularity",
+            "has_full_filmography",
+        }
 
     def test_movie_columns(self):
         engine = in_memory_engine()

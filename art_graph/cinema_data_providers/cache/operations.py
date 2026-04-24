@@ -88,6 +88,7 @@ def store_person_movies(
         person.name,
         profile_path=person.profile_path,
         popularity=person.popularity,
+        has_full_filmography=True,
     )
     for movie in movies:
         upsert_movie(
@@ -117,6 +118,7 @@ def store_movie_cast(session: Session, movie: Movie, cast: List[CastMember]):
         release_date=movie.release_date,
         poster_path=movie.poster_path,
         popularity=movie.popularity,
+        has_full_cast=True,
     )
     for member in cast:
         upsert_person(

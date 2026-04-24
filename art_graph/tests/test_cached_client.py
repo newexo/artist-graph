@@ -115,13 +115,13 @@ class TestGetPersonMovies:
         ):
             await client.get_person_movies(6193)
 
-        # Second call should hit cache
+        # Second call with trust_cache=True should hit cache
         with patch.object(
             client.__class__.__bases__[0],
             "get_person_movies",
             new_callable=AsyncMock,
         ) as mock_api:
-            result = await client.get_person_movies(6193)
+            result = await client.get_person_movies(6193, trust_cache=True)
             mock_api.assert_not_called()
             assert len(result) == 2
             titles = {m.title for m in result}
@@ -150,9 +150,86 @@ class TestGetPersonMovies:
             "get_person_movies",
             new_callable=AsyncMock,
         ):
-            result = await client.get_person_movies(6193)
+            result = await client.get_person_movies(6193, trust_cache=True)
             assert result[0].title == "Inception"  # popularity 90
             assert result[1].title == "Titanic"  # popularity 85
+
+    @pytest.mark.asyncio
+    async def test_default_does_not_trust_cache(self, client):
+        """get_person_movies defaults to trust_cache=False, always hitting API."""
+        # Populate cache
+        with (
+            patch.object(
+                client.__class__.__bases__[0],
+                "get_person_movies",
+                new_callable=AsyncMock,
+                return_value=MOVIES,
+            ),
+            patch.object(
+                client,
+                "get_person_details",
+                new_callable=AsyncMock,
+                return_value=PERSON,
+            ),
+        ):
+            await client.get_person_movies(6193)
+
+        # Default call (trust_cache=False) should still hit API
+        with (
+            patch.object(
+                client.__class__.__bases__[0],
+                "get_person_movies",
+                new_callable=AsyncMock,
+                return_value=MOVIES,
+            ) as mock_api,
+            patch.object(
+                client,
+                "get_person_details",
+                new_callable=AsyncMock,
+                return_value=PERSON,
+            ),
+        ):
+            await client.get_person_movies(6193)
+            mock_api.assert_called_once()
+
+    @pytest.mark.asyncio
+    async def test_incidental_person_not_trusted(self, client):
+        """A person added via store_movie_cast should not be a cache hit."""
+        # Store a movie cast — this creates person records incidentally
+        with (
+            patch.object(
+                client.__class__.__bases__[0],
+                "get_movie_cast",
+                new_callable=AsyncMock,
+                return_value=CAST,
+            ),
+            patch.object(
+                client,
+                "search_movie_by_id",
+                new_callable=AsyncMock,
+                return_value=MOVIE,
+            ),
+        ):
+            await client.get_movie_cast(27205)
+
+        # Asking for person movies with trust_cache=True should still miss,
+        # because has_full_filmography is False
+        with (
+            patch.object(
+                client.__class__.__bases__[0],
+                "get_person_movies",
+                new_callable=AsyncMock,
+                return_value=MOVIES,
+            ) as mock_api,
+            patch.object(
+                client,
+                "get_person_details",
+                new_callable=AsyncMock,
+                return_value=PERSON,
+            ),
+        ):
+            await client.get_person_movies(6193, trust_cache=True)
+            mock_api.assert_called_once()
 
 
 class TestGetMovieCast:
@@ -206,3 +283,79 @@ class TestGetMovieCast:
             assert len(result) == 2
             names = {c.name for c in result}
             assert names == {"Leonardo DiCaprio", "Joseph Gordon-Levitt"}
+
+    @pytest.mark.asyncio
+    async def test_trust_cache_false_skips_cache(self, client):
+        """get_movie_cast with trust_cache=False always hits API."""
+        # Populate cache
+        with (
+            patch.object(
+                client.__class__.__bases__[0],
+                "get_movie_cast",
+                new_callable=AsyncMock,
+                return_value=CAST,
+            ),
+            patch.object(
+                client,
+                "search_movie_by_id",
+                new_callable=AsyncMock,
+                return_value=MOVIE,
+            ),
+        ):
+            await client.get_movie_cast(27205)
+
+        # Call with trust_cache=False should still hit API
+        with (
+            patch.object(
+                client.__class__.__bases__[0],
+                "get_movie_cast",
+                new_callable=AsyncMock,
+                return_value=CAST,
+            ) as mock_api,
+            patch.object(
+                client,
+                "search_movie_by_id",
+                new_callable=AsyncMock,
+                return_value=MOVIE,
+            ),
+        ):
+            await client.get_movie_cast(27205, trust_cache=False)
+            mock_api.assert_called_once()
+
+    @pytest.mark.asyncio
+    async def test_incidental_movie_not_trusted(self, client):
+        """A movie added via store_person_movies should not be a cast cache hit."""
+        # Store a person's filmography — this creates movie records incidentally
+        with (
+            patch.object(
+                client.__class__.__bases__[0],
+                "get_person_movies",
+                new_callable=AsyncMock,
+                return_value=MOVIES,
+            ),
+            patch.object(
+                client,
+                "get_person_details",
+                new_callable=AsyncMock,
+                return_value=PERSON,
+            ),
+        ):
+            await client.get_person_movies(6193)
+
+        # Asking for movie cast should miss — has_full_cast is False
+        with (
+            patch.object(
+                client.__class__.__bases__[0],
+                "get_movie_cast",
+                new_callable=AsyncMock,
+                return_value=CAST,
+            ) as mock_api,
+            patch.object(
+                client,
+                "search_movie_by_id",
+                new_callable=AsyncMock,
+                return_value=MOVIE,
+            ),
+        ):
+            await client.get_movie_cast(27205)
+            mock_api.assert_called_once()
