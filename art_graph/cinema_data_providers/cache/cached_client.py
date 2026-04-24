@@ -1,4 +1,8 @@
-"""A TMDb client that caches results in a local SQLite database."""
+"""A TMDb client that caches results in a database.
+
+The caller provides a SQLAlchemy engine — this module has no opinion about
+which database backend is used or how it is configured.
+"""
 
 from typing import List, Optional
 
@@ -8,7 +12,7 @@ from sqlalchemy.orm import Session
 from ..tmdb.client import TMDbClient
 from ..tmdb.config import TMDbConfig
 from ..tmdb_models import CastMember, Movie, MovieCreditRole, Person
-from .db import create_tables, get_engine
+from .orm_models import Base
 from .operations import (
     get_cached_movie_cast,
     get_cached_person_movies,
@@ -18,10 +22,10 @@ from .operations import (
 
 
 class CachedTMDbClient(TMDbClient):
-    def __init__(self, config: TMDbConfig, engine: Optional[Engine] = None):
+    def __init__(self, config: TMDbConfig, engine: Engine):
         super().__init__(config)
-        self.engine = engine or get_engine()
-        create_tables(self.engine)
+        self.engine = engine
+        Base.metadata.create_all(bind=engine)
 
     async def get_person_movies(
         self, person_id: int, limit: int = 20
