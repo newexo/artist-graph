@@ -1,47 +1,76 @@
-# Artist graph
+# Artist Graph
 
-This project is a set of Python tools for creating graphs of artists and collaborators. It is based on NetworkX, which
-creates an annotated graph whose nodes are people and works of art. Examples of this include the following:
+A Python library for creating graphs of artists and collaborators. Built on
+NetworkX, it creates annotated graphs whose nodes are people and works of art.
+Examples include:
 
-- Citation graphs of scholars and their academic papers
 - Movies and the actors, writers, directors and producers who make them
-- Music, and the musicians, composers, and producers who create it
+- Citation graphs of scholars and their academic papers
+- Music and the musicians, composers and producers who create it
 - Open source software projects and their contributors
 
-## Docker
+## TMDb Integration
 
-Build the image:
+The `cinema_data_providers` package provides an async client for the
+[TMDb API](https://www.themoviedb.org/documentation/api):
 
+- **`TMDbClient`** -- async HTTP client for searching people, movies, credits
+- **`CachedTMDbClient`** -- wraps `TMDbClient` with SQLAlchemy-backed caching
+  (person, movie, and credit tables). The caller provides the database engine.
+- **`MovieFilter`** -- client-side filtering for movies by language, rating,
+  vote count, popularity, and genre
+
+See [docs/tmdb_fields.md](docs/tmdb_fields.md) for field descriptions and
+typical value ranges.
+
+### Cache behaviour
+
+Movie casts are essentially immutable once fetched. Actor filmographies grow
+over time. The cache tracks this with `has_full_cast` and
+`has_full_filmography` flags, and both `get_movie_cast` and
+`get_person_movies` accept a `trust_cache` parameter:
+
+- `get_movie_cast(movie_id, trust_cache=True)` -- trusts cache by default
+- `get_person_movies(person_id, trust_cache=False)` -- hits API by default
+
+## Installation
+
+```bash
+pip install art-graph
 ```
-DOCKER_BUILDKIT=1 docker build --target=runtime -f Dockerfile . -t artist-graph
+
+Or from source:
+
+```bash
+poetry install
 ```
 
-Run the image with a shell:
+## Development
 
-```
-docker run --name artist-graph -v /some/host/machine/directory:/app/data/:rw -it artist-graph sh
-```
-
-Remove the container:
-
-```
-docker container rm artist-graph
+```bash
+poetry install --with dev
 ```
 
-Download the IMDb data:
+### Make targets
 
-```
-docker run --name artist-graph -v /some/host/machine/directory/:/app/data/:rw -it artist-graph python scripts/imdb_download.py
-```
+| Target | Description |
+|---|---|
+| `make test` | Run the test suite |
+| `make lint` | Lint with ruff |
+| `make format` | Format with ruff |
+| `make check` | Format + lint + test |
 
-Build the SQLite database:
+### Running tests
 
-```
-docker run --name artist-graph -v /some/host/machine/directory/:/app/data/:rw -it artist-graph python scripts/s3_2db.py
+```bash
+make test
 ```
 
 ## Acknowledgements
 
-This project began with code originally part of the [Cinema Game](https://github.com/ChiPowers/cinema_game) project,
-which was developed by Chivon Powers and Reuben Brasher. That project relied on a graph of movies and people, which can
-now be constructed using the tools in this project.
+This project began with code originally part of the
+[Cinema Game](https://github.com/ChiPowers/cinema_game) project, developed by
+Chivon Powers and Reuben Brasher.
+
+Movie and actor data provided by [TMDb](https://www.themoviedb.org). This
+product uses the TMDb API but is not endorsed or certified by TMDb.
