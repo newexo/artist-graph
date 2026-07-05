@@ -240,26 +240,30 @@ class TestSearchMovie:
 
         assert result is None
 
-    async def test_passes_year_param(self, client):
-        mock_get = AsyncMock(
-            return_value={
-                "results": [
-                    movie_payload(
-                        id=1,
-                        title="Test",
-                        original_title="Test",
-                        release_date="2013-01-01",
-                    )
-                ]
-            }
-        )
-        with patch.object(client, "_get", mock_get):
-            await client.search_movie("Test", year=2013)
 
-        args, kwargs = mock_get.call_args
-        passed_params = args[1] if len(args) > 1 else kwargs.get("params", {})
-        # search_movie builds a dict and passes it positionally
-        assert passed_params.get("year") == 2013
+class TestSearchMovies:
+    async def test_returns_all_results_in_order(self, client):
+        mock_response = {
+            "results": [
+                movie_payload(id=414906, title="The Batman", release_date="2022-03-01"),
+                movie_payload(id=268, title="Batman", release_date="1989-06-21"),
+            ]
+        }
+        with patch.object(
+            client, "_get", new_callable=AsyncMock, return_value=mock_response
+        ):
+            result = await client.search_movies("Batman")
+
+        assert [m.id for m in result] == [414906, 268]
+        assert [m.title for m in result] == ["The Batman", "Batman"]
+
+    async def test_returns_empty_list_when_no_results(self, client):
+        with patch.object(
+            client, "_get", new_callable=AsyncMock, return_value={"results": []}
+        ):
+            result = await client.search_movies("xyznonexistent")
+
+        assert result == []
 
 
 class TestGetMovieCast:

@@ -49,17 +49,13 @@ class TMDbClient:
         credits.cast.sort(key=lambda m: m.popularity, reverse=True)
         return credits.cast[:limit]
 
-    async def search_movie(
-        self, title: str, year: Optional[int] = None
-    ) -> Optional[Movie]:
-        params = {"query": title}
-        if year:
-            params["year"] = year
-        data = await self._get("/search/movie", params)
-        results = data.get("results", [])
-        if not results:
-            return None
-        return Movie(**results[0])
+    async def search_movie(self, title: str) -> Optional[Movie]:
+        results = await self.search_movies(title)
+        return results[0] if results else None
+
+    async def search_movies(self, title: str) -> List[Movie]:
+        data = await self._get("/search/movie", {"query": title})
+        return [Movie(**m) for m in data.get("results", [])]
 
     async def get_movie_cast(self, movie_id: int) -> List[CastMember]:
         credits = await self.get_movie_credits(movie_id)
