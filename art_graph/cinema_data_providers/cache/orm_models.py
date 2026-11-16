@@ -1,4 +1,13 @@
-from sqlalchemy import Boolean, Column, Integer, String, Float, Date, ForeignKey
+from sqlalchemy import (
+    Boolean,
+    Column,
+    Date,
+    Float,
+    ForeignKey,
+    Integer,
+    String,
+    UniqueConstraint,
+)
 from sqlalchemy.orm import DeclarativeBase, relationship
 
 
@@ -33,6 +42,11 @@ class MovieRecord(Base):
 
 class CreditRecord(Base):
     __tablename__ = "credit"
+    # One credit per (person, movie). Concurrent writers rely on this to make
+    # their upserts converge instead of both inserting the same credit.
+    __table_args__ = (
+        UniqueConstraint("person_id", "movie_id", name="uq_credit_person_movie"),
+    )
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     person_id = Column(

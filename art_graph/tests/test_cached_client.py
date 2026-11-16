@@ -9,6 +9,7 @@ from unittest.mock import AsyncMock, patch
 
 import pytest
 import sqlalchemy
+from sqlalchemy.pool import StaticPool
 
 from art_graph.cinema_data_providers.cache.cached_client import CachedTMDbClient
 from art_graph.cinema_data_providers.cache.orm_models import Base
@@ -23,7 +24,13 @@ from art_graph.cinema_data_providers.tmdb_models import (
 
 @pytest.fixture
 def engine():
-    eng = sqlalchemy.create_engine("sqlite:///:memory:")
+    # The client does its database work in worker threads, so every thread must
+    # share the one in-memory database.
+    eng = sqlalchemy.create_engine(
+        "sqlite:///:memory:",
+        poolclass=StaticPool,
+        connect_args={"check_same_thread": False},
+    )
     Base.metadata.create_all(bind=eng)
     return eng
 
@@ -359,3 +366,58 @@ class TestGetMovieCast:
         ):
             await client.get_movie_cast(27205)
             mock_api.assert_called_once()
+
+
+class TestDatabaseWorkIsOffTheEventLoop:
+    """The cache's database calls must not run on the caller's event loop."""
+
+    @pytest.mark.asyncio
+    async def test_reads_and_writes_run_in_a_worker_thread(self, client, monkeypatch):
+        import threading
+
+        from art_graph.cinema_data_providers.cache import cached_client
+
+        loop_thread = threading.get_ident()
+        seen = {}
+
+        def spy(name, real):
+            def wrapper(*args, **kwargs):
+                seen[name] = threading.get_ident()
+                return real(*args, **kwargs)
+
+            monkeypatch.setattr(cached_client, name, wrapper)
+
+        for name in (
+            "store_person_movies",
+            "get_cached_person_movies",
+            "store_movie_cast",
+            "get_cached_movie_cast",
+        ):
+            spy(name, getattr(cached_client, name))
+
+        with (
+            patch(
+                "art_graph.cinema_data_providers.tmdb.client.TMDbClient.get_person_movies",
+                new_callable=AsyncMock,
+                return_value=MOVIES,
+            ),
+            patch(
+                "art_graph.cinema_data_providers.tmdb.client.TMDbClient.get_movie_cast",
+                new_callable=AsyncMock,
+                return_value=CAST,
+            ),
+            patch.object(client, "search_person_by_id", return_value=PERSON),
+            patch.object(client, "search_movie_by_id", return_value=MOVIE),
+        ):
+            await client.get_person_movies(PERSON.id)
+            await client.get_person_movies(PERSON.id, trust_cache=True)
+            await client.get_movie_cast(MOVIE.id)
+            await client.get_movie_cast(MOVIE.id)
+
+        assert set(seen) == {
+            "store_person_movies",
+            "get_cached_person_movies",
+            "store_movie_cast",
+            "get_cached_movie_cast",
+        }
+        assert all(thread != loop_thread for thread in seen.values()), seen
